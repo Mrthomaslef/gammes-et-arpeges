@@ -49,7 +49,8 @@ main{max-width:860px;margin:0 auto;padding:12px 12px 24px;outline:none}
   background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + var(--safe-b));
 }
 .tabbar a{display:flex;flex-direction:column;align-items:center;font-size:11px;color:var(--muted);flex:1;padding:2px 0;border-radius:10px}
-.tabbar a span{font-size:19px;line-height:1.2}
+.tabbar a span{display:grid;place-items:center;height:26px;line-height:1}
+.tabbar a.on span{transform:translateY(-1px)}
 .tabbar a.on{color:var(--acc);font-weight:600}
 
 /* ---- blocs ---- */
@@ -71,12 +72,7 @@ h2{font-size:15px;margin:22px 4px 8px;color:var(--muted);text-transform:uppercas
 .stats{display:flex;gap:16px;margin-top:10px;font-size:13px}
 .stats b{font-size:18px;display:block}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-.cat{display:flex;gap:12px;align-items:center;padding:13px}
-.cat .ico{font-size:24px;width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--acc-soft);flex:none}
-.cat b{display:block;font-size:14.5px}
-.cat small{color:var(--muted);font-size:12px;display:block}
-.cat .n{margin-left:auto;color:var(--muted);font-size:13px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px}
 
 .list{display:flex;flex-direction:column;gap:8px}
 .row{display:flex;align-items:center;gap:10px;padding:12px 14px}
@@ -173,3 +169,35 @@ th{background:var(--acc-soft);font-weight:700}
 .lb-close{position:fixed;top:calc(10px + var(--safe-t));right:10px;background:rgba(255,255,255,.15);color:#fff;border:0;width:42px;height:42px;border-radius:50%;font-size:20px;z-index:61}
 .foot{color:var(--muted);font-size:12px;text-align:center;margin:26px 8px 0}
 .scope{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;margin-bottom:8px}
+
+/* ---- icônes & couleurs par thème ---- */
+.ic{display:block;flex:none}
+.tile{display:inline-grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;color:#fff;
+  background:linear-gradient(135deg,var(--c),var(--c2));box-shadow:0 2px 6px color-mix(in srgb,var(--c) 35%,transparent)}
+.row .tile{width:34px;height:34px}
+.cat{position:relative;display:flex;flex-direction:column;gap:3px;padding:13px 13px 14px;overflow:hidden;
+  border-top:0;background:linear-gradient(160deg,color-mix(in srgb,var(--c) 13%,var(--card)) 0%,var(--card) 62%)}
+.cat::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--c),var(--c2))}
+.cat .tile{width:46px;height:46px;border-radius:14px}
+.cat-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.cat .n{font-size:12px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);border-radius:999px;padding:3px 9px}
+.cat b{font-size:14.5px;line-height:1.25}
+.cat small{color:var(--muted);font-size:12px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ctag{display:inline-flex;align-items:center;gap:5px;color:var(--c);background:color-mix(in srgb,var(--c) 13%,transparent)}
+.hh{display:flex;align-items:center;gap:10px}
+.h-ico{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;color:#fff;background:linear-gradient(135deg,var(--c),var(--c2));flex:none}
+.hh2{display:flex;align-items:center;gap:8px}
+.hh2 .tile{width:24px;height:24px;border-radius:7px}
+.gcard{border-top:4px solid var(--c)}
+.gcard .tree li.li::before{background:var(--c)}
+.gcard .tree li.h{color:var(--c2)}
+:root[data-theme="dark"] .gcard .tree li.h{color:var(--c)}
+.gsec{border-left:4px solid var(--c)}
+.gsec-h{display:flex;align-items:center;gap:10px;font-size:16px}
+.gsec .chip:hover{border-color:var(--c)}
+.hero{padding-right:96px}
+.hero-logo{position:absolute;right:14px;top:14px;width:68px;height:68px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:1}
+.foot{font-weight:600}
+.cchip{color:var(--ink)}
+.cchip .ic{color:var(--c)}
+.gsec .chip{border-color:color-mix(in srgb,var(--c) 30%,var(--line));background:color-mix(in srgb,var(--c) 6%,var(--card))}
