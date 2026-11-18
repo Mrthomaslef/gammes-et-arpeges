@@ -77,14 +77,15 @@
   function rowGamme(g, opts = {}) {
     const ts = opts.ts;
     let snip = "";
-    if (ts && ts.length) {
-      const hits = [...new Set(LINES[g.id])].filter(l => ts.every(t => norm(l).includes(t)) || ts.some(t => t.length > 3 && norm(l).includes(t))).slice(0, 3);
+    if (ts && ts.length && !opts.noSnip) {
+      const tl = ts.join("").length;
+      // n'afficher un extrait que s'il apporte du contexte (pas juste le terme recherché)
+      const hits = [...new Set(LINES[g.id])].filter(l => ts.every(t => norm(l).includes(t)) && norm(l).length - tl > 18).slice(0, 1);
       if (hits.length) snip = `<ul class="snip">${hits.map(h => `<li>• ${highlight(h, ts)}</li>`).join("")}</ul>`;
     }
     const href = `#/g/${g.id}` + (ts && ts.length ? `?q=${encodeURIComponent(opts.q)}` : "");
-    return `<a class="card row" href="${href}">${tile(g.cats[0], 18)}
-      <div class="t"><b>${ts ? highlight(g.title, ts) : esc(g.title)}</b>${g.sub ? `<small>${esc(g.sub)}</small>` : ""}${snip}</div>
-      ${opts.noSlide ? "" : `<span class="slide">${favs.has(g.id) ? "★ " : ""}D${g.slide}</span>`}<span class="arrow">›</span></a>`;
+    return `<a class="card row" href="${href}">${opts.tile ? tile(g.cats[0], 18) : ""}
+      <div class="t"><b>${ts && !opts.noSnip ? highlight(g.title, ts) : esc(g.title)}</b>${snip}</div><span class="arrow">›</span></a>`;
   }
 
   // ------------------------------------------------------------ recherche
@@ -111,10 +112,10 @@
     const { ts, gammes, ents } = search(q);
     let h = "";
     if (ents.length) {
-      h += `<h2>Diagnostics</h2><div class="chips">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${highlight(e.label, ts)} <span class="c">${e.gammes.length} gammes</span></a>`).join("")}</div>`;
+      h += `<div class="chips" style="margin-top:6px">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${esc(e.label)} · voir les ${e.gammes.length} gammes ›</a>`).join("")}</div>`;
     }
     h += `<h2>${gammes.length} gamme${gammes.length > 1 ? "s" : ""}</h2>`;
-    h += gammes.length ? `<div class="list">${gammes.slice(0, 80).map(g => rowGamme(g, { ts, q })).join("")}</div>`
+    h += gammes.length ? `<div class="list">${gammes.slice(0, 80).map(g => rowGamme(g, { ts, q, tile: true })).join("")}</div>`
       : `<div class="empty">Aucun résultat pour « ${esc(q)} ».<br>Essayez un terme plus court (ex. « ewing », « epiphys », « T2 »).</div>`;
     view.innerHTML = h;
   }
@@ -133,18 +134,14 @@
 
   // ------------------------------------------------------------ vues
   function home() {
-    const nDiag = D.entities.length;
     let h = `<section class="card hero"><img class="hero-logo" src="assets/logo.svg" alt=""><h1>Des gammes et des arpèges</h1>
-      <p>Les gammes diagnostiques ostéo-articulaires, rangées pour s'y retrouver vite : par sémiologie, par localisation, par diagnostic.</p>
-      <div class="stats"><span><b>${MSK.length}</b>gammes MSK</span><span><b>${nDiag}</b>diagnostics indexés</span><span><b>${favs.size}</b>favoris</span></div></section>`;
-    if (recents.length) {
-      h += `<h2>Consultées récemment</h2><div class="chips">${recents.filter(id => G[id]).slice(0, 8).map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
-    }
-    h += `<h2>Par thème</h2><div class="grid">${D.cats.map(c => {
+      <p>Les gammes diagnostiques ostéo-articulaires</p></section>`;
+    const rec = recents.filter(id => G[id]).slice(0, 4);
+    if (rec.length) h += `<h2>Récemment</h2><div class="chips">${rec.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
+    h += `<h2>Thèmes</h2><div class="grid">${D.cats.map(c => {
       const n = D.gammes.filter(g => g.cats.includes(c.id)).length;
-      return `<a class="card cat" href="#/cat/${c.id}" style="${cvar(c.id)}"><span class="cat-top">${tile(c.id, 26)}<span class="n">${n}</span></span><b>${esc(c.label)}</b><small>${esc(c.desc)}</small></a>`;
+      return `<a class="card cat" href="#/cat/${c.id}" style="${cvar(c.id)}"><span class="cat-top">${tile(c.id, 26)}<span class="n">${n}</span></span><b>${esc(c.label)}</b></a>`;
     }).join("")}</div>`;
-    h += `<h2>Raccourcis utiles</h2><div class="chips">${["s002", "s009", "s042", "s133", "s135", "s141", "s150", "s166", "s052", "s095"].map(id => `<a class="chip cchip" style="${cvar(G[id].cats[0])}" href="#/g/${id}">${IC.svg(G[id].cats[0], 15)}${esc(G[id].title)}</a>`).join("")}</div>`;
     h += `<p class="foot">Dr Grégoire Attané</p>`;
     view.innerHTML = h;
   }
@@ -152,7 +149,7 @@
   function catView(id) {
     const c = CAT[id]; if (!c) return notFound();
     const list = D.gammes.filter(g => g.cats.includes(id));
-    view.innerHTML = `<h1 class="hh">${hIco(id, id)}${esc(c.label)}</h1><p class="sub">${esc(c.desc)} · ${list.length} gammes</p>
+    view.innerHTML = `<h1 class="hh">${hIco(id, id)}${esc(c.label)}</h1><p class="sub">${list.length} gammes</p>
       <div class="list">${list.map(g => rowGamme(g)).join("")}</div>`;
   }
 
@@ -176,10 +173,9 @@
     let body = "";
     for (const b of g.blocks) {
       if (b.type === "list") {
-        if (b.transcribed) body += `<p class="transcr">Transcription de la diapositive (image ci-dessous).</p>`;
         body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}">${hl(i.t)}</li>`).join("")}</ul>`;
       } else if (b.type === "table") body += renderTable(b.rows);
-      else if (b.type === "images") body += `<div class="imgs">${b.src.map(s => `<img src="${s}" loading="lazy" alt="Diapositive ${g.slide}" data-zoom>`).join("")}</div>`;
+      else if (b.type === "images") body += `<div class="imgs${b.schema ? " schema" : ""}">${b.src.map(s => `<img src="${s}" loading="lazy" alt="Diapositive ${g.slide}" data-zoom>`).join("")}</div>`;
     }
     const ents = g.ents.map(e => E[e]).filter(Boolean);
     const cat = g.cats[0], sib = D.gammes.filter(x => x.cats.includes(cat)), k = sib.findIndex(x => x.id === id);
@@ -187,9 +183,9 @@
     view.innerHTML = `
       <div class="g-head"><div class="t"><h1>${esc(g.title)}</h1>${g.sub ? `<p class="sub">${esc(g.sub)}</p>` : ""}</div>
         <button class="star${favs.has(id) ? " on" : ""}" id="favBtn" aria-label="Favori">${favs.has(id) ? "★" : "☆"}</button></div>
-      <div class="meta">${catChips(g)}<span class="tag">Diapo ${g.slide}</span>${g.horsMsk ? `<span class="tag warn">Hors MSK</span>` : ""}</div>
+      <div class="meta">${catChips({ cats: [g.cats[0]] })}<span class="dia">diapo ${g.slide}</span></div>
       <section class="card pad gcard" style="${cvar(g.cats[0])}">${body}</section>
-      ${ents.length ? `<h2>Diagnostics de cette gamme → autres gammes</h2><div class="chips">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${esc(e.label)} <span class="c">${e.gammes.length}</span></a>`).join("")}</div>` : ""}
+      ${ents.length ? `<details class="card more"><summary>Retrouver ces diagnostics dans d'autres gammes</summary><div class="chips">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${esc(e.label)}</a>`).join("")}</div></details>` : ""}
       <div class="pn">${prev ? `<a class="card prev" href="#/g/${prev.id}"><small>‹ Précédente</small><span>${esc(prev.title)}</span></a>` : "<span style='flex:1'></span>"}
         ${next ? `<a class="card next" href="#/g/${next.id}"><small>Suivante ›</small><span>${esc(next.title)}</span></a>` : "<span style='flex:1'></span>"}</div>`;
     $("#favBtn").onclick = () => {
@@ -201,12 +197,12 @@
   function diagnostics() {
     const letters = [...new Set(D.entities.map(e => norm(e.label)[0].toUpperCase()))];
     let cur = "";
-    view.innerHTML = `<h1 class="hh">${hIco("diagnostics", "axial")}Diagnostics</h1><p class="sub">Pour chaque diagnostic, toutes les gammes où il apparaît. Idéal pour « dans quelles situations penser à… ? »</p>
+    view.innerHTML = `<h1 class="hh">${hIco("diagnostics", "axial")}Diagnostics</h1><p class="sub">Toutes les gammes où apparaît un diagnostic.</p>
       <div class="az">${letters.map(l => `<a href="#" data-az="${l}">${l}</a>`).join("")}</div>
       <div class="list">${D.entities.map(e => {
         const L = norm(e.label)[0].toUpperCase(); let anchor = "";
         if (L !== cur) { cur = L; anchor = ` id="az-${L}"`; }
-        return `<a class="card row"${anchor} href="#/d/${e.id}"><div class="t"><b>${esc(e.label)}</b></div><span class="slide">${e.gammes.length} gammes</span><span class="arrow">›</span></a>`;
+        return `<a class="card row"${anchor} href="#/d/${e.id}"><div class="t"><b>${esc(e.label)}</b></div><span class="cnt">${e.gammes.length}</span><span class="arrow">›</span></a>`;
       }).join("")}</div>`;
     view.querySelectorAll("[data-az]").forEach(a => a.onclick = ev => { ev.preventDefault(); const t = document.getElementById("az-" + a.dataset.az); t && window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 120, behavior: "smooth" }); });
   }
@@ -217,19 +213,19 @@
     const gs = e.gammes.map(x => G[x]);
     const byCat = {};
     gs.forEach(g => (byCat[g.cats[0]] ||= []).push(g));
-    view.innerHTML = `<h1>${esc(e.label)}</h1><p class="sub">Apparaît dans <b>${gs.length}</b> gammes — classées par thème.</p>
-      ${D.cats.filter(c => byCat[c.id]).map(c => `<h2 class="hh2">${tile(c.id, 14)} ${esc(c.label)}</h2><div class="list">${byCat[c.id].map(g => rowGamme(g, { ts, q: ts.join(" ") })).join("")}</div>`).join("")}`;
+    view.innerHTML = `<h1>${esc(e.label)}</h1><p class="sub">${gs.length} gammes</p>
+      ${D.cats.filter(c => byCat[c.id]).map(c => `<h2 class="hh2">${tile(c.id, 14)} ${esc(c.label)}</h2><div class="list">${byCat[c.id].map(g => rowGamme(g, { ts, q: ts.join(" "), noSnip: true })).join("")}</div>`).join("")}`;
   }
 
   // ---- démarche + croiseur
   let crossSel = [];
   function demarche() {
-    let h = `<h1 class="hh">${hIco("demarche", "diffus")}Démarche</h1><p class="sub">Partir de ce que l'on voit sur l'image pour tomber sur la bonne gamme.</p>`;
+    let h = `<h1 class="hh">${hIco("demarche", "diffus")}Démarche</h1><p class="sub">De ce que l'on voit à la bonne gamme.</p>`;
     const GC = ["os", "perioste", "axial", "diffus", "tm", "pedia"];
-    h += D.guide.map((sec, i) => `<section class="card pad gsec" style="margin-bottom:10px;${cvar(GC[i])}"><div class="gsec-h">${tile(GC[i], 20)}<b>${esc(sec.title)}</b></div>
-      ${sec.steps.map(st => `<div class="step"><div class="lab">${esc(st.label)}</div><div class="chips">${st.ids.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div></div>`).join("")}</section>`).join("");
-    h += `<section class="card pad" id="cross"><div class="gsec-h">${tile("aspect", 20)}<b>Croiser des gammes</b></div>
-      <p class="sub" style="margin-top:4px">Sélectionnez 2 ou 3 critères : l'app liste les diagnostics présents dans <i>toutes</i> les gammes choisies (ex. « lacunes épiphysaires » + « niveaux liquide-liquide »).</p>
+    h += D.guide.map((sec, i) => `<details class="card gsec" style="${cvar(GC[i])}"><summary class="gsec-h">${tile(GC[i], 20)}<b>${esc(sec.title)}</b><span class="chev">›</span></summary><div class="gsec-b">
+      ${sec.steps.map(st => `<div class="step"><div class="lab">${esc(st.label)}</div><div class="chips">${st.ids.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div></div>`).join("")}</div></details>`).join("");
+    h += `<section class="card pad" id="cross" style="margin-top:14px"><div class="gsec-h">${tile("aspect", 20)}<b>Croiser des gammes</b></div>
+      <p class="sub" style="margin-top:4px">2 ou 3 gammes → les diagnostics communs.</p>
       <input id="crossQ" type="search" placeholder="Ajouter un critère (filtrer les gammes)…" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px">
       <div class="chips" id="crossPick" style="margin-top:8px"></div>
       <div class="chips" id="crossSel" style="margin-top:10px"></div>
@@ -239,7 +235,7 @@
     const pool = MSK.filter(g => g.ents.length >= 2 && !g.cats.includes("classif"));
     function draw() {
       const ts = terms(cq.value);
-      const cand = pool.filter(g => !crossSel.includes(g.id) && (!ts.length || ts.every(t => norm(g.title + " " + (g.sub || "")).includes(t)))).slice(0, ts.length ? 30 : 14);
+      const cand = pool.filter(g => !crossSel.includes(g.id) && (!ts.length || ts.every(t => norm(g.title + " " + (g.sub || "")).includes(t)))).slice(0, ts.length ? 12 : 0);
       pick.innerHTML = cand.map(g => `<button class="chip" data-add="${g.id}">＋ ${esc(g.title)}</button>`).join("");
       sel.innerHTML = crossSel.map(id => `<button class="chip acc" data-rm="${id}">${esc(G[id].title)} ✕</button>`).join("");
       if (crossSel.length < 2) { res.innerHTML = crossSel.length ? `<p class="sub">Ajoutez un 2ᵉ critère…</p>` : ""; return; }
@@ -277,10 +273,9 @@
       <div class="sub" style="font-size:13px">${known}/${pool.length} gammes maîtrisées</div><div class="progress"><i style="width:${pool.length ? (100 * known / pool.length) : 0}%"></i></div>`;
     if (!g) { view.innerHTML = h + `<div class="empty">Aucune gamme dans cette sélection.</div>`; bindScope(); return; }
     const n = g.blocks.filter(b => b.type === "list").reduce((a, b) => a + b.items.filter(i => i.k === "li").length, 0);
-    const heads = g.blocks.filter(b => b.type === "list").flatMap(b => b.items.filter(i => i.k === "h").map(i => i.t));
     h += `<section class="card pad flash"><div class="meta" style="margin:0">${catChips(g)}</div>
       <div class="q">${esc(g.title)}</div>${g.sub ? `<div class="sub">${esc(g.sub)}</div>` : ""}
-      <div class="sub" style="font-size:13px">≈ ${n} éléments${heads.length ? ` · rubriques : ${heads.slice(0, 5).map(esc).join(", ")}` : ""}</div>
+      <div class="sub" style="font-size:13px">≈ ${n} éléments</div>
       ${rev.shown ? `<div id="ans"></div>` : ""}
       <div class="actions">${rev.shown
         ? `<button class="btn ko" data-r="-1">↻ À revoir</button><button class="btn ok" data-r="1">✓ Je savais</button>`

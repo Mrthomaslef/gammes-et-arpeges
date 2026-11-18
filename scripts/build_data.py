@@ -58,7 +58,7 @@ C[52] = ["diffus", "os"]
 C[35] = ["axial"]
 C[173] = ["axial"]
 
-HORS_MSK = {122, 123, 127, 128, 129, 130, 132}
+HORS_MSK = set()
 
 TITLES = {
     2: ("Gamme générale d'une lésion osseuse", "Infection, pseudo-infection, « scinti + », -oses, trauma, hémopathie, métastase, tumeur"),
@@ -196,6 +196,16 @@ def build_items(raw_items, title_text):
         elif txt.endswith(":") or n in HEADER_WORDS:
             kind = "h"
         out.append({"l": lvl, "t": txt.rstrip(" :") if kind == "h" else txt, "k": kind, "b": bold})
+    # doublons dans un même groupe (même en-tête) → supprimés
+    seen, head, dedup = set(), "", []
+    for it in out:
+        if it["k"] == "h" or it["l"] == 0 and it["k"] != "li":
+            head = norm(it["t"])
+        key = (head, it["l"], norm(it["t"]))
+        if key in seen:
+            continue
+        seen.add(key); dedup.append(it)
+    out = dedup
     # un item de niveau n suivi d'un item de niveau > n devient en-tête de groupe
     for i, it in enumerate(out[:-1]):
         if it["k"] == "li" and out[i + 1]["l"] > it["l"]:
@@ -216,23 +226,7 @@ EXTRA = {
         ("li", 1, "Multiples lacunes infra-millimétriques donnant une impression de perte de densité osseuse et de flou cortical"),
         ("note", 0, "Agressivité croissante de IA à III : IA = lent / quiescent ; II-III = agressif (sarcomes, Ewing, lymphome, ostéomyélite, métastases)"),
     ],
-    165: [
-        ("h", 0, "Hypersignal T1 → disparition après suppression du signal de la graisse ?"),
-        ("h", 1, "OUI (graisse)"),
-        ("li", 2, "Absence de calcifications : lipomes et liposarcomes, malformations vasculaires, hémangiomes et autres"),
-        ("li", 2, "Présence de calcifications : malformations vasculaires (phlébolithes)"),
-        ("li", 2, "Os mature"),
-        ("h", 1, "NON (pas de graisse)"),
-        ("li", 2, "Méthémoglobine : hématome et tumeurs hémorragiques"),
-        ("li", 2, "Vaisseaux à flux lent"),
-        ("li", 2, "Matériel protéique : kystes mucoïdes et abcès"),
-        ("li", 2, "Mélanine : mélanome et sarcome à cellules claires"),
-    ],
     167: [
-        ("h", 0, "Lésion d'allure kystique en T2 → injection systématique de gadolinium (lésion bien kystique, sauf si contenu liquide démontré en échographie)"),
-        ("li", 1, "Prise de contraste périphérique fine et régulière → kystes, chondromes, lipomes chondroïdes et myxoïdes"),
-        ("li", 1, "Paroi épaisse prenant le contraste, centre ne prenant pas → abcès et tumeurs nécrosées"),
-        ("li", 1, "Prise de contraste diffuse (parfois retardée : séquences tardives !) → tumeurs myxoïdes"),
         ("h", 0, "Masses de signal myxoïde ne prenant pas le gadolinium (sauf paroi fine)"),
         ("li", 1, "Kyste mucoïde"), ("li", 1, "Sérome (post-traumatique ou après chirurgie)"), ("li", 1, "Kyste épidermoïde"),
         ("li", 1, "Chondrome des tissus mous"), ("li", 1, "Lipome chondroïde"), ("li", 1, "Lipome à cellules fusiformes (variante myxoïde)"),
@@ -250,21 +244,87 @@ EXTRA = {
         ("li", 1, "Myxofibrosarcome"), ("li", 1, "Sarcome fibroblastique myxo-inflammatoire acral"),
         ("li", 1, "Myoépithéliome"), ("li", 1, "Léiomyosarcome myxoïde"),
     ],
-    179: [
-        ("h", 0, "Masse pré-sacrée de l'enfant (orientation selon IRM/TDM)"),
-        ("li", 1, "Ostéolyse sacrée : sarcome d'Ewing (> 5 ans), lymphome, métastase"),
-        ("li", 1, "Extension intra-canalaire (débute dans le canal / en sablier) : TMGNP, tumeurs neuroblastiques (neuroblastome, ganglioneuroblastome)"),
-        ("li", 1, "Isolée — calcifications / graisse / kystique : tératomes sacro-coccygiens (< 3 mois ; tissulaire = malignité), tumeurs germinales, lymphangiome kystique"),
-        ("li", 1, "Masse uro-génitale à extension pré-sacrée : rhabdomyosarcome"),
+}
+
+
+EXTRA.update({
+    67: [
+        ("li", 0, "Boutonnière : flexion de l'IPP, hyperextension de l'IPD"),
+        ("li", 0, "Col de cygne : hyperextension de l'IPP, flexion de l'IPD"),
+        ("li", 0, "Doigt en maillet : flexion de l'IPD (rupture/avulsion de l'appareil extenseur)"),
     ],
-    178: [
-        ("h", 0, "Masse pré-sacrée de l'adulte : orienter selon l'extension"),
-        ("li", 1, "Masse sacrée : abcès tuberculeux, métastases, hémopathies, tumeurs osseuses primitives (chordome, TCG…)"),
-        ("li", 1, "Extension foraminale : tumeurs neurogènes (schwannome, neurofibrome, ganglioneurome, épendymome myxopapillaire, paragangliome, TMGNP), méningocèle"),
-        ("li", 1, "Masse rectale : abcès, GIST, adénocarcinome mucineux, lymphome, léiomyome/léiomyosarcome"),
-        ("li", 1, "Masse isolée kystique : kyste épidermoïde/dermoïde, tailgut cyst, duplication rectale, tératome"),
-        ("li", 1, "Masse isolée tissulaire : HEM, myélolipome, lipome/liposarcome, TFS, hématome, tumeur desmoïde, Castleman, sarcomes"),
+    113: [
+        ("li", 0, "Projection de la fosse acétabulaire en dedans de la ligne ilio-ischiatique"),
+        ("h", 0, "Coxa profunda (caractère pathogène incertain)"),
+        ("li", 1, "Homme : > 1 mm"), ("li", 1, "Femme : > 2 mm"),
+        ("h", 0, "Protrusion acétabulaire"),
+        ("li", 1, "Homme : > 3 mm"), ("li", 1, "Femme : > 6 mm"),
     ],
+    118: [
+        ("note", 0, "Orientation par rapport au grand axe du ménisque"),
+        ("h", 0, "Rupture radiaire"),
+        ("li", 1, "Pure → oblique (« bec de perroquet »)"),
+        ("h", 0, "Rupture longitudinale"),
+        ("li", 1, "Verticale → anse de seau (fragment déplacé)"),
+        ("li", 1, "Horizontale → languette (flap) déplacée"),
+    ],
+    119: [
+        ("note", 0, "De latéral en médial (« I Love Spine »)"),
+        ("li", 0, "Ilio-costal"), ("li", 0, "Longissimus"), ("li", 0, "Épineux"),
+        ("li", 0, "Plan profond : multifides (transversaires épineux)"),
+    ],
+    121: [
+        ("h", 0, "Caractéristiques communes aux atteintes axiales et périphériques"),
+        ("li", 1, "Liseré de chondrocalcinose (inconstant)"), ("li", 1, "Pincement localisé (sauf hanche, genou)"),
+        ("li", 1, "Destructeur"), ("li", 1, "Engrènement, encastrement, aspect crénelé"), ("li", 1, "« Retoucheur photo »"),
+        ("li", 1, "Géodes"), ("li", 1, "Ostéochondromatose secondaire"), ("li", 1, "Ostéophytose souvent absente"),
+    ],
+})
+EXTRA_TABLES = {
+    68: [["", "Arthrose", "Arthrite septique", "Arthrite rhumatismale", "Ostéose iliaque condensante", "Ostéodystrophie rénale", "Hyperostose (Forestier)", "Chondrocalcinose"],
+         ["Sexe", "F > M", "F = M", "M > F", "F > M", "F = M", "F = M", "F > M"],
+         ["Clinique", "Douleur inconstante, mécanique", "Douleur intense, inflammatoire", "Douleur inflammatoire", "Douleur inconstante, mécanique", "Asymptomatique", "Asymptomatique", "Douleur inconstante, crise aiguë microcristalline possible"],
+         ["Topographie", "Bilatérale", "Unilatérale", "Bilatérale, symétrique", "Bilatérale, symétrique", "Bilatérale, symétrique", "Bilatérale", "Bilatérale, symétrique"],
+         ["Interligne", "Normal ou pincé", "Élargissement local", "Pseudo-élargissement puis ankylose", "Normal", "Pseudo-élargissement", "Ankylose intra-articulaire possible", "Calcifications linéaires cartilagineuses"],
+         ["Érosions", "Rares, localisées", "Ostéolyse sous-chondrale", "Diffuses, « en timbre-poste »", "Absentes", "Résorption sous-chondrale", "Absentes", "Possibles"],
+         ["Condensation sous-chondrale", "Faible épaisseur, dense, limites nettes", "Absente ou large, peu dense, floue, progressive", "Large, peu dense, floue, progressive", "Très épaisse, très dense, limites nettes", "Possible", "Rare et limitée", "Faible épaisseur, dense, limites nettes"],
+         ["Constructions", "Ostéophytes", "Absentes", "Parfois calcifications capsulaires", "Absentes", "Absentes", "Volumineux ponts ostéophytiques", "Ostéophytes"]],
+    69: [["Mesure (cheville face / mortaise)", "Valeur normale"],
+         ["Espace clair tibio-fibulaire (1 cm au-dessus du plafond tibial)", "< 5 mm"],
+         ["Chevauchement tibio-fibulaire", "> 6 mm de face, > 1 mm en mortaise"],
+         ["Espace clair talo-crural médial", "< 4 mm (≤ interligne talo-crural)"]],
+    114: [["Grade", "Arthroscopie", "Arthro-TDM / arthro-IRM"],
+          ["0", "Normal", "Surface lisse, épaisseur normale"],
+          ["1", "Fibrillation / ramollissement sans perte de substance", "Surface lisse, épaisseur normale"],
+          ["2", "Perte de substance < 50 % de l'épaisseur", "Pénétration du contraste < 50 %"],
+          ["3", "Perte de substance > 50 % sans atteindre l'os", "Pénétration du contraste > 50 %"],
+          ["4", "Perte de substance jusqu'à l'os", "Contraste au contact de l'os sous-chondral"]],
+    117: [["Localisation", "Ostéochondrose"],
+          ["Capitulum", "Panner / ostéochondrite disséquante"], ["Épicondyle médial", "Adams"],
+          ["Épiphyse radiale distale", "Madelung"], ["Lunatum", "Kienböck"], ["Plateaux vertébraux", "Scheuermann"],
+          ["Épiphyse fémorale supérieure", "Legg-Perthes-Calvé"], ["Synchondrose ischio-pubienne", "Van Neck-Odelberg"],
+          ["Tubérosité ischiatique", "Mac Master"], ["Condyles fémoraux", "Ostéochondrite disséquante"],
+          ["Pointe de la patella", "Sinding-Larsen-Johansson"], ["Physe tibiale proximale médiale", "Blount"],
+          ["Tubérosité tibiale antérieure", "Osgood-Schlatter"], ["Dôme du talus", "Ostéochondrite disséquante"],
+          ["Calcanéus", "Sever"], ["Naviculaire", "Köhler-Mouchet"], ["Base du 5e métatarsien", "Iselin"],
+          ["Têtes des métatarsiens médiaux", "Freiberg"], ["Sésamoïdes", "Renander"]],
+    124: [["Grade", "Lésion de l'élément conjonctif (C)"],
+          ["0", "Pas d'anomalie en imagerie"],
+          ["1C", "Épaississement flou d'un élément conjonctif, sans rupture"],
+          ["2C", "Rupture partielle d'un élément conjonctif majeur sans perte de tension, ou rupture complète d'un élément mineur"],
+          ["3C", "Rupture complète d'un élément conjonctif majeur avec perte de tension"],
+          ["4", "Rupture myo-conjonctive complète avec rétraction"]],
+    178: [["Masse osseuse sacrée", "Points clés en imagerie"],
+          ["Abcès tuberculeux", "Atteinte vertébrale ou sacro-iliaque + abcès paravertébral"],
+          ["Myélome", "Ostéolyse soufflante avec destruction corticale"],
+          ["Chordome", "Ostéolyse médiane/paramédiane S2-S5 et coccyx ; calcifications 50-60 % ; hypersignal T2 (myxoïde)"],
+          ["Tumeur à cellules géantes", "Ostéolyse excentrée soufflante, agressive ; niveaux si KOA secondaire"],
+          ["Plasmocytome", "Ostéolyse unique identique au myélome"],
+          ["Chondrosarcome", "Ostéolyse agressive lobulée, matrice chondroïde (anneaux et arcs)"],
+          ["Sarcome d'Ewing / PNET", "Ostéolyse agressive avec large masse des tissus mous"],
+          ["Kyste osseux anévrysmal", "Niveaux liquide-liquide occupant la majeure partie de la masse"],
+          ["Lymphome osseux", "Ostéolyse mitée ou corticale respectée, masse mal limitée, traverse la sacro-iliaque ou le disque L5-S1"],
+          ["Ostéosarcome", "Condensation lésionnelle dense"]],
 }
 
 # ---------------------------------------------------------------- entités diagnostiques
@@ -358,7 +418,27 @@ def entities_of(text: str):
     return [k for k, _, rx in ENT_RE if rx.search(n)]
 
 # ---------------------------------------------------------------- construction
-SKIP = {1, 3, 4, 5, 6, 19, 27, 33, 43, 60, 65, 71, 76, 181, 47, 102, 96, 112, 111}
+SKIP = {1, 3, 4, 5, 6, 19, 27, 33, 43, 60, 65, 71, 76, 181, 47, 102, 96, 112, 111,
+        122, 123, 127, 128, 129, 130, 132,  # classifications hors ostéo-articulaire
+        180}                                # territoires nerveux : photos de livre uniquement
+
+# Images conservées (figures nettes, non redondantes avec le texte) ; les photos prises à la main sont retirées
+KEEP_IMGS = {"s012_1.webp", "s014_1.webp", "s015_1.webp", "s016_1.webp", "s017_1.webp", "s067_2.webp",
+             "s120_1.webp", "s125_1.webp", "s126_1.webp", "s126_2.webp", "s131_1.webp"}
+# Schémas SVG redessinés (scripts/make_schemas.py)
+import importlib.util
+_spec = importlib.util.spec_from_file_location("make_schemas", ROOT / "scripts/make_schemas.py")
+MS = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(MS)
+def _flat(node):
+    label, kids = node if isinstance(node, tuple) else (node, [])
+    return [label] + [x for k in kids for x in _flat(k)]
+SCHEMAS = {
+    135: ("periostees.svg", []), 147: ("surface.svg", []), 115: ("gruen-charnley.svg", ["Gruen", "DeLee-Charnley", "descellement"]),
+    116: ("ewald.svg", ["Ewald", "prothèse totale de genou"]),
+    165: ("algo-t1.svg", _flat(MS.T1)), 167: ("algo-t2.svg", _flat(MS.T2)),
+    178: ("presacre-adulte.svg", _flat(MS.PRESACRE_ADULTE)), 179: ("presacre-enfant.svg", _flat(MS.PRESACRE_ENFANT)),
+}
+NO_SLIDE_TEXT = {135}  # texte de la diapo déjà porté par le schéma
 
 def slide_title(s):
     for b in s["blocks"]:
@@ -395,16 +475,25 @@ for s in RAW:
             blocks.append({"type": "table", "rows": rows})
     if items:
         blocks.append({"type": "list", "items": items})
+    hidden = []
+    if n in NO_SLIDE_TEXT:
+        hidden = [i["t"] for b in blocks if b["type"] == "list" for i in b["items"]]
+        blocks = []
     if n in EXTRA:
         ex = [{"l": l, "t": t, "k": k, "b": False} for k, l, t in EXTRA[n]]
-        if n in (9,):
-            blocks = [{"type": "list", "items": ex}] + blocks
-        else:
-            blocks.insert(0, {"type": "list", "items": ex, "transcribed": True})
-    if n in IMGS:
-        blocks.append({"type": "images", "src": [f"assets/slides/{f}" for f in IMGS[n]]})
+        blocks = [{"type": "list", "items": ex}] + blocks
+    if n in SCHEMAS:
+        f, txt = SCHEMAS[n]
+        blocks.insert(0, {"type": "images", "src": [f"assets/schemas/{f}"], "schema": True})
+        hidden += txt
+    if n in EXTRA_TABLES:
+        blocks.append({"type": "table", "rows": EXTRA_TABLES[n]})
+    imgs = [f for f in IMGS.get(n, []) if f in KEEP_IMGS]
+    if imgs:
+        blocks.append({"type": "images", "src": [f"assets/slides/{f}" for f in imgs]})
+    blocks = [b for b in blocks if b["type"] != "list" or b["items"]]
     # texte plein pour la recherche + entités
-    flat = []
+    flat = list(hidden)
     for b in blocks:
         if b["type"] == "list":
             flat += [i["t"] for i in b["items"]]
@@ -442,7 +531,7 @@ GUIDE = [
         ("Surface de l'os", ["s147", "s148", "s149", "s026"]),
     ]},
     {"t": "Squelette axial & sites particuliers", "i": "🧭", "steps": [
-        ("Vertèbre", ["s141", "s036", "s145", "s034", "s041", "s108", "s044", "s140", "s037"]),
+        ("Vertèbre", ["s141", "s036", "s145", "s034", "s041", "s108", "s140"]),
         ("Disque / tassement", ["s038", "s081", "s082"]),
         ("Sacrum & pré-sacré", ["s146", "s178", "s179"]),
         ("Crâne", ["s035", "s173"]),
@@ -468,6 +557,10 @@ GUIDE = [
     ]},
 ]
 ids = {g["id"] for g in gammes}
+_seen = set()
+for sec in GUIDE:
+    sec["steps"] = [(lab, [x for x in lst if x in ids and not (x in _seen or _seen.add(x))]) for lab, lst in sec["steps"]]
+    sec["steps"] = [st for st in sec["steps"] if st[1]]
 guide = []
 for sec in GUIDE:
     st = []
