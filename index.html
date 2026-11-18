@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gammes & Arpèges — MSK</title>
+<meta name="description" content="Les gammes diagnostiques en imagerie ostéo-articulaire, pour les internes : recherche, parcours guidé, diagnostics, révision.">
+<meta name="theme-color" content="#1e1b4b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gammes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="app.css?v=1">
+</head>
+<body>
+<div id="ptr" aria-hidden="true"><span class="ptr-ico">↻</span><span class="ptr-txt">Tirer pour actualiser</span></div>
+
+<header class="top">
+  <button class="icon-btn" id="backBtn" aria-label="Retour" hidden>‹</button>
+  <a class="brand" href="#/">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span><span><b>Gammes</b> &amp; Arpèges</span><small>Imagerie ostéo-articulaire</small></span>
+  </a>
+  <button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button>
+</header>
+
+<div class="searchbar" id="searchWrap">
+  <input id="q" type="text" placeholder="Gamme ou diagnostic (Ewing, épiphyse, T1…)" autocomplete="off" enterkeyhint="search">
+  <button id="qClear" class="q-clear" aria-label="Effacer" hidden>✕</button>
+</div>
+
+<main id="view" tabindex="-1"></main>
+
+<nav class="tabbar" id="tabbar">
+  <a href="#/" data-tab="home"><span>🎼</span>Gammes</a>
+  <a href="#/demarche" data-tab="demarche"><span>🧭</span>Démarche</a>
+  <a href="#/diagnostics" data-tab="diagnostics"><span>🔎</span>Diagnostics</a>
+  <a href="#/revision" data-tab="revision"><span>🧠</span>Révision</a>
+  <a href="#/favoris" data-tab="favoris"><span>★</span>Favoris</a>
+</nav>
+
+<div id="lightbox" hidden><button class="lb-close" aria-label="Fermer">✕</button><img alt=""></div>
+
+<script src="data/embedded_data.js?v=1"></script>
+<script src="app.js?v=1"></script>
+</body>
+</html>
