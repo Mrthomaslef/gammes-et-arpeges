@@ -228,7 +228,7 @@
         ["s157", "Nerf, pédicule vasculo-nerveux"], ["s175", "Paravertébrale"], ["s178", "Pré-sacrée"]] },
       { t: "Signal T1", o: [["s310#0", "Hypersignal T1 graisseux (s'efface en saturation de graisse)"], ["s310#1", "Hypersignal T1 non graisseux (sang, protéines, mélanine)"]] },
       { t: "Signal T2", o: [["s167", "Hypersignal T2 liquidien ou myxoïde"], ["s168", "Hyposignal T2 (fibrose, hémosidérine, calcium)"],
-        ["s158", "Triple signal T2"], ["s164", "Structure stratifiée (en couches concentriques)"]] },
+        ["s158", "Triple signal T2"], ["s164", "Structure stratifiée (bandes alternées)"]] },
       { t: "Contenu", o: [["s049", "Calcifications"], ["s162", "Hypervasculaire (flow voids)"], ["s171", "Hémorragique"], ["s170", "« Fascial tail sign »"]] },
     ] },
     osm: { label: "Os + parties molles", px: "osmou", gid: "tm", steps: [
