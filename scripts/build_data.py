@@ -18,7 +18,6 @@ IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json
 # groupe (accueil) → sous-choix (picto) → gammes (n° de diapo). Le 1er emplacement d'une gamme est son emplacement principal.
 GROUPS = [
     ("os", "Lésion osseuse", [
-        ("unique", "Lésion unique", [2, 136, 137, 143]),
         ("multi", "Lésions multiples", [52, 95, 37, 23, 139, 97, 93, 94, 84]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
         ("siege", "Siège dans l'os", [301, 302, 303]),
@@ -55,7 +54,7 @@ GROUPS = [
     ]),
     # Référentiel : tout ce qui décrit UNE entité (fiches maladies), classifications, anatomie
     ("ref", "Référentiel", [
-        ("fos", "Fiches os, rachis & tissus mous", [54, 160, 81, 82, 89, 125, 172, 57, 58]),
+        ("fos", "Fiches os, rachis & tissus mous", [54, 143, 160, 81, 82, 89, 125, 172, 57, 58]),
         ("fart", "Fiches articulaires", [61, 62, 63, 121, 66, 68, 72, 73, 88, 75, 67]),
         ("fsys", "Fiches maladies générales", [59, 83, 78, 80, 86, 77, 79, 103, 104, 106, 85]),
         ("fped", "Fiches enfant", [70, 99, 117]),
@@ -101,7 +100,7 @@ KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       45: "pseudo-ostéomyélite", 46: "pseudo-arthrite de hanche", 100: "bandes claires métaphysaires", 25: "appositions périostées"}
 
 # fiche maladie → entité(s) décrite(s) (affichée en tête de la page diagnostic)
-FICHE_ENT = {54: ["enchondrome"], 172: ["mo"], 81: ["fracture"], 82: ["fracture"], 89: ["tmgnp"], 125: ["lipome", "liposarcome"],
+FICHE_ENT = {54: ["enchondrome"], 143: ["osteosarcome"], 172: ["mo"], 81: ["fracture"], 82: ["fracture"], 89: ["tmgnp"], 125: ["lipome", "liposarcome"],
              57: ["nf"], 58: ["nf"], 61: ["goutte"], 62: ["cpp"], 63: ["cpp"], 121: ["cpp"], 66: ["pr"], 73: ["hemophilie"],
              88: ["amylose"], 75: ["oan"], 59: ["paget"], 83: ["paget"], 78: ["hpt"], 80: ["osteomalacie"],
              77: ["acromegalie"], 103: ["drepano"], 104: ["drepano"], 85: ["rx"], 70: ["sapho"], 99: ["leucemie"]}
@@ -705,7 +704,7 @@ RAW += [
         "# Liquidien", "Kyste épidermoïde", "Hémangiome (lac veineux)",
         "# Graisseux", "Kyste dermoïde"]),
 ]
-for _n in (35, 173):
+for _n in (35, 173, 2, 136, 137):  # 2, 136, 137 : catégorie « Lésion unique » retirée
     SKIP.add(_n)
 for _n in (42, 29, 11, 31, 161, 113, 115, 116, 119, 69):  # 113… : anatomie & repères retirés
     SKIP.add(_n)
@@ -824,6 +823,7 @@ if miss:
 # ---------------------------------------------------------------- fiches : une entrée par maladie (nom seul), sections fusionnées
 FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
     ("Enchondrome", [(54, "Signes atypiques")]),
+    ("Ostéosarcome secondaire", [(143, "Causes")]),
     ("Kyste anévrysmal vs kyste essentiel", [(160, None)]),
     ("Tassement vertébral ostéoporotique", [(81, "Radiographie"), (82, "IRM (tassement récent)")]),
     ("Tumeur des gaines nerveuses périphériques", [(89, "Arguments diagnostiques")]),
