@@ -94,8 +94,8 @@
     }
     return out + hl(t.slice(pos));
   }
-  function renderBody(g, ts) {
-    let body = g.resume ? `<p class="resume">${resumeHtml(g.resume)}<span class="src">${esc(g.src || "")}</span></p>` : "";
+  function renderBody(g, ts, noResume) {
+    let body = g.resume && !noResume ? `<p class="resume">${resumeHtml(g.resume)}<span class="src">${esc(g.src || "")}</span></p>` : "";
     for (const b of g.blocks) {
       if (b.type === "list") body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}${i.a ? " ag" : ""}">${rich(i.t, i.e, ts)}</li>`).join("")}</ul>`;
       else if (b.type === "table") body += renderTable(b.rows, b.links);
@@ -362,10 +362,13 @@
       const gs = sb.ids.map(x => G[x]).filter(g => g.ents.includes(id) && home1(g)[1] === sb.id && g.kw);
       if (gs.length) lines.push(`<li><span class="dk-k">${esc(sb.kw || sb.label)}</span> : ${gs.map(g => `<a class="kw${g.aggr ? " ag" : ""}" href="#/g/${g.id}?q=${q}">${esc(g.kw)}</a>`).join(", ")}</li>`);
     }));
+    const res = e.resume || (fiches.find(g => g.resume) || {}).resume, src = e.resume ? e.src : (fiches.find(g => g.resume) || {}).src;
+    // fiche intégrée à la page (un seul résumé, puis le contenu de la fiche)
+    const fb = fiches.map(g => `${fiches.length > 1 ? `<h2 class="hh2">${esc(g.title)}</h2>` : ""}<div class="g-body">${renderBody(g, null, true)}</div>`).join("");
     view.innerHTML = `<h1>${esc(e.label)}</h1>
-      ${e.resume ? `<p class="resume">${resumeHtml(e.resume)}<span class="src">${esc(e.src || "")}</span></p>` : ""}
-      ${lines.length ? `<details class="card acc dacc"><summary><span class="t"><b>Dans les gammes</b><span class="snip1">${lines.length} critère${lines.length > 1 ? "s" : ""}</span></span><span class="chev">›</span></summary><ul class="desc">${lines.join("")}</ul></details>` : ""}
-      ${fiches.length ? `<h2 class="hh2">Fiche</h2><div class="list">${fiches.map(g => rowGamme(g, { noSnip: true, mixed: true })).join("")}</div>` : ""}`;
+      ${res ? `<p class="resume">${resumeHtml(res)}<span class="src">${esc(src || "")}</span></p>` : ""}
+      ${fb}
+      ${lines.length ? `<details class="card acc dacc"><summary><span class="t"><b>Dans les gammes</b><span class="snip1">${lines.length} critère${lines.length > 1 ? "s" : ""}</span></span><span class="chev">›</span></summary><ul class="desc">${lines.join("")}</ul></details>` : ""}`;
   }
 
   // ---- croiseur de gammes (dans Diagnostics)
