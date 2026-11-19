@@ -20,9 +20,9 @@ GROUPS = [
     ("os", "Lésion osseuse", [
         ("multi", "Lésions multiples", [52, 95, 37, 23, 139, 97, 93, 94, 84]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
-        ("siege", "Siège dans l'os", [301, 302, 303]),
+        ("siege", "Siège dans l'os", [301, 302, 303, 18, 92, 53, 98, 24, 134]),
         ("contenu", "Aspect & contenu", [304, 144, 28, 30, 101, 32, 10]),
-        ("perioste", "Corticale & périoste", [20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
+        ("perioste", "Périoste", [20, 21, 22, 138]),
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
@@ -65,7 +65,7 @@ GROUPS = [
 ]
 # mots-clés courts : description d'une maladie = ses caractéristiques (chaque mot-clé → la gamme)
 SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick", "siege": "Siège", "contenu": "Aspect",
-          "perioste": "Corticale / périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
+          "perioste": "Périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
           "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "tmmulti": "Tissus mous", "tmsiege": "Siège (tissus mous)",
           "paravert": "Paravertébral", "signal": "Signal IRM", "calcif": "Calcifications", "vaisseaux": "Vaisseaux", "sang": "Sang", "nerf": "Nerf", "inflam": "Articulation",
           "synoviale": "Synoviale", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
