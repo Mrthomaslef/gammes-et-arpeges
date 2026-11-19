@@ -185,22 +185,30 @@
   // chaque étape = un critère ; chaque réponse = une gamme (ou une région = union de gammes).
   // Le diagnostic restant = intersection des diagnostics des réponses choisies ; une réponse
   // n'est proposée que si elle laisse au moins un diagnostic.
+  const LYT = ["s012", "s013", "s014", "s015", "s052", "s138", "s141", "s146", "s142", "s145"];
   const W = {
     os: { label: "Os", px: "os", gid: "os", steps: [
-      { t: "Nombre de lésions", o: [["u", "Lésion unique", []], ["s052", "Ostéolyses plurifocales"], ["s095", "Condensation diffuse ou multifocale"],
-        ["s053", "Stries intracorticales"], ["s139", "Atteinte osseuse + tissus mous"]] },
+      { t: "Densité", o: [["lyt", "Lytique (ostéolyse)", LYT], ["cond", "Condensante (ostéocondensation)", ["s316", "s095", "s036"]]] },
+      { t: "Nombre de lésions", o: [["u", "Lésion unique", []], ["s052", "Ostéolyses plurifocales", null, "!cond"],
+        ["s095", "Condensation diffuse ou multifocale", null, "!lyt"], ["s053", "Stries intracorticales"], ["s139", "Atteinte osseuse + tissus mous"]] },
       { t: "Localisation", o: [["s301", "Épiphysaire"], ["s302", "Métaphysaire"], ["s303", "Diaphysaire"], ["s311", "Surface de l'os"],
         ["s018", "Corticale"], ["vertebre", "Vertèbre", ["s141", "s145", "s036", "s041", "s034", "s038"]],
         ["sacrum", "Sacrum", ["s146", "s178"]], ["crane", "Crâne", ["s305", "s309"]], ["s039", "Côte"], ["s142", "Doigts"]] },
-      { t: "Aspect vertébral", if: "vertebre", o: [["s141", "Ostéolyse vertébrale unique"], ["s036", "Vertèbre ivoire"], ["s145", "Vertèbre évidée (« mini-brain »)"],
-        ["s041", "Forme anormale (H, rostre, plana)"], ["s034", "Franchit le disque"], ["s038", "Pseudo-spondylodiscite"]] },
-      { t: "Sacrum", if: "sacrum", o: [["s146", "Ostéolyse sacrée"], ["s178", "Masse pré-sacrée"]] },
-      { t: "Contours (Lodwick)", o: [["s012", "IA1 — liseré net"], ["s013", "IA2 — condensation dégressive"], ["s014", "IB — sans sclérose"],
+      { t: "Aspect vertébral", if: "vertebre", o: [["s141", "Ostéolyse vertébrale unique", null, "!cond"], ["s036", "Vertèbre ivoire", null, "!lyt"],
+        ["s145", "Vertèbre évidée (« mini-brain »)", null, "!cond"], ["s041", "Forme anormale (H, rostre, plana)"], ["s034", "Franchit le disque"], ["s038", "Pseudo-spondylodiscite"]] },
+      { t: "Sacrum", if: "sacrum", o: [["s146", "Ostéolyse sacrée", null, "!cond"], ["s178", "Masse pré-sacrée"]] },
+      { t: "Contours (Lodwick)", if: "!cond", o: [["s012", "IA1 — liseré net"], ["s013", "IA2 — condensation dégressive"], ["s014", "IB — sans sclérose"],
         ["s015", "IC, II, III — mal limitée, mitée, perméative"]] },
-      { t: "Aspect & contenu", o: [["s138", "Soufflante (coque)"], ["s144", "« In and out »"], ["s032", "Réaction inflammatoire"],
-        ["s030", "Niveaux liquide-liquide"], ["s028", "Trabéculations"], ["s101", "Séquestre"], ["s010", "Sinueuse"]] },
+      { t: "Aspect & contenu", o: [["s138", "Soufflante (coque)", null, "!cond"], ["s144", "« In and out »"], ["s032", "Réaction inflammatoire"],
+        ["s030", "Niveaux liquide-liquide", null, "!cond"], ["s028", "Trabéculations", null, "!cond"], ["s101", "Séquestre"], ["s010", "Sinueuse"]] },
       { t: "Périoste", o: [["s020", "Unilamellaire continue"], ["s022", "Plurilamellaire ou spiculée"], ["s021", "Compacte"],
         ["s024", "Encoches endostées ± hyperostose"], ["s023", "Appositions diffuses"]] },
+    ] },
+    art: { label: "Articulation & tendons", px: "art", gid: "art", steps: [
+      { t: "Atteinte articulaire", o: [["s159", "Érosions marginales (synovite)"], ["s055", "Dactylite"], ["s090", "Synoviale hypointense en T2"],
+        ["s074", "Hémarthrose"], ["s050", "Arthropathie destructrice (neurogène)"]] },
+      { t: "Tendon, gaine, enthèse", o: [["s312", "Tendon épaissi ou rompu sans traumatisme"], ["s313", "Calcification tendineuse"],
+        ["s314", "Ténosynovite"], ["s315", "Enthèse : œdème, érosion, ossification"]] },
     ] },
     tm: { label: "Parties molles", px: "tm", gid: "tm", steps: [
       { t: "Nombre de lésions", o: [["u", "Masse unique", []], ["s174", "Masses multiples"]] },
@@ -212,13 +220,14 @@
     ] },
   };
   const optIds = o => o[2] || [o[0]];
+  const okIf = (c, picks) => !c || (c[0] === "!" ? !picks.includes(c.slice(1)) : picks.includes(c));
   const entsOf = ids => new Set(ids.flatMap(id => (G[id] ? G[id].ents : [])));
   const inter = (a, b) => new Set([...a].filter(x => b.has(x)));
   function wizard(dom, picks) {
     const w = W[dom]; if (!w) return home();
     let pool = entsOf(w.steps.flatMap(st => st.o.flatMap(optIds)));
     const chosen = []; // [étape, réponse]
-    const steps = w.steps.filter(st => !st.if || picks.includes(st.if));
+    const steps = w.steps.filter(st => okIf(st.if, picks));
     let i = 0;
     for (; i < steps.length && i < picks.length; i++) {
       const o = steps[i].o.find(x => x[0] === picks[i]);
@@ -231,7 +240,7 @@
     // prochaine étape utile : on saute celles dont aucune réponse ne réduit la liste
     let next = null;
     for (let k = i; k < steps.length && pool.size > 1; k++) {
-      const opts = steps[k].o.map(o => [o, optIds(o).length ? inter(pool, entsOf(optIds(o))).size : pool.size]).filter(([, n]) => n > 0);
+      const opts = steps[k].o.filter(o => okIf(o[3], picks)).map(o => [o, optIds(o).length ? inter(pool, entsOf(optIds(o))).size : pool.size]).filter(([, n]) => n > 0);
       if (opts.some(([o, n]) => optIds(o).length && n < pool.size)) { next = [k, opts]; break; }
     }
     const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
@@ -256,7 +265,7 @@
     let h = "";
     const rec = recents.filter(id => G[id]).slice(0, 3);
     if (rec.length) h += `<div class="chips recent">${rec.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
-    h += `<h2 class="hh2">Orienter une lésion</h2><div class="grid big">${Object.entries(W).map(([k, w]) => `<a class="card grp wz" href="#/o/${k}" style="${cvar(w.gid)}">${PX.svg(w.px, 64)}<b>${esc(w.label)}</b></a>`).join("")}</div>`;
+    h += `<h2 class="hh2">Orienter une lésion</h2><div class="grid big wz3">${Object.entries(W).map(([k, w]) => `<a class="card grp wz" href="#/o/${k}" style="${cvar(w.gid)}">${PX.svg(w.px, 64)}<b>${esc(w.label)}</b></a>`).join("")}</div>`;
     h += `<h2 class="hh2">Toutes les gammes</h2><div class="list">${MAIN.map(gr => `<a class="row" href="#/c/${gr.id}" style="${cvar(gr.id)}">${px(gr.id, gr.id, 32)}<b>${esc(gr.label)}</b></a>`).join("")}</div>`;
     h += `<p class="foot">Dr Grégoire Attané</p>`;
     view.innerHTML = h;

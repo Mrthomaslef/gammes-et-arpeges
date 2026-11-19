@@ -22,7 +22,7 @@ GROUPS = [
         ("multi", "Lésions multiples", [52, 95, 37, 53, 139]),
         ("siege", "Localisation", [301, 302, 303, 311, 18, 92]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
-        ("contenu", "Aspect & contenu", [138, 304, 144, 32, 28, 30, 101, 10]),
+        ("contenu", "Aspect & contenu", [316, 138, 304, 144, 32, 28, 30, 101, 10]),
         ("perioste", "Périoste", [20, 22, 21, 134, 24, 98, 23, 25]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
@@ -108,7 +108,7 @@ KW = {39: "côte", 164: "structure stratifiée", 23: "appositions périostées d
       12: "IA1", 13: "IA2", 14: "IB", 15: "IC", 16: "II", 17: "III",
       301: "épiphysaire", 302: "métaphysaire", 303: "diaphysaire",
       304: "expansive / anévrysmale", 144: "« in and out »", 28: "trabéculations", 30: "niveaux liquide-liquide",
-      312: "tendinopathie non mécanique", 313: "calcification tendineuse", 314: "ténosynovite", 315: "enthésopathie",
+      316: "condensante localisée", 312: "tendinopathie non mécanique", 313: "calcification tendineuse", 314: "ténosynovite", 315: "enthésopathie",
       101: "séquestre", 32: "inflammatoire", 10: "sinueuse",
       20: "périostose unilamellaire", 21: "périostose compacte", 22: "périostose plurilamellaire ou spiculée",
       24: "hyperostose + encoches endostées", 134: "hyperostose, endoste normal", 138: "coque périostée",
@@ -662,6 +662,7 @@ RAW.append(_syn(304, "Lésions expansives / d'aspect « anévrysmal »", [
     "# Tumeurs primitives", "Kyste anévrysmal", "Tumeur à cellules géantes", "Hémangiome-lymphangiome", "Ostéoblastome",
     "Chondroblastome", "Chondrosarcome", "Ostéosarcome télangiectasique", "Sarcome d'Ewing (extrémités principalement)",
     "Angiosarcome"]))
+TITLES[316] = ("Lésion condensante localisée", "Ostéocondensation focale (hors rachis : voir Vertèbre ivoire)")
 TITLES[312] = ("Tendon épaissi, nodulaire ou rompu sans traumatisme", "Tendinopathie non mécanique")
 TITLES[313] = ("Calcification tendineuse", None)
 TITLES[314] = ("Ténosynovite", "Épanchement, épaississement synovial de la gaine")
@@ -776,6 +777,13 @@ OVERRIDE = {
         "Infections parasitaires (cysticercose, loase, dracunculose…)", "Autres infections (lèpre, tuberculose, coccidioïdomycose…)",
         "Divers (athérosclérose, maladie de Weber-Christian…)",
         "## Idiopathique", "Calcinose tumorale idiopathique (Teutschlaender)"]),
+    316: _syn(316, "x", ["# Pseudotumeurs", "Îlot condensant bénin (énostose)", "Ostéite chronique",
+        "Ostéite aseptique (SAPHO, OCMR)", "Infarctus osseux", "Dysplasie fibreuse", "Maladie de Paget", "Fracture de contrainte",
+        "Mastocytose", "Sarcoïdose", "Sclérose tubéreuse de Bourneville",
+        "# Métastases et hémopathies", "Métastase condensante (prostate, sein)", "Lymphome",
+        "# Tumeurs bénignes", "Ostéome", "Ostéome ostéoïde (sclérose réactionnelle)", "Ostéoblastome",
+        "Enchondrome (matrice calcifiée)",
+        "# Tumeurs malignes", "Ostéosarcome", "Chondrosarcome (matrice calcifiée)", "Sarcome d'Ewing (condensation réactionnelle)"]),
     312: _syn(312, "x", ["# Mécanique (le plus fréquent)", "Tendinopathie dégénérative, nodulaire",
         "Attrition sur un relief osseux (tête ulnaire, scaphoïde horizontalisé, lunatum en DISI)",
         "# Inflammatoire", "Polyarthrite rhumatoïde (rupture du long fléchisseur du pouce, des extenseurs)", "Spondyloarthrite",
@@ -871,7 +879,7 @@ OVERRIDE = {
         "# Tumeurs primitives", "Chondrosarcome", "Enchondrome", "Chondroblastome", "Kyste anévrysmal", "Ostéoblastome",
         "Tumeur à cellules géantes"]),
 }
-RAW = [OVERRIDE.get(x["n"], x) for x in RAW] + [OVERRIDE[k] for k in (312, 313, 314, 315)]
+RAW = [OVERRIDE.get(x["n"], x) for x in RAW] + [OVERRIDE[k] for k in (312, 313, 314, 315, 316)]
 # voûte crânienne : diapos 173 + 35 séparées par caractéristique, sans doublon
 RAW += [
     _syn(305, "Lacune à limites nettes scléreuses", ["Dysplasie fibreuse", "Kyste épidermoïde", "Méningocèle",
