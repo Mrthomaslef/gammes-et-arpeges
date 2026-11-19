@@ -20,7 +20,7 @@ GROUPS = [
     ("os", "Lésion osseuse", [
         ("multi", "Lésions multiples", [52, 95, 37, 23, 139, 97, 93, 94, 84]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
-        ("siege", "Localisation", [301, 302, 303, 311, 312, 18, 92, 53, 98, 24, 134]),
+        ("siege", "Localisation", [301, 302, 303, 311, 18, 92, 53, 98, 24, 134]),
         ("contenu", "Aspect & contenu", [304, 144, 28, 30, 101, 32, 10]),
         ("perioste", "Périoste", [20, 21, 22, 138]),
     ]),
@@ -79,7 +79,7 @@ KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       20: "périostose unilamellaire", 21: "périostose compacte", 22: "périostose plurilamellaire ou spiculée",
       24: "hyperostose + encoches endostées", 134: "hyperostose, endoste normal", 138: "coque périostée",
       18: "ostéolyse corticale", 53: "stries intracorticales", 92: "métastase corticale", 98: "scalloping endosté",
-      311: "surface minéralisée", 312: "érosion de surface",
+      311: "surface",
       141: "ostéolyse vertébrale unique", 36: "vertèbre ivoire", 145: "vertèbre évidée", 41: "vertèbre en H",
       108: "vertèbre en rostre", 140: "condensation axiale localisée", 44: "vertebra plana",
       38: "pseudo-spondylodiscite", 34: "extension transdiscale",
@@ -540,7 +540,7 @@ SCHEMAS = {
 }
 NO_SLIDE_TEXT = {135}
 # vignettes de schéma périosté (panneaux de periostees.svg)
-PERIO_THUMB = {311: "siege-surf.svg", 312: "siege-surf.svg", 301: "siege-epi.svg", 302: "siege-meta.svg", 303: "siege-dia.svg", 20: "perio-4.svg", 21: "perio-2.svg", 22: "perio-5.svg", 24: "perio-3.svg", 134: "perio-2.svg", 138: "perio-7.svg",
+PERIO_THUMB = {311: "siege-surf.svg", 301: "siege-epi.svg", 302: "siege-meta.svg", 303: "siege-dia.svg", 20: "perio-4.svg", 21: "perio-2.svg", 22: "perio-5.svg", 24: "perio-3.svg", 134: "perio-2.svg", 138: "perio-7.svg",
                13: "lodwick-ia2.svg"}
 # vignettes recadrées sur la lésion (Lodwick) ; pas de vignette pour les algorithmes (texte illisible en miniature)
 THUMB = {n: f"assets/slides/s{n:03d}_t.webp" for n in (12, 14, 15, 16, 17)}
@@ -722,46 +722,25 @@ RAW.append(_syn(310, "Masse en hypersignal T1", [
     "## Mélanine", "Mélanome et métastases de mélanome", "Sarcome à cellules claires"]))
 # surface de l'os : 147 (schéma), 148, 149 et 26 fusionnés en 2 gammes, sans doublon
 RAW += [
-    _syn(311, "Surface : image minéralisée", [
-        "# Origine tissus mous",
-        "## Dépôts cristallins", "Calcinose tumorale apatitique (Teutschlaender, insuffisance rénale chronique)", "Tophus goutteux",
-        "Dépôt pseudo-tumoral de pyrophosphate de calcium",
-        "## Tumeurs", "Ostéochondromatose synoviale", "Fibrome aponévrotique calcifiant", "Ostéosarcome des tissus mous",
-        "# Pseudotumeurs de surface", "Enthésopathie calcifiante (isolée, calcifications tendineuses multiples, secondaire)",
-        "Hématome sous-périosté (neurofibromatose, scorbut, troubles de la coagulation)", "Fracture de stress",
-        "Cal hypertrophique (ostéogenèse imparfaite de type V)", "Mélorhéostose",
-        "Ossifications périostées iatrogènes (fluorose, voriconazole)", "Para-ostéo-arthropathie neurogène",
-        "# Métastases", "Métastase condensante (cancer de la prostate)",
-        "# Tumeurs primitives de surface",
-        "## Réactionnelles", "Périostose réactionnelle floride", "BPOP (lésion de Nora)", "Exostose sous-unguéale",
-        "Exostose en tourelle",
-        "## Kyste anévrysmal et apparentés", "Kyste anévrysmal sous-périosté", "Lésion à cellules géantes des petits os",
-        "## Fibreuses", "Desmoïde cortical",
-        "## Cartilagineuses", "Exostose", "Chondrosarcome périphérique", "Chondrome périosté", "Chondrosarcome périosté",
-        "Fibrome chondromyxoïde",
-        "## Ostéogènes", "Ostéome ostéoïde, ostéoblastome", "Ostéome paraostéal", "Ostéosarcome paraostéal",
-        "Ostéosarcome périosté", "Ostéosarcome de surface de haut grade",
-        "## Autres", "Lipome paraostéal", "Hémangiome périosté", "Adamantinome juxtacortical", "Chondroblastome",
-        "Chordome extra-axial"]),
-    _syn(312, "Surface : érosion ou encoche", [
-        "# Origine tissus mous",
-        "## Dépôts cristallins", "Calcinose tumorale apatitique", "Tophus goutteux", "Dépôt pseudo-tumoral de pyrophosphate de calcium",
-        "## Kystes et synoviale", "Kyste mucoïde (kyste méniscal par exemple)", "Bursite, kyste synovial (arthropathies chroniques)",
-        "Atteinte des gaines synoviales (infectieuse, rhumatismale, tumeur à cellules géantes des gaines)",
-        "## Tumeurs", "Synovialosarcome (adulte jeune, para-articulaire)", "Tumeur desmoïde (juxta-diaphysaire)",
-        "Sarcomes fibroblastiques (> 40 ans)", "Sarcome indifférencié pléomorphe",
-        "# Pseudotumeurs de surface", "Enthésopathie calcifiante", "Kyste mucoïde périosté", "Infection sous-périostée",
-        "Hématome sous-périosté",
-        "# Métastases", "Cancer bronchopulmonaire (> 50 % des cas)", "Cancers digestifs, sein",
-        "# Tumeurs primitives de surface",
-        "## Kyste anévrysmal et apparentés", "Kyste anévrysmal sous-périosté (fréquent, coque périostée)",
-        "Lésion à cellules géantes des petits os",
-        "## Fibreuses", "Defect cortical (fréquent, coque périostée)", "Desmoïde cortical", "Fibrosarcome périosté",
-        "## Cartilagineuses", "Chondrome périosté (fréquent, coque périostée)", "Chondrosarcome périosté", "Fibrome chondromyxoïde",
-        "## Ostéogènes", "Ostéome ostéoïde, ostéoblastome", "Ostéosarcome périosté", "Ostéosarcome de surface de haut grade",
-        "Ostéosarcome intracortical",
-        "## Autres", "Sarcome d'Ewing périosté", "Hémangiome périosté", "Lipome paraostéal", "Adamantinome juxtacortical",
-        "Chondroblastome", "Schwannome", "Hémangioendothéliome", "Lymphome", "Léiomyosarcome", "Chordome extra-axial"]),
+    _syn(311, "Lésion de surface", [
+        "# Minéralisante",
+        "Exostose (dont sous-unguéale, en tourelle)", "Périostose réactionnelle floride", "BPOP (lésion de Nora)",
+        "Ostéome paraostéal", "Ostéosarcome paraostéal", "Chondrosarcome périphérique",
+        "Métastase condensante (cancer de la prostate)", "Fracture de stress", "Cal hypertrophique (ostéogenèse imparfaite de type V)",
+        "Mélorhéostose", "Ossifications périostées iatrogènes (fluorose, voriconazole)", "Para-ostéo-arthropathie neurogène",
+        "Ostéochondromatose synoviale", "Fibrome aponévrotique calcifiant", "Ostéosarcome des tissus mous",
+        "# Érosive",
+        "Defect cortical", "Kyste mucoïde périosté", "Infection sous-périostée",
+        "Métastase ostéolytique (poumon > 50 %, digestif, sein)", "Ostéosarcome intracortical", "Sarcome d'Ewing périosté",
+        "Fibrosarcome périosté", "Lymphome", "Hémangioendothéliome", "Léiomyosarcome", "Schwannome",
+        "Kyste mucoïde (kyste méniscal par exemple)", "Bursite, kyste synovial", "Atteinte des gaines synoviales",
+        "Synovialosarcome", "Tumeur desmoïde des tissus mous", "Sarcomes fibroblastiques", "Sarcome indifférencié pléomorphe",
+        "# Minéralisante ou érosive",
+        "Kyste anévrysmal sous-périosté", "Lésion à cellules géantes des petits os", "Chondrome périosté",
+        "Chondrosarcome périosté", "Fibrome chondromyxoïde", "Ostéome ostéoïde, ostéoblastome", "Ostéosarcome périosté",
+        "Ostéosarcome de surface de haut grade", "Desmoïde cortical", "Hémangiome périosté", "Lipome paraostéal",
+        "Adamantinome juxtacortical", "Chondroblastome", "Chordome extra-axial", "Hématome sous-périosté",
+        "Enthésopathie calcifiante", "Dépôts cristallins (calcinose tumorale, tophus, pyrophosphate de calcium)"]),
 ]
 for _n in (35, 173, 2, 136, 137, 165, 166, 126, 150, 147, 148, 149, 26):  # 150 : « les plus fréquentes » retirée  # 2, 136, 137 : catégorie « Lésion unique » retirée
     SKIP.add(_n)
@@ -913,7 +892,7 @@ FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
 ]
 RESUMES = json.loads((ROOT / "data/source/cotten_resumes.json").read_text())
 _by = {g["slide"]: g for g in gammes}
-MOVED = {"s173": "s305", "s035": "s307", "s165": "s310", "s166": "s310", "s126": "s310", "s147": "s311", "s148": "s311", "s149": "s312", "s026": "s312"}
+MOVED = {"s173": "s305", "s035": "s307", "s165": "s310", "s166": "s310", "s126": "s310", "s147": "s311", "s148": "s311", "s149": "s311", "s026": "s311"}
 for name, parts in FICHE_NAMES:
     g0 = _by[parts[0][0]]
     blocks, ents, fiche, qs = [], set(), [], []
