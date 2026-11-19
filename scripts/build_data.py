@@ -37,7 +37,7 @@ GROUPS = [
         ("frequentes", "Les plus fréquentes", [150, 174]),
         ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 177]),
         ("paravert", "Paravertébral", [175, 176, 105]),
-        ("signal", "Signal IRM & graisse", [165, 166, 126, 167, 48, 168, 158]),
+        ("signal", "Signal IRM", [310, 167, 48, 168, 158]),
         ("tmcontenu", "Calcifications, vaisseaux, sang", [49, 87, 162, 169, 163, 164, 170, 171]),
         ("nerf", "Nerfs", [157, 56]),
     ]),
@@ -89,7 +89,7 @@ KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       151: "superficielle", 152: "aponévrose superficielle", 153: "juxta-articulaire", 154: "intermusculaire",
       155: "intramusculaire", 156: "tendon / gaine", 177: "sarcome hypodermique",
       175: "paravertébrale thoracique", 176: "paravertébrale lombaire", 105: "hématopoïèse extramédullaire",
-      165: "hypersignal T1 (algorithme)", 166: "hypersignal T1", 126: "graisse", 167: "hypersignal T2 liquidien",
+      310: "hypersignal T1", 167: "hypersignal T2 liquidien",
       48: "matrice myxoïde", 168: "hyposignal T1 et T2", 158: "triple signal T2",
       49: "calcifiée", 87: "calcinose pseudo-tumorale", 162: "vaisseaux serpigineux", 169: "« flow voids »",
       163: "niveaux séro-hématiques", 164: "structure stratifiée", 170: "« fascial tail »", 171: "aspect d'hématome",
@@ -704,7 +704,22 @@ RAW += [
         "# Liquidien", "Kyste épidermoïde", "Hémangiome (lac veineux)",
         "# Graisseux", "Kyste dermoïde"]),
 ]
-for _n in (35, 173, 2, 136, 137):  # 2, 136, 137 : catégorie « Lésion unique » retirée
+# hypersignal T1 : algorithme (165), liste (166) et planche graisse (126) fusionnés, sans schéma
+RAW.append(_syn(310, "Masse en hypersignal T1", [
+    "# Contenant de la graisse (disparaît avec la saturation de la graisse)",
+    "## Graisse", "Lipome et ses variantes, hibernome", "Liposarcomes",
+    "Tumeur fibrolipomateuse hémosidérinique (sous-cutanée, graisse dans 5 cas sur 6)",
+    "Tumeur hyalinisante angiectasique pléomorphe (sous-cutanée, graisse rare)", "PEComa (angiomyolipome)",
+    "Tumeur mésenchymateuse hyperphosphaturiante", "Hémangiome, lymphangiome, malformations vasculaires (phlébolithes)",
+    "Cytostéatonécrose", "Sarcoïdose sous-cutanée (forme en réseau)", "Hématopoïèse extramédullaire, myélolipome",
+    "## Os mature à moelle graisseuse", "Myosite ossifiante circonscrite mature", "Ostéochondromatose ténosynoviale",
+    "Tumeur fibromyxoïde ossifiante des tissus mous",
+    "# Sans graisse",
+    "## Méthémoglobine", "Hématome", "Lésions et tumeurs hémorragiques, endométriose",
+    "## Vaisseaux à flux lent", "Malformations veineuses", "Hémangiome", "Sarcome alvéolaire",
+    "## Matériel riche en protéines", "Kystes mucoïdes", "Kyste épidermoïde", "Abcès",
+    "## Mélanine", "Mélanome et métastases de mélanome", "Sarcome à cellules claires"]))
+for _n in (35, 173, 2, 136, 137, 165, 166, 126):  # 2, 136, 137 : catégorie « Lésion unique » retirée
     SKIP.add(_n)
 for _n in (42, 29, 11, 31, 161, 113, 115, 116, 119, 69):  # 113… : anatomie & repères retirés
     SKIP.add(_n)
@@ -853,7 +868,7 @@ FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
     ("Ostéochondroses", [(117, None)]),
 ]
 _by = {g["slide"]: g for g in gammes}
-MOVED = {"s173": "s305", "s035": "s307"}
+MOVED = {"s173": "s305", "s035": "s307", "s165": "s310", "s166": "s310", "s126": "s310"}
 for name, parts in FICHE_NAMES:
     g0 = _by[parts[0][0]]
     blocks, ents, fiche, qs = [], set(), [], []
