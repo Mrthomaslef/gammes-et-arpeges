@@ -234,18 +234,21 @@
       const opts = steps[k].o.map(o => [o, optIds(o).length ? inter(pool, entsOf(optIds(o))).size : pool.size]).filter(([, n]) => n > 0);
       if (opts.some(([o, n]) => optIds(o).length && n < pool.size)) { next = [k, opts]; break; }
     }
+    const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
+    const first = t => { const m = String(t || "").match(/^.{20,}?[.;](\s|$)/); return (m ? m[0] : String(t || "").slice(0, 120)).replace(/[.;]\s*$/, ""); };
+    const res = ents.length <= 30 ? `<h2 class="hh2">${ents.length > 1 ? `${ents.length} réponses possibles` : "Réponse"}</h2><div class="wz-res">${ents.map(e =>
+      `<a class="wz-dx" href="#/d/${e.id}"><b>${esc(e.label)}</b>${e.resume ? `<small>${esc(first(e.resume))}</small>` : ""}</a>`).join("")}</div>` : "";
+    let q = "";
     if (next) {
       const [k, opts] = next;
       const hrefK = key => `${base}/${[...picks.slice(0, i), ...Array(k - i).fill("_"), key].join("/")}`;
-      h += `<h2 class="hh2">${esc(steps[k].t)}</h2><div class="wz-opts">${opts.map(([o, n]) => {
+      q = `<h2 class="hh2">Affiner : ${esc(steps[k].t)}</h2><div class="wz-opts">${opts.map(([o, n]) => {
         const g = o[2] ? null : G[o[0]];
         return `<a class="wz-opt" href="${hrefK(o[0])}"><span>${esc(o[1])}${g && g.aggr ? ` <span class="aggr">agressif</span>` : ""}</span>${optIds(o).length ? `<span class="n">${n}</span>` : ""}</a>`;
       }).join("")}<a class="wz-opt skip" href="${hrefK("_")}"><span>Je ne sais pas / passer</span></a></div>`;
     }
-    const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
-    if (!next || pool.size <= 30) h += `<h2 class="hh2">Diagnostics possibles</h2><div class="chips">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${esc(e.label)}</a>`).join("")}</div>`;
-    const gs = chosen.filter(([, o]) => o && optIds(o).length).flatMap(([, o]) => optIds(o)).filter(id => G[id]);
-    if (gs.length) h += `<h2 class="hh2">Gammes correspondantes</h2><div class="list">${[...new Set(gs)].map(id => rowGamme(G[id], { noSnip: true, mixed: true })).join("")}</div>`;
+    // peu de réponses : on les montre d'abord ; sinon la question d'abord
+    h += ents.length <= 8 ? res + q : q + res;
     view.innerHTML = h;
   }
 
