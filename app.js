@@ -269,6 +269,7 @@
   // lésions multiples = maladie générale : on ne décrit plus la lésion (seules les étapes « multi » restent)
   const okStep = (st, picks) => okIf(st.if, picks) && (st.multi || !picks.some(p => MULTIK.includes(p)));
   const entsOf = ids => new Set(ids.flatMap(id => {
+    if (id[0] === "@") return E[id.slice(1)] ? [id.slice(1)] : [];
     const [gid, k] = id.split("#"); const g = G[gid]; if (!g) return [];
     return k === undefined ? g.ents : secEnts(g, +k);
   }));
@@ -277,33 +278,171 @@
   function keep(st, o, pool) {
     const ids = optIds(o); if (!ids.length) return pool;
     let s = entsOf(ids);
-    if (st.soft && ids.every(id => id.includes("#"))) {
-      const cov = entsOf(st.o.flatMap(optIds).filter(id => id.includes("#")));
+    const sec = id => id.includes("#") || id[0] === "@";
+    if (st.soft && ids.every(sec)) {
+      const cov = entsOf(st.o.flatMap(optIds).filter(sec));
       s = new Set([...s, ...[...pool].filter(x => !cov.has(x))]);
     }
     return inter(pool, s);
   }
-  function wizard(dom, picks) {
-    const w = W[dom]; if (!w) return home();
-    let pool = entsOf(w.steps.flatMap(st => st.o.flatMap(optIds)));
-    const chosen = []; // [étape, réponse]
-    const steps = w.steps.filter(st => okStep(st, picks));
-    let i = 0;
-    for (; i < steps.length && i < picks.length; i++) {
-      const o = steps[i].o.find(x => x[0] === picks[i]);
-      if (o) pool = keep(steps[i], o, pool);
-      chosen.push([steps[i], o]);
+
+  // Questions « Akinator » : après le parcours fixe, on enchaîne les questions qui partagent encore les diagnostics restants.
+  // Réponses = listes de diagnostics (@id), d'après le Cotten ; une réponse élimine ceux qui n'y figurent pas.
+  const A = (...ids) => ids.map(x => "@" + x);
+  const BANK = {
+    os: [
+      // condensation diffuse ou multifocale
+      { t: "Répartition", if: "s095", o: [
+        ["rd", "Diffuse et homogène (tout le squelette)", A("meta", "myelofibrose", "odr", "hpt", "mastocytose", "myelome", "fluorose", "osteomalacie", "osteopetrose", "drepano", "gaucher")],
+        ["rf", "Foyers multiples (multifocale)", A("meta", "paget", "lymphome", "mastocytose", "myelome", "sarcoidose", "sapho", "infection", "tb", "osteopoecilie", "infarctus", "fracture", "stb", "osteosarcome", "drepano", "gaucher")]] },
+      { t: "Âge", if: "s095", o: [
+        ["ae", "Enfant ou adolescent", A("osteopetrose", "drepano", "gaucher", "sapho", "infection", "tb", "osteosarcome", "stb", "osteopoecilie", "odr", "osteomalacie", "infarctus", "fracture", "lymphome")],
+        ["aa", "Adulte", A("meta", "paget", "myelofibrose", "odr", "hpt", "lymphome", "mastocytose", "myelome", "drepano", "fluorose", "osteomalacie", "sarcoidose", "gaucher", "sapho", "infection", "tb", "osteopoecilie", "infarctus", "fracture", "stb", "osteopetrose")]] },
+      // contexte : « soft », seuls les diagnostics qui supposent ce contexte sont listés (les autres restent toujours)
+      { t: "Contexte clinique", if: "s095", soft: 1, o: [
+        ["cc", "Cancer connu (prostate, sein…)", A("meta")],
+        ["ch", "Hémopathie, splénomégalie", A("myelofibrose", "mastocytose", "gaucher")],
+        ["cr", "Insuffisance rénale chronique", A("odr")],
+        ["cd", "Hémoglobinopathie (drépanocytose, thalassémie)", A("drepano")],
+        ["cf", "Exposition prolongée au fluor", A("fluorose")],
+        ["cb", "Phacomatose (sclérose tubéreuse)", A("stb")]] },
+      { t: "Signe associé", if: "s095", o: [
+        ["sp", "Os élargi, travées grossières, corticale épaissie", A("paget")],
+        ["sr", "Vertèbres en « maillot de rugby »", A("odr", "osteopetrose")],
+        ["so", "Aspect d'« os dans l'os »", A("osteopetrose", "drepano", "gaucher")],
+        ["sh", "Vertèbres en H, ostéonécroses épiphysaires", A("drepano", "gaucher")],
+        ["si", "Plages médullaires serpigineuses (infarctus)", A("infarctus", "drepano", "gaucher")],
+        ["se", "Ossification des enthèses et des ligaments", A("fluorose")],
+        ["ss", "Résorption sous-périostée des phalanges", A("hpt", "odr")],
+        ["sl", "Fissures de Looser-Milkman", A("osteomalacie")],
+        ["sn", "Énostoses péri-articulaires symétriques", A("osteopoecilie")],
+        ["sc", "Paroi thoracique antérieure (sterno-claviculaire)", A("sapho")],
+        ["sy", "Splénomégalie", A("myelofibrose", "gaucher", "mastocytose", "lymphome", "drepano")],
+        ["sx", "Ostéolyses associées (lésions mixtes)", A("meta", "myelome", "lymphome", "mastocytose", "sarcoidose", "tb", "infection", "stb")]] },
+      // ostéolyses plurifocales
+      { t: "Âge", if: "s052", o: [
+        ["le", "Enfant ou adolescent", A("hl", "neuroblastome", "leucemie", "df", "enchondrome", "fno", "nf", "gaucher", "tb", "hydatide", "lymphome")],
+        ["lj", "Adulte de moins de 40 ans", A("df", "enchondrome", "hl", "lymphome", "hpt", "gaucher", "hee", "angiosarcome", "mastocytose", "nf", "tb", "hydatide", "sarcoidose", "stb", "meta")],
+        ["lv", "Après 40 ans", A("meta", "myelome", "lymphome", "hpt", "hee", "angiosarcome", "mastocytose", "sarcoidose", "tb", "hydatide", "gaucher")]] },
+      { t: "Contexte clinique", if: "s052", soft: 1, o: [
+        ["kc", "Cancer connu", A("meta", "neuroblastome")],
+        ["kh", "Hémopathie, splénomégalie", A("mastocytose", "gaucher")],
+        ["kr", "Insuffisance rénale, hyperparathyroïdie connue", A("hpt")],
+        ["kt", "Phacomatose (NF1, sclérose tubéreuse)", A("nf", "stb")],
+        ["ki", "Zone d'endémie hydatique", A("hydatide")]] },
+      { t: "Topographie", if: "s052", o: [
+        ["tr", "Un seul membre (atteinte régionale ou unilatérale)", A("df", "enchondrome", "hee", "angiosarcome")],
+        ["ta", "Crâne, rachis, bassin, côtes", A("meta", "myelome", "lymphome", "hl", "mastocytose", "neuroblastome", "leucemie", "gaucher", "hpt", "df")],
+        ["tm", "Mains et pieds (phalanges)", A("sarcoidose", "enchondrome", "tb", "hpt")],
+        ["tg", "Métaphyses des os longs", A("fno", "leucemie", "neuroblastome", "gaucher", "enchondrome")]] },
+      { t: "Aspect des lésions", if: "s052", o: [
+        ["xv", "Verre dépoli, os déformé", A("df")],
+        ["xc", "Matrice chondroïde", A("enchondrome")],
+        ["xp", "À l'emporte-pièce, sans sclérose", A("myelome", "meta", "hl", "hpt")],
+        ["xf", "Corticales, excentrées, liseré scléreux", A("fno")],
+        ["xk", "Kystiques multivésiculaires", A("hydatide", "tb")],
+        ["xm", "Mal limitées, mitées ou perméatives", A("leucemie", "neuroblastome", "lymphome", "meta", "angiosarcome", "hee")],
+        ["xd", "Lacis ou ostéolyses fines des phalanges", A("sarcoidose")],
+        ["xx", "Mixtes (lyse et condensation)", A("mastocytose", "meta", "stb", "lymphome")]] },
+      // appositions périostées plurifocales
+      { t: "Âge", if: "s023", o: [
+        ["pe", "Enfant ou adolescent", A("ewing", "hl", "infection", "leucemie", "lymphome", "neuroblastome", "rms", "oah")],
+        ["pa", "Adulte", A("oah", "acromegalie", "infection", "leucemie", "lymphome", "meta")]] },
+      { t: "Signe associé", if: "s023", o: [
+        ["ph", "Hippocratisme digital", A("oah")],
+        ["px", "Extrémités élargies, parties molles épaissies", A("acromegalie", "oah")],
+        ["pl", "Lésions osseuses lytiques ou perméatives", A("ewing", "hl", "leucemie", "lymphome", "meta", "neuroblastome", "rms", "infection")],
+        ["pf", "Fièvre", A("infection", "ewing", "leucemie", "hl")],
+        ["pp", "Cancer bronchique ou maladie pulmonaire", A("oah", "meta")]] },
+    ],
+    art: [
+      { t: "Topographie", if: "artic", o: [
+        ["jm", "Mains, poignets, pieds (petites articulations)", A("pr", "spa", "goutte", "cpp", "sarcoidose", "hpt", "odr", "apatite", "infection", "tb", "amylose", "drepano", "diabete", "oan", "oo")],
+        ["jg", "Grosses articulations (genou, hanche, épaule, coude, cheville)", A("hemophilie", "svn", "chondromatose", "infection", "tb", "cpp", "apatite", "amylose", "oan", "goutte", "oo", "hemangiome", "leucemie", "drepano", "spa", "pr", "diabete")],
+        ["jr", "Rachis, sacro-iliaques", A("spa", "infection", "tb", "cpp", "amylose", "oan", "odr")]] },
+      { t: "Contexte clinique", if: "artic", soft: 1, o: [
+        ["xh", "Trouble de la coagulation (hémophilie, anticoagulants)", A("hemophilie")],
+        ["xn", "Diabète, neuropathie, syringomyélie", A("oan", "diabete")],
+        ["xr", "Insuffisance rénale, dialyse", A("amylose", "odr")],
+        ["xs", "Psoriasis, MICI, uvéite", A("spa")],
+        ["xd", "Hémoglobinopathie", A("drepano")],
+        ["xc", "Sarcoïdose connue", A("sarcoidose")]] },
+      { t: "Contexte clinique", if: "tend", soft: 1, o: [
+        ["yp", "Polyarthrite rhumatoïde connue", A("pr")],
+        ["ys", "Spondyloarthrite, psoriasis", A("spa")],
+        ["yr", "Insuffisance rénale, dialyse", A("amylose", "odr")],
+        ["yd", "Diabète", A("diabete")],
+        ["yc", "Sarcoïdose connue", A("sarcoidose")],
+        ["yx", "Exposition au fluor", A("fluorose")]] },
+    ],
+    tm: [
+      // âge : « soft », les lésions sans âge préférentiel (lipome, hémangiome, hématome…) ne sont jamais éliminées
+      { t: "Âge", if: "u", soft: 1, o: [
+        ["te", "Enfant ou adolescent", A("rms", "ewing", "alveolaire", "synovialosarcome", "desmoide", "tbgp")],
+        ["tj", "Adulte de moins de 40 ans", A("synovialosarcome", "alveolaire", "desmoide", "tbgp", "tmgnp", "epithelioide", "scc", "ewing", "rms", "hibernome", "liposarcome")],
+        ["tv", "Après 40 ans", A("liposarcome", "sip", "myxofibrosarcome", "lms", "meta", "lymphome", "elastofibrome", "myxome", "tfs", "chondrosarcome", "angiosarcome", "tbgp", "tmgnp", "synovialosarcome", "desmoide")]] },
+      { t: "Contenu des masses", if: "s174", o: [
+        ["mg", "Graisse", A("lipome")],
+        ["mc", "Calcifications, dépôts denses", A("apatite", "goutte", "maffucci", "mv", "hemangiome")],
+        ["mv", "Phlébolithes, hypersignal T2 franc (vasculaire)", A("hemangiome", "mv", "maffucci")],
+        ["mn", "Le long des nerfs (signe de la cible)", A("nf")],
+        ["mm", "Myxoïdes intramusculaires", A("mazabraud")],
+        ["mb", "Hyposignal T2 en bandes (fibreux)", A("desmoide")],
+        ["ms", "Tissulaires non spécifiques", A("meta", "sarcoidose")]] },
+      { t: "Atteinte osseuse associée", if: "s174", o: [
+        ["oe", "Enchondromes multiples", A("maffucci")],
+        ["od", "Dysplasie fibreuse", A("mazabraud")],
+        ["on", "Scoliose, dysplasie, pseudarthrose", A("nf")],
+        ["ol", "Ostéolyses", A("meta", "sarcoidose")],
+        ["oa", "Érosions articulaires", A("goutte")],
+        ["o0", "Aucune", A("lipome", "desmoide", "hemangiome", "mv", "apatite", "meta", "sarcoidose", "nf")]] },
+      { t: "Siège des masses", if: "s174", o: [
+        ["gp", "Péri-articulaire, tendineux", A("apatite", "goutte")],
+        ["gs", "Sous-cutané", A("lipome", "meta", "sarcoidose", "nf", "hemangiome")],
+        ["gm", "Intramusculaire", A("mazabraud", "sarcoidose", "meta", "hemangiome", "mv", "desmoide", "lipome")],
+        ["gr", "Tout un membre (segmentaire)", A("mv", "maffucci", "nf")],
+        ["gw", "Paroi abdominale, cicatrice", A("desmoide")]] },
+    ],
+  };
+  // prochaine question de la banque : la première (dans l'ordre) qui partage encore les diagnostics restants
+  function nextBank(dom, pool, asked, picks) {
+    let best = null;
+    for (const q of BANK[dom] || []) {
+      if (asked.has(q) || !okIf(q.if, picks)) continue;
+      const opts = q.o.map(o => [o, keep(q, o, pool).size]).filter(([, n]) => n > 0);
+      if (opts.length < 2 || !opts.some(([, n]) => n < pool.size)) continue;
+      return [q, opts]; // questions larges d'abord (ordre de la banque), signes précis ensuite
     }
-    const base = `#/o/${dom}`;
-    let h = `<div class="wz-head" style="${cvar(w.gid)}">${PX.svg(w.px, 40)}<div><b>${esc(w.label)}</b><span>${pool.size} diagnostic${pool.size > 1 ? "s" : ""} possible${pool.size > 1 ? "s" : ""}</span></div><a class="wz-reset" href="#/">Recommencer</a></div>`;
-    if (chosen.length) h += `<ol class="wz-path">${chosen.map(([st, o], k) => `<li><a href="${base}/${picks.slice(0, k).join("/")}"><span>${esc(st.t)}</span><b>${o ? esc(o[1]) : "—"}</b></a></li>`).join("")}</ol>`;
-    // prochaine étape utile : on saute celles dont aucune réponse ne réduit la liste
+    return best;
+  }
+  // parcours : étapes fixes puis questions de la banque
+  function walk(dom, picks) {
+    const w = W[dom];
+    let pool = entsOf(w.steps.flatMap(st => st.o.flatMap(optIds)));
+    const steps = w.steps.filter(st => okStep(st, picks)), chosen = [], asked = new Set();
+    let i = 0;
+    for (; i < picks.length; i++) {
+      let st = steps[i];
+      if (!st) { const b = pool.size > 1 && nextBank(dom, pool, asked, picks); if (!b) break; st = b[0]; asked.add(st); }
+      const o = st.o.find(x => x[0] === picks[i]);
+      if (o) pool = keep(st, o, pool);
+      chosen.push([st, o]);
+    }
     let next = null;
     for (let k = i; k < steps.length && pool.size > 1; k++) {
       const opts = steps[k].o.filter(o => okIf(o[3], picks)).map(o => [o, keep(steps[k], o, pool).size]).filter(([, n]) => n > 0);
       const useful = opts.filter(([o, n]) => optIds(o).length && n < pool.size);
-      if (useful.length >= 2 || (useful.length === 1 && opts.length >= 2)) { next = [k, opts]; break; }
+      if (useful.length >= 2 || (useful.length === 1 && opts.length >= 2)) { next = [k, steps[k], opts]; break; }
     }
+    if (!next && pool.size > 1) { const b = nextBank(dom, pool, asked, picks); if (b) next = [Math.max(i, steps.length), b[0], b[1]]; }
+    return { pool, chosen, i, next };
+  }
+  function wizard(dom, picks) {
+    const w = W[dom]; if (!w) return home();
+    const { pool, chosen, i, next } = walk(dom, picks);
+    const base = `#/o/${dom}`;
+    let h = `<div class="wz-head" style="${cvar(w.gid)}">${PX.svg(w.px, 40)}<div><b>${esc(w.label)}</b><span>${pool.size} diagnostic${pool.size > 1 ? "s" : ""} possible${pool.size > 1 ? "s" : ""}</span></div><a class="wz-reset" href="#/">Recommencer</a></div>`;
+    if (chosen.length) h += `<ol class="wz-path">${chosen.map(([st, o], k) => `<li><a href="${base}/${picks.slice(0, k).join("/")}"><span>${esc(st.t)}</span><b>${o ? esc(o[1]) : "—"}</b></a></li>`).join("")}</ol>`;
     const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
     const dx = e => `<a class="wz-dx" href="#/d/${e.id}"><b>${esc(e.label)}</b></a>`;
     const mg = picks.find(p => MULTIK.includes(p)) && G[picks.find(p => MULTIK.includes(p))];
@@ -322,9 +461,9 @@
     const res = ents.length && (picks.length || ents.length <= 20) ? `<h2 class="hh2">${mg && !next ? "Maladies générales à évoquer" : ents.length > 1 ? `${ents.length} diagnostics à évoquer` : "Diagnostic à évoquer"}</h2>${body}` : "";
     let q = "";
     if (next) {
-      const [k, opts] = next;
+      const [k, st, opts] = next;
       const hrefK = key => `${base}/${[...picks.slice(0, i), ...Array(k - i).fill("_"), key].join("/")}`;
-      q = `<h2 class="hh2">Affiner : ${esc(steps[k].t)}</h2><div class="wz-opts">${opts.map(([o, n]) => {
+      q = `<h2 class="hh2">Affiner : ${esc(st.t)}</h2><div class="wz-opts">${opts.map(([o, n]) => {
         const g = o[2] ? null : G[o[0]];
         return `<a class="wz-opt" href="${hrefK(o[0])}"><span>${esc(o[1])}${(g && g.aggr) || o[4] ? ` <span class="aggr">agressif</span>` : ""}</span>${optIds(o).length ? `<span class="n">${n}</span>` : ""}</a>`;
       }).join("")}<a class="wz-opt skip" href="${hrefK("_")}"><span>Je ne sais pas / passer</span></a></div>`;
