@@ -224,3 +224,30 @@ details.gsec .chev{margin-left:auto;color:var(--muted);font-size:20px;transition
 details.gsec[open] .chev{transform:rotate(90deg)}
 .gsec-b{padding:0 14px 14px}
 .step:first-child{margin-top:0}
+
+/* ---- gammes en menus déroulants ---- */
+details.acc{padding:0;overflow:hidden}
+details.acc summary{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;list-style:none}
+details.acc summary .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+details.acc summary b{font-size:15px;font-weight:600}
+details.acc .ex{font-size:12.5px;color:var(--muted);font-style:italic}
+details.acc .ex::before{content:"ex. ";font-style:normal;font-weight:600;color:var(--c)}
+details.acc .snip1{font-size:12.5px;color:var(--muted)}
+details.acc .thumb{width:58px;height:58px;object-fit:contain;border-radius:8px;background:#fff;border:1px solid var(--line);flex:none}
+details.acc .chev{color:var(--muted);font-size:20px;transition:transform .2s;flex:none}
+details.acc[open] .chev{transform:rotate(90deg)}
+details.acc[open]{border-left:4px solid var(--c)}
+details.acc[open] summary{border-bottom:1px solid var(--line)}
+.acc-b{padding:6px 14px 12px}
+.acc-b .tree li.li::before{background:var(--c)}
+.acc-b .tree li.h{color:var(--c2)}
+:root[data-theme="dark"] .acc-b .tree li.h{color:var(--c)}
+.acc-f{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px}
+.acc-f a{color:var(--muted)}
+.fav{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--muted)}
+.fav.on{color:#d97706;border-color:#f59e0b}
+a.dx{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--c,#4f46e5) 55%,transparent);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a.dx:active{background:color-mix(in srgb,var(--c,#4f46e5) 15%,transparent);border-radius:3px}
+.ex1{margin:-4px 0 8px;font-size:13.5px;color:var(--muted);font-style:italic}
+.ex1::before{content:"ex. ";font-style:normal;font-weight:600}
+.list .acc{margin:0}

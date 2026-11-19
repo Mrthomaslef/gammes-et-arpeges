@@ -191,7 +191,7 @@ def build_items(raw_items, title_text):
             continue
         kind = "li"
         n = norm(txt.rstrip(" :"))
-        if NOTE_RE.match(txt) or txt.startswith("* :") or txt.startswith("** :"):
+        if NOTE_RE.match(txt) or txt.startswith("*"):
             kind = "note"
         elif txt.endswith(":") or n in HEADER_WORDS:
             kind = "h"
@@ -209,6 +209,12 @@ def build_items(raw_items, title_text):
     # un item de niveau n suivi d'un item de niveau > n devient en-tête de groupe
     for i, it in enumerate(out[:-1]):
         if it["k"] == "li" and out[i + 1]["l"] > it["l"]:
+            it["k"] = "h"
+    # item en gras suivi d'items non gras au même niveau → titre de rubrique
+    for i, it in enumerate(out[:-1]):
+        nxt = out[i + 1]
+        if (it["k"] == "li" and it["b"] and it["l"] == 0 and len(it["t"]) < 40 and not entities_of(it["t"])
+                and (nxt["l"] == 0 and not nxt["b"] or nxt["k"] == "h")):
             it["k"] = "h"
     return out
 
@@ -413,6 +419,38 @@ ENT = [
 ]
 ENT_RE = [(k, lab, re.compile(p)) for k, lab, p in ENT]
 
+def norm_map(t: str):
+    """Texte normalisé caractère par caractère + index vers l'original (pour placer les liens)."""
+    n, idx = [], []
+    for i, ch in enumerate(t):
+        c = unicodedata.normalize("NFD", ch.lower())
+        c = "".join(x for x in c if unicodedata.category(x) != "Mn").replace("œ", "oe").replace("’", "'")
+        if ch.isspace():
+            c = " "
+        for x in c:
+            n.append(x); idx.append(i)
+    return "".join(n), idx
+
+def ent_spans(text: str):
+    """Positions des diagnostics dans le texte original : [[début, fin, id]] sans chevauchement."""
+    n, idx = norm_map(text)
+    cand = []
+    for k, _, rx in ENT_RE:
+        m = rx.search(n)
+        if m and m.end() > m.start():
+            a, b = idx[m.start()], idx[m.end() - 1] + 1
+            while a > 0 and text[a - 1].isalpha():
+                a -= 1
+            while b < len(text) and text[b].isalpha():
+                b += 1
+            cand.append((a, b, k))
+    cand.sort(key=lambda c: (c[0], -(c[1] - c[0])))
+    out, last = [], -1
+    for a, b, k in cand:
+        if a >= last:
+            out.append([a, b, k]); last = b
+    return out
+
 def entities_of(text: str):
     n = norm(text)
     return [k for k, _, rx in ENT_RE if rx.search(n)]
@@ -438,7 +476,9 @@ SCHEMAS = {
     165: ("algo-t1.svg", _flat(MS.T1)), 167: ("algo-t2.svg", _flat(MS.T2)),
     178: ("presacre-adulte.svg", _flat(MS.PRESACRE_ADULTE)), 179: ("presacre-enfant.svg", _flat(MS.PRESACRE_ENFANT)),
 }
-NO_SLIDE_TEXT = {135}  # texte de la diapo déjà porté par le schéma
+NO_SLIDE_TEXT = {135}
+_spec2 = importlib.util.spec_from_file_location("examples", ROOT / "scripts/examples.py")
+EX = importlib.util.module_from_spec(_spec2); _spec2.loader.exec_module(EX)  # texte de la diapo déjà porté par le schéma
 
 def slide_title(s):
     for b in s["blocks"]:
@@ -500,9 +540,20 @@ for s in RAW:
         elif b["type"] == "table":
             flat += [c for r in b["rows"] for c in r if c]
     ents = sorted({e for t in flat + [title] for e in entities_of(t)})
+    # liens cliquables vers les diagnostics (pas dans les en-têtes ni les notes)
+    for b in blocks:
+        if b["type"] == "list":
+            for it in b["items"]:
+                if it["k"] == "li":
+                    sp = ent_spans(it["t"])
+                    if sp:
+                        it["e"] = sp
+        elif b["type"] == "table":
+            b["links"] = [[ent_spans(c) if c else [] for c in r] for r in b["rows"]]
     gammes.append({
         "id": f"s{n:03d}", "slide": n, "title": title, "sub": sub, "cats": C[n],
         "horsMsk": n in HORS_MSK, "blocks": blocks, "ents": ents,
+        "ex": EX.EXAMPLES.get(n), "thumb": EX.THUMBS.get(n),
         "q": norm(" ".join([title, sub or ""] + flat)),
     })
 
