@@ -366,7 +366,7 @@
       case "search": setTab("home"); qInput.value ? renderSearch(qInput.value) : home(); break;
       case "c": setTab(parts[1] === "ref" ? "ref" : "home"); parts[2] ? subView(parts[1], parts[2]) : groupView(parts[1]); break;
       case "cat": location.replace("#/"); break;
-      case "g": { const mv = { s029: "s301", s042: "s302", s011: "s303" }[parts[1]]; if (mv) { location.replace("#/g/" + mv); break; } setTab(""); gammeView(parts[1], q); break; }
+      case "g": { const mv = { s029: "s301", s042: "s302", s011: "s303", s031: "s304", s161: "s304" }[parts[1]]; if (mv) { location.replace("#/g/" + mv); break; } setTab(""); gammeView(parts[1], q); break; }
       case "d": setTab("diagnostics"); entityView(parts[1]); break;
       case "diagnostics": setTab("diagnostics"); diagnostics(); break;
       case "demarche": location.replace("#/diagnostics"); break;

@@ -21,7 +21,7 @@ GROUPS = [
         ("demarche", "Démarche", [2, 136, 137, 143]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
         ("siege", "Siège dans l'os", [301, 302, 303]),
-        ("contenu", "Aspect & contenu", [31, 144, 28, 30, 161, 101, 32, 10]),
+        ("contenu", "Aspect & contenu", [304, 144, 28, 30, 101, 32, 10]),
         ("perioste", "Corticale & périoste", [20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
         ("multi", "Multifocal & diffus", [52, 139, 95, 97, 37, 23, 93, 94, 84]),
@@ -559,7 +559,17 @@ RAW += [
         "# Pseudotumeurs", "Dysplasie fibreuse des os", "Dysplasie ostéofibreuse (tibia)", "Histiocytose langerhansienne",
         "Ostéomyélite", "Ostéite aseptique (SAPHO)", "Infarctus osseux"]),
 ]
-for _n in (42, 29, 11):
+# lésions expansives + images d'aspect « anévrysmal » (diapos 31 et 161) fusionnées
+RAW.append(_syn(304, "Lésions expansives / d'aspect « anévrysmal »", [
+    "# Pseudotumeurs", "Kyste essentiel", "Kyste hydatique", "Tumeur brune d'hyperparathyroïdie", "Kyste épidermoïde",
+    "Dysplasie fibreuse", "Fibrome non ossifiant",
+    "# Métastases", "Rein, thyroïde, poumon, mélanome, tumeurs neuro-endocrines, paragangliome, hépatocarcinome",
+    "# Hémopathies", "Myélome", "Plasmocytome",
+    "# Tumeurs primitives", "Kyste anévrysmal", "Tumeur à cellules géantes", "Hémangiome-lymphangiome", "Ostéoblastome",
+    "Chondroblastome", "Chondrosarcome", "Ostéosarcome télangiectasique", "Sarcome d'Ewing (extrémités principalement)",
+    "Angiosarcome"]))
+TITLES[304] = ("Lésions expansives / d'aspect « anévrysmal »", "Soufflantes, ± cloisonnées")
+for _n in (42, 29, 11, 31, 161):
     SKIP.add(_n)
 
 gammes = []
