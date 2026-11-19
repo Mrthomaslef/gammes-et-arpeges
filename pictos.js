@@ -72,6 +72,7 @@ window.GEA_PICTOS = (() => {
   };
   // fiches maladies (Référentiel) : même dessin que le domaine
   P.sys = P.croissance;
+  P.unique = P.os;
   Object.entries({ fos: "os", fart: "art", fsys: "metab", fped: "enfant" }).forEach(([k, v]) => { P[k] = P[v]; });
   const svg = (name, size = 48) => `<svg class="px" viewBox="0 0 48 48" width="${size}" height="${size}" aria-hidden="true">${P[name] || P.os}</svg>`;
   return { svg, has: n => n in P };

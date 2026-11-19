@@ -18,13 +18,13 @@ IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json
 # groupe (accueil) → sous-choix (picto) → gammes (n° de diapo). Le 1er emplacement d'une gamme est son emplacement principal.
 GROUPS = [
     ("os", "Lésion osseuse", [
-        ("demarche", "Démarche", [2, 136, 137, 143]),
+        ("unique", "Lésion unique", [2, 136, 137, 143]),
+        ("multi", "Lésions multiples", [52, 95, 37, 23, 139, 97, 93, 94, 84]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
         ("siege", "Siège dans l'os", [301, 302, 303]),
         ("contenu", "Aspect & contenu", [304, 144, 28, 30, 101, 32, 10]),
         ("perioste", "Corticale & périoste", [20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
-        ("multi", "Multifocal & diffus", [52, 139, 95, 97, 37, 23, 93, 94, 84]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
         ("vertebre", "Vertèbre, disque & sacrum", [141, 36, 145, 34, 41, 108, 140, 146, 38, 44]),
