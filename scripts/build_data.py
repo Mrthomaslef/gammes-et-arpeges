@@ -35,10 +35,12 @@ GROUPS = [
     ]),
     ("tm", "Tissus mous", [
         ("frequentes", "Les plus fréquentes", [150, 174]),
-        ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 177]),
+        ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 170, 177]),
         ("paravert", "Paravertébral", [175, 176, 105]),
         ("signal", "Signal IRM", [310, 167, 48, 168, 158]),
-        ("tmcontenu", "Calcifications, vaisseaux, sang", [49, 87, 162, 169, 163, 164, 170, 171]),
+        ("calcif", "Calcifications", [49, 87]),
+        ("vaisseaux", "Vaisseaux", [162, 169]),
+        ("sang", "Sang & hématome", [163, 164, 171]),
         ("nerf", "Nerfs", [157, 56]),
     ]),
     ("art", "Articulations", [
@@ -65,7 +67,7 @@ GROUPS = [
 SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick", "siege": "Siège", "contenu": "Aspect",
           "perioste": "Corticale / périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
           "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "frequentes": "Tissus mous", "tmsiege": "Siège (tissus mous)",
-          "paravert": "Paravertébral", "signal": "Signal IRM", "tmcontenu": "Contenu", "nerf": "Nerf", "inflam": "Articulation",
+          "paravert": "Paravertébral", "signal": "Signal IRM", "calcif": "Calcifications", "vaisseaux": "Vaisseaux", "sang": "Sang", "nerf": "Nerf", "inflam": "Articulation",
           "synoviale": "Synoviale", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
 KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       52: "ostéolyses plurifocales", 95: "condensation diffuse ou multifocale", 37: "condensations axiales multiples",
