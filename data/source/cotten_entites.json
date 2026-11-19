@@ -1,0 +1,326 @@
+{
+ "acromegalie": {
+  "resume": "Hypersécrétion de GH (adénome hypophysaire), diagnostic vers 40-45 ans. Hypertrophie des tissus mous (coussinet plantaire), houppes en « ancre de marine », épiphyses au carré, élargissement des interlignes (2e MCP) et des disques par hypertrophie cartilagineuse, enthésophytes exubérants, scalloping vertébral postérieur. Évolution vers une arthropathie dégénérative tardive ; canal carpien fréquent.",
+  "source": "Cotten — Endocrinopathies"
+ },
+ "adamantinome": {
+  "resume": "Tumeur maligne biphasique (contingents épithélial et ostéofibreux) rare, localement agressive, de l'adulte jeune (vers 30 ans). Elle touche la diaphyse tibiale dans 85 % des cas (tiers moyen, corticale antérieure). Radio : ostéolyse expansive multiloculaire « en bulles de savon », à contours scléreux, corticale amincie mais rarement rompue, lésions satellites. IRM aspécifique, utile pour le bilan d'extension. Piège : une biopsie périphérique peut conclure à tort à une dysplasie ostéofibreuse.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "amylose": {
+  "resume": "Amylose à β2-microglobuline de l'hémodialysé chronique : syndrome du canal carpien bilatéral, épaississements tendineux et capsulosynoviaux (épaule, poignet), lacunes sous-chondrales bien limitées multiples et bilatérales, spondylarthropathie destructrice cervicale. IRM : dépôts en hypo/iso T1 et typiquement hyposignal T2, sans infiltration des tissus mous périvertébraux. Piège : la spondylarthropathie destructrice peut évoquer une spondylodiscite infectieuse.",
+  "source": "Cotten — Troubles minéraux et osseux associés à la maladie rénale chronique"
+ },
+ "angiosarcome": {
+  "resume": "Tumeur vasculaire maligne de haut grade. Osseux : surtout 20-40 ans, unique ou multifocal, ostéolyse d'aspect agressif avec extension fréquente aux parties molles, possible sur Paget, infarctus, ostéomyélite ou matériel. Tissus mous : sujet âgé, cutané ou profond, favorisé par un lymphœdème chronique (Stewart-Treves) ou une irradiation ; masses de signal non spécifique, rehaussées, hypermétaboliques en TEP-FDG. Évolution rapide, fort potentiel métastatique (poumon, os).",
+  "source": "Cotten — Tumeurs osseuses ; Tumeurs des tissus mous"
+ },
+ "chondroblastome": {
+  "resume": "Tumeur cartilagineuse bénigne observée avant la soudure des physes (5-25 ans), à prédominance masculine. Elle est épiphysaire ou apophysaire (grand trochanter, humérus, tibia, talus). Radio/TDM : ostéolyse arrondie bien limitée, liseré scléreux, calcifications dans 30 à 50 % des cas. IRM : hyposignal T2 évocateur, œdème médullaire et des parties molles marqué, épanchement possible. Piège : la TCG survient après la soudure des physes et n'est pas calcifiée.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "cpp": {
+  "resume": "Dépôts de pyrophosphate de calcium : liseré calcique fin parallèle à l'os sous-chondral (cartilage hyalin), calcifications épaisses des fibrocartilages (ménisques, ligament triangulaire, symphyse). Arthropathie atypique : sièges inhabituels (radiocarpienne, MCP, fémoropatellaire isolée), condensation nette, géodes nombreuses, ostéophytes pauvres, évolution destructrice. Rachis : calcifications des ligaments péri-odontoïdiens (dent couronnée), discopathies calcifiantes pluriétagées pouvant évoluer vers une destruction intersomatique mimant une spondylodiscite.",
+  "source": "Cotten — Affections microcristallines"
+ },
+ "chondromatose": {
+  "resume": "Tumeur synoviale bénigne : multiples nodules cartilagineux hyalins de taille identique (« grains de riz »), adulte de 30-50 ans, homme, monoarticulaire (genou > coude, hanche). Radio : calcifications intra-articulaires en arcs et anneaux (70-95 %), érosions marginales extrinsèques (hanche), interligne préservé. IRM : nodules hyper T2 non rehaussés hormis en périphérie, calcifications en hyposignal. Alerte : destruction corticale, envahissement médullaire ou extension extra-articulaire évoquent un chondrosarcome synovial (< 5 %).",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "chondrosarcome": {
+  "resume": "Premier sarcome osseux de l'adulte (30-60 ans), primitif ou secondaire (enchondrome, ostéochondrome, Paget). Siège : fémur, bassin, humérus proximal, côtes. Radio/TDM : ostéolyse de plus de 4 cm, calcifications en arcs et anneaux, scalloping endosté profond (> 2/3 de la corticale) et étendu, épaississement ou rupture corticale. IRM : lobules en hypersignal T2, rehaussement en arcs et anneaux. Haut grade : nécrose, extension aux parties molles. Piège : essaimage le long du trajet de biopsie.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "chordome": {
+  "resume": "Tumeur maligne de bas grade d'origine notochordale, adulte de 40 à 70 ans (pic 50 ans), prédominance masculine ; siège sacrococcygien (50-60 %, tumeur sacrée la plus fréquente), sphéno-occipital puis rachidien. Ostéolyse médiane volumineuse avec masse des parties molles pseudolobulée « en pseudopodes », calcifications périphériques (débris osseux séquestrés). IRM : hypo/iso T1, hypersignal T2 marqué comparable au nucléus, septums rehaussés. Au rachis : franchissement discal possible, extension épidurale > 90 %. Diagnostic différentiel principal : chondrosarcome.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "apatite": {
+  "resume": "Dépôts de phosphate de calcium basique (apatite) périarticulaires, femme de 30-50 ans, épaule surtout (supra-épineux). Radio : calcification amorphe, dense, ovalaire, à l'insertion tendineuse ; floue et moins dense lors de la résorption aiguë (crise hyperalgique), migration bursale ou intra-osseuse. IRM : hyposignal T1/T2 avec œdème parfois pseudo-infectieux ou tumoral ; érosion corticale « en queue de comète ». Calcinose tumorale : masses lobulées juxta-articulaires avec niveaux de sédimentation.",
+  "source": "Cotten — Affections microcristallines ; Tumeurs des tissus mous"
+ },
+ "diabete": {
+  "resume": "Le diabète entraîne des complications ostéo-articulaires propres. Au pied : ostéoarthropathie nerveuse (médiopied, sans ulcère en regard) ou ostéite (au contact d'un ulcère, franc hyposignal T1). L'infarctus musculaire complique un diabète de type 1 ancien et mal équilibré (cuisse, bilatéral dans un tiers des cas). IRM : muscle œdématié avec une plage non rehaussée et des fibres résiduelles rehaussées ; la biopsie est à éviter. Autres atteintes : capsulite rétractile, maladie de Dupuytren, chéiroarthropathie.",
+  "source": "Cotten — Diabète et ostéoarthropathies nerveuses"
+ },
+ "drepano": {
+  "resume": "Hémoglobinopathie HbS (syndrome drépanocytaire majeur) avec occlusions microvasculaires et hyperplasie médullaire (hyposignal T1 diffus). Siège des infarctus selon l'âge : syndrome main-pied (6 mois-2 ans), infarctus métaphysodiaphysaires du grand enfant (bien plus fréquents que l'ostéomyélite), ostéonécroses épiphysaires ; vertèbres en « H » évocatrices. Infarctus vs ostéomyélite : hypersignal T1 spontané (T1 fat sat) et rehaussement en anneau en faveur de l'infarctus.",
+  "source": "Cotten — Hémoglobinopathies et autres anémies"
+ },
+ "df": {
+  "resume": "Affection congénitale non héréditaire (mutation GNAS), forme monostotique dans 70-80 % (côtes, fémur, tibia, maxillaire) ; McCune-Albright si polyostotique avec taches café au lait et puberté précoce. Radio/TDM : lésion intramédullaire diaphysaire modérément expansive, en « verre dépoli », liseré dense épais, déformation en « crosse de berger ». IRM très variable. Alerte : perte du liseré, ostéolyse mal limitée et masse des parties molles évoquent une dégénérescence sarcomateuse (0,4-1 %).",
+  "source": "Cotten — Ostéochondrodysplasies"
+ },
+ "dof": {
+  "resume": "Lésion fibro-osseuse bénigne de l'enfant (souvent avant 12 ans), révélée par une incurvation antérieure du tibia (tiers moyen de la diaphyse, fibula associée dans 10 % des cas). Radio : ostéolyse intracorticale antérieure, allongée, parfois multiloculaire ou en verre dépoli, corticale soufflée, sclérose endostée épaisse. IRM : signal intermédiaire en T1, hypersignal T2 hétérogène, sans œdème. Elle se stabilise à la maturité osseuse. Piège : elle peut être difficile à distinguer d'un adamantinome.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "elastofibrome": {
+  "resume": "Pseudo-tumeur fibroélastique de croissance très lente, sujet âgé (> 70 ans), deux fois plus fréquente chez la femme, bilatérale dans 25 % des cas, siégeant entre la pointe de la scapula, le gril costal et les muscles superficiels ; visible en antépulsion du bras. Masse oblongue non encapsulée (2-15 cm) d'aspect fibrillaire/strié alternant couches fibreuses et graisseuses en échographie, TDM et IRM, très évocateur. Le rehaussement hétérogène peut inquiéter à tort ; biopsie habituellement inutile.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "enchondrome": {
+  "resume": "Tumeur bénigne fréquente faite de lobules de cartilage hyalin, très fréquente aux mains, métaphysaire aux os longs. Ostéolyse lobulée avec calcifications en anneaux, arcs ou pop-corn et érosions endostées focales peu profondes. IRM : lobules hypo T1/hyper T2, rehaussement « en arcs et anneaux ». Inquiéter : douleur, siège axial, scalloping > 2/3, appositions périostées.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "fasciite": {
+  "resume": "Pseudo-sarcome myofibroblastique bénin (fusion MYH9-USP6) de l'adulte jeune : nodule unique de moins de 3 cm, de croissance rapide, souvent au membre supérieur. Il existe des formes sous-cutanée (accolée au fascia profond), intramusculaire (qui mime un sarcome) et intermusculaire. Écho : nodule hypoéchogène lenticulaire. IRM : signal iso ou hyper T1/T2, rehaussement variable, léger œdème. Signes évocateurs : « cible inversée » (kystisation centrale) et extension le long du fascia (fascial tail sign).",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "fcm": {
+  "resume": "Tumeur bénigne rare (< 2 %), intriquant secteurs fibreux, myxoïdes et chondroïdes, découverte entre 10 et 30 ans ; membre inférieur (tibia proximal, fémur distal), bassin, pied ; métaphysaire. Ostéolyse excentrée allongée dans l'axe de l'os, polylobée, cerclée d'un fin liseré de sclérose, corticale amincie ou soufflée sans apposition périostée ; calcifications rares (sujet âgé, os plats). TDM : travées osseuses incomplètes évocatrices. IRM : intermédiaire T1, hyper T2 variable, rehaussement hétérogène.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "fno": {
+  "resume": "Dystrophie bénigne très fréquente entre 2 et 18 ans (garçon), proche d'insertions tendineuses ; cortical defect si < 2 cm. Métaphyse des os longs, surtout genou, face postéromédiale. Radio : ostéolyse excentrée allongée dans l'axe de l'os, multilobulée, contours nets se condensant, défect cortical sans réaction périostée ni extension aux parties molles. IRM inutile (signal variable). Involution spontanée ; risque fracturaire si > 50 % du diamètre ou > 33 mm.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "fluorose": {
+  "resume": "Imprégnation fluorée endémique (Inde, Chine) ou exogène : eaux fortement fluorées, traitement par le fluor, certains médicaments. L'atteinte prédomine nettement au squelette axial : ostéocondensation (cause rare de condensation osseuse diffuse) ou ostéopénie, enthésopathies ossifiantes, ossifications ligamentaires (ligament longitudinal postérieur, ligaments jaunes), ostéophytose et appositions périostées. Le fluor fait aussi partie des toxiques inhibant la minéralisation. Le Cotten ne décrit pas de sémiologie spécifique en TDM ou en IRM.",
+  "source": "Cotten — Autres affections ; Ostéopathies"
+ },
+ "fracture": {
+  "resume": "Fractures de contrainte : de fatigue (sollicitations excessives répétées sur os sain, sportif, femme, troubles statiques) ou par insuffisance osseuse (contraintes normales sur os fragile : ostéoporose, ostéomalacie, radiothérapie, transplantation). Radio initialement normale, puis bande de condensation perpendiculaire aux travées, trait ou apposition périostée après 1-6 semaines. IRM précoce : œdème médullaire et des parties molles centré sur un trait hypo-intense. Souvent multiples (bassin, sacrum) ; au col fémoral, fracture supérolatérale (tension) à haut risque de déplacement.",
+  "source": "Cotten — Autres pathologies de la cheville et du pied (fractures de contrainte) ; Pathologies osseuses de la hanche"
+ },
+ "goutte": {
+  "resume": "Dépôts d'urate monosodique (hyperuricémie) : accès aigus puis goutte tophacée chronique. Radio tardive : atteinte polyarticulaire asymétrique des membres inférieurs, tophus denses, érosions para-articulaires de grande taille prolongées de spicules (hallebarde), interligne longtemps préservé, sans raréfaction juxta-articulaire. Écho : signe du double contour.",
+  "source": "Cotten — Affections microcristallines"
+ },
+ "hee": {
+  "resume": "Tumeur vasculaire maligne rare de l'adulte, multifocale dans 40 % des cas au squelette. Les lésions sont épiphysaires, métaphysaires ou diaphysaires, ostéolytiques, souvent un peu expansives, avec destruction corticale et petite masse des parties molles (40 %). L'IRM détecte plus de lésions que la radiographie. Dans les tissus mous, l'hémangioendothéliome épithélioïde est ubiquitaire, parfois multicentrique, avec un potentiel métastatique de 20 à 30 %. Piège : des lésions multifocales des tissus mous peuvent être prises pour de multiples abcès.",
+  "source": "Cotten — Tumeurs osseuses ; Tumeurs des tissus mous"
+ },
+ "hemangiome": {
+  "resume": "Malformation vasculaire osseuse, souvent multiple, découverte après 40 ans, siège vertébral thoracique (70 %) puis crânien. Vertèbre : stries verticales en radiographie, aspect ponctué en coupes axiales TDM, signal graisseux (hyper T1/T2) ou mixte, sans infiltration épidurale. Crâne : aspect aréolaire « en nid d'abeilles », spicules radiaires. Hémangiome agressif (T3-T9, grossesse) : atteinte de l'arc postérieur, ostéolyse, corticales amincies, extension épidurale et paravertébrale, faible composante graisseuse, hypo T1 rehaussé ; le scanner aide à le reconnaître.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "hematome": {
+  "resume": "Lésion fréquente mais piège redoutable : un sarcome hémorragique peut le mimer. Signal IRM évolutif : aigu iso T1/hypo T2, subaigu halo hyper T1 (méthémoglobine), puis hyper T1 et T2, chronique liseré d'hémosidérine hypointense, niveaux possibles. Seul un fin anneau périphérique se rehausse. Alerte : absence de traumatisme net, enfant, flux Doppler intralésionnel, rehaussement nodulaire, siège atypique ; contrôle échographique à 3 semaines, sinon IRM ou biopsie.",
+  "source": "Cotten — Pseudo-tumeurs des tissus mous"
+ },
+ "hemophilie": {
+  "resume": "Déficit en F VIII ou F IX, lié à l'X, du garçon : hémarthroses répétées des articulations cibles (genou, cheville, coude). Radio : hypertrophie épiphysaire, élargissement de la fosse intercondylaire, géodes, pincement. IRM : synovite hypertrophique avec hémosidérine en hyposignal T1/T2, accentué en écho de gradient. La pseudo-tumeur hémophilique (1-2 %) est un hématome chronique encapsulé, de signal hétérogène avec anneau hypointense ; la forme sous-périostée donne un scalloping avec des travées radiaires. Piège : elle peut mimer un KOA.",
+  "source": "Cotten — Hémophilie"
+ },
+ "hibernome": {
+  "resume": "Tumeur bénigne rare de graisse brune, adulte jeune (pic 20-30 ans), cuisse (30 %), épaule, dos, cou ; souvent sous-cutanée, très vascularisée. IRM : signal « graisseux atypique », intermédiaire entre muscle et graisse en T1, partiellement supprimé par la saturation, très intense en STIR, septums rehaussés, gros vaisseaux intratumoraux (absents dans les liposarcomes). TEP : captation FDG parfois intense et variable dans le temps, pouvant dépasser celle d'un liposarcome. Biopsie percutanée à éviter (risque hémorragique).",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "hl": {
+  "resume": "Prolifération de cellules de Langerhans, surtout enfant (moyenne 3,5 ans), atteinte osseuse prédominante. Os plats (voûte pariétale, bassin) puis os longs diaphysaires. Radio : lacune à l'emporte-pièce aux bords « biseautés », séquestre « en bouton », aspect en carte de géographie ; scalloping endosté « bourgeonnant », appositions variables ; vertebra plana au rachis. IRM : lésion aspécifique avec œdème médullaire et des parties molles disproportionné, pouvant faire surestimer l'agressivité.",
+  "source": "Cotten — Histiocytoses"
+ },
+ "hpt": {
+  "resume": "Hypersécrétion de PTH, primitive (adénome) ou secondaire. Résorption osseuse sous-périostée (bord radial des phalanges intermédiaires), intracorticale et sous-chondrale. Tumeurs brunes (crâne, mandibule, côtes, bassin, fémurs) : ostéolyses bien limitées, excentrées, parfois expansives. IRM : hypo T1, hyper T2, rehaussement, niveaux liquide-liquide si elles sont kystiques. Elles se condensent après parathyroïdectomie. Piège : leur histologie ressemble à la TCG et au KOA ; rechercher les signes de résorption à distance.",
+  "source": "Cotten — Endocrinopathies"
+ },
+ "infarctus": {
+  "resume": "Nécrose ischémique de l'os spongieux métaphysodiaphysaire, illustrée dans la drépanocytose (enfant > 3 ans, fémur, tibia, humérus, souvent bilatérale). Radio retardée : ostéolyse mouchetée, lésion mixte ou condensation, contours « déchiquetés », calcifications périphériques, liseré dense. IRM : liseré périphérique hypo-intense secondaire, plage de signal graisseux « en carte de géographie », hypersignal T1 spontané à la phase aiguë, rehaussement en anneau ; hyposignal global au stade fibreux. Pièges : ostéomyélite, enchondrome ; sarcome secondaire rare.",
+  "source": "Cotten — Hémoglobinopathies et autres anémies ; Tumeurs osseuses"
+ },
+ "hydatide": {
+  "resume": "Larve d'Echinococcus granulosus (chien, mouton), régions d'élevage ; atteinte musculosquelettique rare (0,5-2,5 %). Rachis (44 %, thoracique) : ostéolyses multiloculaires respectant longtemps corticale et forme vertébrale, extension à l'arc postérieur et aux côtes très évocatrice, disque épargné. Muscles : kyste multivésiculaire à vésicules filles, signe du nénuphar en écho, paroi hypo T2. Alerte : ponction classiquement contre-indiquée (essaimage, anaphylaxie) ; sérologie souvent négative.",
+  "source": "Cotten — Infections rachidiennes ; Infections ostéoarticulaires extra-rachidiennes"
+ },
+ "kystemucoide": {
+  "resume": "Pseudo-tumeur kystique fréquente, para-articulaire (poignet, main, tarse, genou) ou parfois intraosseuse. Écho : masse anéchogène polylobée reliée à l'interligne articulaire par un pédicule, parfois long et sinueux ; l'échogénicité augmente en cas d'inflammation ou d'hémorragie, par exemple dans un kyste poplité fissuré. Les bursites superficielles (coude, genou) ou profondes peuvent aussi se révéler par une masse. Piège : une masse anéchogène encapsulée n'est pas forcément un kyste ; toute atypie de siège, d'échogénicité ou de signal impose une IRM.",
+  "source": "Cotten — Pseudo-tumeurs des tissus mous"
+ },
+ "koa": {
+  "resume": "Lésion ostéolytique expansive multiloculaire, adolescent et adulte jeune (80 % entre 10 et 20 ans) ; os longs (métaphyse excentrée, jamais épiphysaire si primitif), arc postérieur vertébral sans franchissement discal, bassin. Radio : ostéolyse soufflée à fine coque périostée, éperon de Codman, aspect « bulle de savon » en stabilisation ; la phase d'expansion active peut mimer un sarcome. IRM : logettes à niveaux liquide-liquide, septums rehaussés. Rechercher une lésion sous-jacente tissulaire (TCG, chondroblastome), surtout après 20 ans ; biopsier la composante solide.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "koe": {
+  "resume": "Lésion bénigne lytique à contenu liquidien, 5-15 ans, garçon ; humérus proximal (56 %) puis fémur proximal ; calcanéus et os iliaque après 20 ans. Radio : lacune métaphysaire centrale, uniloculaire, ovoïde, allongée dans l'axe de l'os, corticale amincie, sans réaction périostée hors fracture. Signe du fragment tombé si fracture. TDM/IRM : contenu liquidien, niveau possible si fracture, rehaussement de la fine paroi. Diagnostic différentiel : KOA si aspect pluriloculaire expansif.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "lms": {
+  "resume": "Sarcome à différenciation musculaire lisse de l'adulte d'âge moyen ou âgé, surtout rétropéritonéal ; il représente 10 à 15 % des sarcomes des membres. C'est le sarcome le plus fréquent de la paroi des gros vaisseaux (veine cave inférieure). Les métastases sont hépatiques et pulmonaires. L'imagerie n'est pas spécifique et l'atteinte osseuse adjacente est inhabituelle. La forme osseuse primitive, exceptionnelle, donne une ostéolyse métaphysaire mal limitée ; il faut d'abord éliminer une métastase.",
+  "source": "Cotten — Tumeurs des tissus mous ; Tumeurs osseuses"
+ },
+ "lcgpo": {
+  "resume": "Lésion à cellules géantes des petits os (granulome réparateur à cellules géantes), apparentée au KOA solide, entre 10 et 30 ans ; mandibule, maxillaire et petits os des mains et des pieds, rarement multiple. Ostéolyse expansive épargnant habituellement l'épiphyse, de sémiologie superposable à celle de la TCG ; IRM : signal intermédiaire en T1 et T2. Histologie identique à la tumeur brune : exclure une hyperparathyroïdie par la biologie.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "leucemie": {
+  "resume": "Enfant (2-5 ans, LAL) : atteinte osseuse fréquente, parfois révélatrice ; bandes claires métaphysaires bilatérales et symétriques, ostéopénie diffuse, lésions ostéolytiques, appositions périostées, tassements. Adulte : ostéopénie diffuse et discrètes ostéolyses (crâne, bassin, os longs proximaux) mimant métastases ou myélome. IRM : infiltration médullaire diffuse hypo T1/hyper T2 fat sat, rehaussée. Piège : arthralgies sans synovite mimant une arthrite juvénile ; sarcome myéloïde (chlorome) dans les LAM.",
+  "source": "Cotten — Néoplasies lymphoïdes et myéloïdes"
+ },
+ "lipome": {
+  "resume": "Tissus mous : tumeur la plus fréquente, sous-cutanée ou intramusculaire. Densité et signal sont ceux de la graisse, avec une fine capsule et des septums de moins de 2 mm peu rehaussés ; en écho, masse lenticulaire parallèle à la peau. Lipome intraosseux, souvent fortuit (calcanéus, région trochantérienne) : ostéolyse cerclée de sclérose, de signal graisseux, avec nécrose et calcifications centrales aux stades II-III. Piège : une grande taille ou des septums épais ou nodulaires font évoquer une tumeur adipeuse atypique.",
+  "source": "Cotten — Tumeurs des tissus mous ; Tumeurs osseuses"
+ },
+ "liposarcome": {
+  "resume": "Sarcome fréquent de l'adulte, profond (fascias intermusculaires), cuisse et rétropéritoine, souvent volumineux et plurinodulaire. TAA/liposarcome bien différencié (MDM2) : graisse prédominante avec septums épais > 2 mm ou nodulaires rehaussés, hyper STIR. Dédifférencié : contingent nodulaire non graisseux > 2 cm (biopsie ciblée). Myxoïde (40-60 ans) : plages pseudo-kystiques hyper T2 mais rehaussées, métastases extrapulmonaires (tissus mous, os). Pléomorphe : sans graisse, non spécifique. Forme osseuse primitive rare (20-40 ans, tibia, fémur, humérus), de haut grade.",
+  "source": "Cotten — Tumeurs des tissus mous ; Tumeurs osseuses"
+ },
+ "lymphome": {
+  "resume": "Lymphome osseux primitif : LNH B à grandes cellules, pic vers 40 ans, os longs métaphysodiaphysaires. Ostéolyse perméative ou mitée, appositions agressives, séquestres ; contraste entre infiltration étendue des parties molles et ostéolyse corticale modérée, et entre bon état général et lésion inquiétante. IRM : hypo T1, T2 variable. Hodgkin : adulte jeune, squelette axial, lésions lytiques ou ostéocondensantes (« vertèbre ivoire » homogène sans hypertrophie, contrairement au Paget), érosion au contact d'adénopathies.",
+  "source": "Cotten — Néoplasies lymphoïdes et myéloïdes"
+ },
+ "paget": {
+  "resume": "Remodelage osseux excessif et désorganisé, mono- ou polyostotique, après 45 ans. Radio : front de résorption en « V » aux os longs, épaississement cortical, travées grossières, os augmenté de volume ; vertèbre « en cadre » ou « ivoire ». IRM : moelle de signal graisseux habituellement conservé. Alerte : ostéolyse agressive, rupture corticale, masse des parties molles ou hyposignal T1 médullaire font craindre une dégénérescence sarcomateuse (bassin, fémur, humérus ; ostéosarcome dans 50 à 60 % des cas).",
+  "source": "Cotten — Ostéopathies"
+ },
+ "mv": {
+  "resume": "Anomalies de la vasculogenèse présentes dès la naissance, croissant avec l'enfant sans régresser ; flux lent (veineuse, lymphatique, capillaire) ou rapide (MAV). Malformation veineuse, la plus fréquente : phlébolithes (spécifiques), canaux tubulés compressibles en écho, hyper T2 marqué séparés par de la graisse, sans syndrome de masse, rehaussement lent et progressif. MAV : vaisseaux dilatés vides de signal sans masse tissulaire, rehaussement en 5-10 s. Pièges : ex-« hémangiome » intramusculaire = malformation veineuse, parfois riche en graisse (pseudo-lipome).",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "mastocytose": {
+  "resume": "Prolifération de mastocytes ; forme systémique (10 %) avec atteinte osseuse et médullaire dans 90 %, squelette axial et appendiculaire proximal, tryptase > 20 µg/L. Radio/TDM : raréfaction osseuse diffuse avec tassements (signe le plus fréquent), ostéocondensation diffuse ou en plages mimant des métastases, petites ostéolyses cerclées d'un liseré dense, aspects souvent associés. IRM : infiltration plurifocale ou diffuse hypo T1, hypo ou hyper T2. L'ostéocondensation suggérerait une forme plus agressive.",
+  "source": "Cotten — Néoplasies lymphoïdes et myéloïdes"
+ },
+ "meta": {
+  "resume": "Tumeur osseuse maligne la plus fréquente de l'adulte (sein, prostate, poumon, rein, thyroïde ; neuroblastome chez l'enfant). Elle siège dans la moelle rouge axiale. Les lésions sont lytiques (75 %), mixtes ou condensantes (prostate, sein), multiples, de tailles inégales. Une lyse corticale est un signe d'appel (vertèbre « borgne ») ; la réaction périostée est rare. IRM : hypo T1, rehaussement marqué, pas de chute du signal en opposition de phase. Piège : la métastase condensante a des contours flous non spiculés, contrairement à l'énostose.",
+  "source": "Cotten — Métastases"
+ },
+ "myelofibrose": {
+  "resume": "Myélofibrose primitive, syndrome myéloprolifératif le plus rare, après 50 ans : splénomégalie, hématies en larmes, myélémie ; une myélofibrose secondaire a la même sémiologie. Radio/TDM : ostéocondensation diffuse ou hétérogène du squelette axial et des os longs proximaux, vertèbres « en maillot de rugby », épaississement cortical endosté ou périosté ; ostéolyses = métaplasie myéloïde ou transformation blastique. IRM : moelle en hyposignal T1 et T2, rehaussée, avec extension appendiculaire de la moelle hématopoïétique.",
+  "source": "Cotten — Néoplasies lymphoïdes et myéloïdes"
+ },
+ "myelome": {
+  "resume": "Prolifération plasmocytaire clonale, âge médian 70 ans. Radio : lacunes multiples « à l'emporte-pièce » sans liseré ni réaction périostée (crâne, squelette proximal), scalloping endosté, lésions expansives, ostéopénie diffuse parfois microgéodique, tassements ; 30-70 % de faux négatifs. IRM : lésions focales, aspect « poivre et sel » ou infiltration diffuse hypo T1/hyper T2. Plasmocytome : sujet plus jeune (50 ans), ostéolyse expansive vertébrale à corticale respectée et travées épaisses, franchissement discal possible.",
+  "source": "Cotten — Dyscrasies plasmocytaires"
+ },
+ "mo": {
+  "resume": "Masse ossifiée bénigne intramusculaire de l'adolescent ou de l'adulte jeune, avec un traumatisme dans la moitié des cas. Radio/TDM : calcifications périphériques après 2 à 6 semaines puis ossification centripète (phénomène de zone), séparée de l'os par un liseré clair. IRM précoce trompeuse : masse mal limitée en hypersignal T2, rehaussement périphérique, œdème important. Piège : elle peut mimer un sarcome ; en cas de doute, faire un TDM ou un contrôle à 3-4 semaines plutôt qu'une biopsie précoce.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "myxofibrosarcome": {
+  "resume": "Sarcome fréquent entre 50 et 80 ans, variante myxoïde de l'ancien histiocytome fibreux malin, siégeant aux membres et ceintures. Moitié dermohypodermique (multiples nodules gélatineux ou fermes), moitié profonde (fascia, muscle, masse unique) ; masse indolore de croissance lente. L'aspect d'imagerie dépend du contenu myxoïde : tumeur pseudo-kystique en T2, à ne pas prendre pour un kyste (vérifier le rehaussement). Formes de bas grade non métastatiques.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "myxome": {
+  "resume": "Tumeur bénigne à matrice myxoïde hypocellulaire, adulte de 40-60 ans, femme, intramusculaire (cuisse > 50 %). Radio normale. Écho : masse hypoéchogène bien limitée, pas un kyste. IRM : aspect pseudo-kystique (hypo T1, hyper T2 intense) mais rehaussement hétérogène diffus, fine couronne graisseuse périphérique et œdème musculaire adjacent fréquents. Multiples : rechercher un syndrome de Mazabraud (dysplasie fibreuse associée).",
+  "source": "Cotten — Tumeurs des tissus mous ; Ostéochondrodysplasies"
+ },
+ "neuroblastome": {
+  "resume": "Tumeur de la crête neurale et 3e cancer de l'enfant ; il sécrète des catécholamines dans 80 à 90 % des cas. La masse est rétropéritonéale ou médiastinale postérieure, avec une extension intracanalaire possible. TDM : masse volumineuse et hétérogène, calcifiée dans 80 à 90 % des cas, qui englobe les vaisseaux. IRM : restriction de la diffusion. Le bilan d'extension repose sur la MIBG. Les métastases osseuses (avant 5 ans) sont multiples, avec bandes claires métaphysaires et appositions périostées, et miment une leucémie ou un Ewing.",
+  "source": "Cotten — Tumeurs des tissus mous ; Métastases ; Néoplasies lymphoïdes et myéloïdes"
+ },
+ "nf": {
+  "resume": "NF1 (von Recklinghausen, autosomique dominante) : taches café au lait, neurofibromes dont plexiformes pathognomoniques, nodules de Lisch. Os : dysplasie du sphénoïde, scalloping vertébral postérieur et ectasie durale, cyphoscoliose dysplasique courte et angulaire, incurvation et pseudarthrose du tibia. NF2 : schwannomes vestibulaires bilatéraux ; NF3 : schwannomatose. Croissance rapide d'un neurofibrome : craindre une TMGNP.",
+  "source": "Cotten — Autres affections ; Tumeurs des tissus mous"
+ },
+ "oan": {
+  "resume": "Destruction articulaire sur neuropathie (diabète, syringomyélie, traumatisme médullaire, lèpre, tabès) ; indolence relative et déformations rapides. Forme hypertrophique (genou, pied) : ostéosclérose, fragmentation, ostéophytose exubérante, débris intra-articulaires ; forme atrophique (épaule, membre supérieur) : résorption avec amputation en coin des épiphyses. Topographie orientant l'étiologie : épaule ou doigts → syringomyélie. IRM peu utile au diagnostic : l'œdème osseux et des parties molles peut égarer.",
+  "source": "Cotten — Diabète et ostéoarthropathies nerveuses"
+ },
+ "ob": {
+  "resume": "Tumeur ostéoformatrice bénigne proche de l'ostéome ostéoïde mais de plus de 2 cm, observée entre 10 et 30 ans. Elle siège à l'arc postérieur du rachis, aux os longs, au talus et aux os plats. Radio/TDM : ostéolyse expansive bien limitée à fine coque, avec calcifications internes et une sclérose réactionnelle variable. IRM : aspect aspécifique, œdème périlésionnel intense (« halo lumineux »). Piège : une extension au corps vertébral ou une forme épithélioïde peuvent mimer une tumeur maligne.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "osteochondrome": {
+  "resume": "Tumeur osseuse bénigne la plus fréquente, découverte avant 20 ans ; métaphysaire (fémur distal, humérus, tibia proximal), excroissance sessile ou pédiculée orientée vers la diaphyse. Signe clé : continuité corticale et médullaire avec l'os porteur ; coiffe cartilagineuse hyper T2, < 5 mm (au plus quelques mm) après la croissance. Complications : fracture, bursite, compression vasculonerveuse. Chondrosarcome secondaire (< 1 % si solitaire, 3-5 % si exostoses multiples ; bassin, ceintures) : douleur, croissance après maturité, coiffe > 1-1,5 cm nodulaire, ostéolyse, masse calcifiée.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "odr": {
+  "resume": "Trouble minéral et osseux de l'insuffisance rénale chronique : ostéite fibreuse (hyperparathyroïdie secondaire), ostéomalacie, ostéopathie adynamique ou mixte. Résorption osseuse sous-périostée, intracorticale, sous-chondrale ; ostéosclérose plus fréquente que dans l'hyperparathyroïdie primitive (vertèbres en « maillot de rugby ») ; tumeurs brunes plus rares ; calcifications vasculaires et des tissus mous.",
+  "source": "Cotten — Troubles minéraux et osseux associés à la maladie rénale"
+ },
+ "osteomalacie": {
+  "resume": "Défaut de minéralisation de l'ostéoïde, le plus souvent par carence en vitamine D ; chez l'enfant, il réalise un rachitisme. Adulte : travées floues, pseudo-fractures de Looser-Milkman bilatérales et symétriques, vertèbres biconcaves. Rachitisme : physes élargies, métaphyses floues, frangées et cupuliformes, image « en toit de pagode », os arqués. L'IRM n'a pas d'intérêt diagnostique. Piège : les fractures du rachitisme ne doivent pas faire conclure à tort à des sévices.",
+  "source": "Cotten — Ostéopathies"
+ },
+ "oo": {
+  "resume": "Tumeur bénigne de 7 à 25 ans, prédominance masculine, douleur nocturne calmée par l'aspirine ; os longs (fémur, tibia), diaphysaire et cortical, aussi intraspongieux, sous-périosté, intra-articulaire, arc postérieur rachidien (scoliose douloureuse). Radio : épaississement cortical fusiforme masquant parfois le nidus < 1 cm. TDM en coupes fines : nidus lacunaire avec calcification centrale. IRM trompeuse : œdème médullaire et des parties molles important ; nidus rehaussé à la phase artérielle. Forme intra-articulaire : synovite, peu de sclérose, diagnostic tardif.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "infection": {
+  "resume": "Ostéomyélite hématogène surtout de l'enfant, métaphysaire. Radio : tuméfaction des parties molles précoce, puis ostéolyse mal limitée après 1-2 semaines. Écho : décollement ou abcès sous-périosté. IRM (signes dès 3-5 jours) : hypo T1, hyper T2, rehaussement, abcès ; franchissement focal du cartilage de croissance évocateur d'infection plutôt que de tumeur. Forme subaiguë : abcès de Brodie avec signe de la pénombre. Chronique : séquestres. Différentiels : Ewing, leucémie.",
+  "source": "Cotten — Infections ostéoarticulaires extra-rachidiennes"
+ },
+ "onc": {
+  "resume": "Nécrose épiphysaire, surtout de la tête fémorale chez l'adulte jeune (corticoïdes, alcool, drépanocytose, barotraumatisme, traumatisme). Radio : normale au début, puis condensation arciforme, dissection sous-chondrale (« coquille d'œuf »), perte de sphéricité, arthrose (stades de Ficat). IRM (sensibilité > 99 %) : liseré de démarcation en hyposignal T1, pathognomonique, et « double contour » en T2. Le pronostic dépend du volume nécrotique et de la fracture sous-chondrale. Rechercher une atteinte controlatérale.",
+  "source": "Cotten — Pathologies osseuses de la hanche"
+ },
+ "osteopetrose": {
+  "resume": "Ostéopétrose : défaut de résorption ostéoclastique héréditaire. Forme maligne infantile (récessive) : ostéocondensation diffuse, insuffisance médullaire, rétrécissement des foramens de la base, métaphyses « en flacon d'Erlenmeyer ». Forme adulte de type II (Albers-Schönberg) : vertèbres « en maillot de rugby », « os dans l'os » du bassin, fractures, coxa vara ; IRM : moelle en hyposignal global. Pycnodysostose (cathepsine K) : condensation uniforme sans striation, petite taille, os wormiens, fontanelle persistante, angle mandibulaire hypoplasique, acro-ostéolyse distale.",
+  "source": "Cotten — Ostéochondrodysplasies"
+ },
+ "osteosarcome": {
+  "resume": "Tumeur osseuse maligne primitive la plus fréquente, 10-24 ans ; métaphyse fémorale distale ou tibiale proximale, extension épiphysaire (80 %). Radio : ostéocondensation « nuageuse » (os et parties molles), lyse perméative, réaction en feu d'herbe ou poil de brosse, triangle de Codman. IRM avant biopsie : os entier et articulations adjacentes (skip métastases, extension transphysaire et articulaire, parties molles). TDM thoracique systématique : 20 % métastatiques au diagnostic.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "pr": {
+  "resume": "Rhumatisme inflammatoire chronique le plus fréquent : synovite bilatérale et symétrique des mains, des poignets et des avant-pieds. Radio : tuméfaction, raréfaction en bande, érosions marginales sans reconstruction (styloïde ulnaire, MCP, 5e tête métatarsienne), pincement diffus. Écho et IRM détectent tôt les synovites et les ténosynovites ; une synovite persistante prédit la progression. Au rachis cervical, rechercher un diastasis atlanto-axoïdien antérieur, risque d'instabilité sévère.",
+  "source": "Cotten — Polyarthrite rhumatoïde"
+ },
+ "rx": {
+  "resume": "Moelle irradiée : phase œdémato-hémorragique (1re-2e semaines) puis transformation graisseuse (hypersignal T1). Complications : troubles de croissance chez l'enfant, ostéoradionécrose après 1 à 3 ans (ostéopénie et plages de sclérose), fractures par insuffisance dans le champ (souvent 3 à 12 mois, sacrum), tumeurs radio-induites (bénignes vers 5 ans, malignes 11-14 ans).",
+  "source": "Cotten — Ostéopathies"
+ },
+ "rms": {
+  "resume": "Tumeur maligne des tissus mous la plus fréquente de l'enfant. Sous-type embryonnaire chez l'enfant (cervicofacial, génito-urinaire, membres 9 %) ; alvéolaire et pléomorphe chez l'adulte jeune ou âgé, aux membres. Imagerie non spécifique ; envahissement osseux fréquent (25 %). Métastases pulmonaires puis osseuses ; pronostic moins bon chez l'adulte.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "sapho": {
+  "resume": "Ostéite aseptique chronique par poussées : SAPHO chez l'adulte jeune, OCRM chez l'enfant. Il s'associe à une pustulose palmoplantaire ou à une acné sévère. Siège principal : paroi thoracique antérieure. Radio/TDM : ostéocondensation, hyperostose, ossification costoclaviculaire, érosions et ankylose sternocostales ; atteinte possible du rachis (spondylite, spondylodiscite) et du bassin. IRM : œdème osseux et des parties molles. Pièges : masse rétrosternale pseudo-tumorale ; atteinte vertébrale qui mime une infection.",
+  "source": "Cotten — Syndrome SAPHO et ostéomyélite chronique récurrente multifocale"
+ },
+ "sarcoidose": {
+  "resume": "Granulomatose épithélioïde non caséeuse de l'adulte jeune ; atteinte osseuse rare (1-15 %), surtout dactylite des phalanges moyennes et distales (ostéite de Perthes-Jüngling) : trabéculation réticulée « en nid d'abeilles », lacunes pseudo-kystiques, ostéolyse corticopériostée sans réaction périostée, acro-ostéosclérose, articulations respectées. Os longs et rachis : lésions lytiques ou condensantes non spécifiques en IRM (graisse intralésionnelle utile contre la métastase). Muscle : nodules avec cicatrice centrale hypo-intense (dark star, three stripes). Arthrite aiguë des chevilles (Löfgren).",
+  "source": "Cotten — Maladies systémiques et vascularites"
+ },
+ "scc": {
+  "resume": "Sarcome rare à différenciation mélanocytaire (« mélanome malin des tissus mous »), 20-40 ans, membre inférieur (pied et cheville 43 %), intimement lié à un tendon, une aponévrose ou un fascia. IRM : aspect faussement bénin, homogène, sans nécrose ni œdème ; hypersignal T1 spontané dans la moitié des cas (mélanine), extension fusiforme le long du tendon, rehaussement modéré à intense. Adénopathies fréquentes (50 %), pronostic mauvais.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "alveolaire": {
+  "resume": "Sarcome rare de haut grade (fusion ASPSCR1-TFE3) de l'adulte jeune (10-30 ans), à prédominance féminine. Masse profonde des membres inférieurs, de croissance lente, parfois pulsatile, qui mime une malformation vasculaire ; les métastases sont fréquentes, parfois très tardives. IRM : masse bien limitée, modérément hyperintense en T1, hétérogène en T2, avec des vides de signal serpigineux et un rehaussement intense. L'association hypersignal T1 et vides de signal est évocatrice.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "ewing": {
+  "resume": "Sarcome à petites cellules rondes (EWSR1-FLI1), 2e tumeur osseuse maligne de l'enfant et de l'adolescent (2e décennie), parfois fébrile avec syndrome inflammatoire ; fémur, os iliaque, tibia, côtes, siège métaphysodiaphysaire ou diaphysaire. Radio : ostéolyse perméative ou mitée centrée, destruction corticale, périostite « en bulbe d'oignon » ou spiculée. IRM : remplacement médullaire, volumineuse masse des parties molles circonférentielle, signal T2 bas à intermédiaire, œdème rare. Pièges : forme condensante, ostéomyélite subaiguë.",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "epithelioide": {
+  "resume": "Sarcome le plus fréquent de la main et du poignet entre 6 et 25 ans (forme classique, membre supérieur) ; forme proximale plus âgée (racine des membres inférieurs, périnée). Nodules sous-cutanés ou ulcération, croissance lente. TDM/IRM : masse souvent infiltrative, mal limitée, parfois plurinodulaire, progressant le long des fascias et paquets vasculonerveux, œdème péritumoral marqué, nécrose ; remodelage osseux ou réaction périostée possibles. Métastases lymphonodales fréquentes.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "sip": {
+  "resume": "Sarcome indifférencié pléomorphe (ex-HFM), diagnostic d'exclusion. Dans les tissus mous, c'est un sarcome fréquent du sujet âgé, parfois radio-induit : masse intramusculaire bien délimitée, souvent sans œdème, de signal variable (hémorragie, nécrose, fibrose). Dans l'os, il est rare (5e-7e décennie), centré sur le genou : ostéolyse mitée ou perméative, rupture corticale, peu de périostite. Il est secondaire dans 28 % des cas (Paget, infarctus, irradiation), avec un pronostic plus sombre.",
+  "source": "Cotten — Tumeurs des tissus mous ; Tumeurs osseuses"
+ },
+ "tbgp": {
+  "resume": "Tumeurs bénignes des gaines nerveuses : masse fusiforme sur un trajet nerveux, nerf entrant et sortant, split fat sign, signe de la cible en T2 (centre fibreux, périphérie myxoïde), aspect fasciculé, forme en sablier foraminale, dénervation musculaire. Schwannome (40-50 ans) : globulaire, excentré au nerf, remaniements kystiques fréquents, énucléable. Neurofibrome (20-30 ans, NF1) : fusiforme, centré, signe de la cible plus fréquent, rehaussement central ; forme plexiforme pathognomonique de NF1. Radiographies souvent normales.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "stb": {
+  "resume": "Phacomatose autosomique dominante (TSC1/TSC2) : épilepsie, retard mental, adénomes sébacés, angiomyolipomes rénaux, lymphangioléiomyomatose. Anomalies osseuses purement radiologiques (60 %) : aux phalanges, métacarpiens et métatarsiens, petites lésions ostéolytiques pseudo-kystiques corticales et spongieuses avec épaississements corticaux irréguliers ; au rachis, bassin, crâne et côtes, lésions ostéocondensantes ovalaires ou en plages. Piège : elles ne fixent pas en scintigraphie, contrairement aux métastases.",
+  "source": "Cotten — Autres affections"
+ },
+ "spa": {
+  "resume": "Rhumatisme inflammatoire axial et enthésitique de l'adulte jeune (HLA-B27). Sacro-iliite bilatérale et symétrique : érosions, condensation, ankylose. En IRM, l'œdème-ostéite sous-chondral est obligatoire pour retenir une sacro-iliite active. Rachis : spondylite de Romanus (vertèbres carrées), syndesmophytes, spondylodiscite d'Andersson. Psoriasis : atteinte des IPD avec proliférations, « pencil-in-cup », ankylose, dactylite, sacro-iliite parfois unilatérale, parasyndesmophytes. Piège : fracture transversale sur rachis ankylosé.",
+  "source": "Cotten — Spondyloarthrites"
+ },
+ "synovialosarcome": {
+  "resume": "Sarcome de l'adulte jeune (15-40 ans), membres inférieurs, surtout fosse poplitée, périarticulaire mais sans lien avec la synoviale ; translocation t(X;18). Radio : normale dans la moitié des cas, calcifications périphériques dans un tiers, érosion osseuse d'allure bénigne. IRM : masse multilobulée bien limitée, « triple signal » en T2 (hypo, intermédiaire, hyper), niveaux liquide-liquide, rehaussement précoce hétérogène. Piège : petite taille, croissance lente et homogénéité donnant un aspect faussement bénin, voire kystique.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "svn": {
+  "resume": "Tumeur à cellules géantes ténosynoviale : forme diffuse (synovite villonodulaire), adulte de 30-50 ans, genou (80 %), monoarticulaire, hémarthrose. Radio : érosions bordées de sclérose aux zones de réflexion synoviale (hanche, épaule), interligne et densité préservés, pas de calcification. IRM : synoviale nodulaire avec hémosidérine en hyposignal T2, efflorescence en écho de gradient, rehaussement. Forme localisée : nodule intra-articulaire (graisse de Hoffa) ou de gaine tendineuse (doigts).",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "tb": {
+  "resume": "Première cause mondiale de spondylodiscite, chez le migrant, l'immunodéprimé ou le sujet âgé. Mal de Pott (thoracolombaire) : disque longtemps préservé, larges érosions en miroir, séquestres, abcès paravertébraux froids volumineux à paroi fine, calcifiés, avec extension sous-ligamentaire. Arthrite : triade de Phemister (ostéopénie, érosions marginales, pincement tardif), pannus marqué et grains de riz en IRM. Piège : le tableau est indolent et le syndrome inflammatoire inconstant.",
+  "source": "Cotten — Infections rachidiennes ; Infections ostéoarticulaires extra-rachidiennes"
+ },
+ "tcg": {
+  "resume": "Tumeur bénigne localement agressive, adulte de 20 à 30 ans après fusion physaire, légère prédominance féminine ; « près du genou, loin du coude » (fémur distal, tibia proximal, radius distal), sacrum. Ostéolyse épiphysométaphysaire excentrée atteignant l'os sous-chondral, contours nets sans sclérose, sans calcification, aspect pseudo-trabéculaire, expansion ou rupture corticale. IRM : plages hypo/iso T2 (cellularité, hémosidérine), KOA secondaire fréquent. Exclure une tumeur brune ; métastases pulmonaires bénignes possibles (2 %).",
+  "source": "Cotten — Tumeurs osseuses"
+ },
+ "desmoide": {
+  "resume": "Fibromatose profonde localement agressive, sans métastase, adulte jeune ; abdominale (femme jeune, grossesse, cicatrice), extra-abdominale (épaule, paroi thoracique, cuisse) ou intra-abdominale (syndrome de Gardner). IRM : masse intermusculaire infiltrante, extension linéaire le long des fascias (fascial tail sign), signal variable selon la maturation, bandes hypointenses sur toutes les séquences (collagène) évocatrices. Os adjacent érodé sans envahissement médullaire. Récidives fréquentes (30-40 %).",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "tfs": {
+  "resume": "Tumeur fibreuse de malignité intermédiaire (fusion NAB2-STAT6) de l'adulte d'âge moyen (membre inférieur, rétropéritoine, région cervicofaciale) ; elle englobe la plupart des anciens hémangiopéricytomes. Masse ronde, polylobée, bien délimitée, à croissance lente, avec une hypoglycémie possible (IGF2). IRM : lésion hypervascularisée avec pédicule et vides de signal, contingent fibreux en hypo T2, rehaussement hétérogène parfois tardif. Facteurs de malignité : taille > 10 cm, nécrose, marges infiltrantes.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "tmgnp": {
+  "resume": "Sarcome de haut grade des gros troncs nerveux (sciatique, plexus), 20-50 ans, NF1 dans 25-70 % des cas (dégénérescence d'un neurofibrome plexiforme) ou radio-induit. Douleur intense et déficit neurologique, croissance rapide. Masse souvent ≥ 5 cm, hétérogène (nécrose, hémorragie), contours flous, œdème des tissus mous adjacents, rehaussement annulaire périphérique ; signe de la cible ou aspect fasciculé rares et focaux. TEP-FDG : SUVmax élevée (seuil proposé 6,1 vs schwannome) ; guide la biopsie.",
+  "source": "Cotten — Tumeurs des tissus mous"
+ }
+}

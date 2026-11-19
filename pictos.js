@@ -81,6 +81,12 @@ window.GEA_PICTOS = (() => {
   P.sacrum = '<path class="bo" d="M8 6h32l-4 16-6 14-4 8h-4l-4-8-6-14z"/><path class="sk th" d="M14 10h20M16 18h16M19 26h10"/>' +
     '<circle class="sk" cx="16" cy="14" r="1.6"/><circle class="sk" cx="32" cy="14" r="1.6"/><circle class="sk" cx="18" cy="22" r="1.5"/><circle class="sk" cx="30" cy="22" r="1.5"/>' +
     '<ellipse class="le" cx="27" cy="29" rx="5" ry="4"/>';
+  // tendons & enthèses : os + tendon qui s'y insère
+  const TEND = '<path class="bo" d="M6 30h24l6 6v8H6z"/><path class="le" d="M30 30c3-8 6-16 12-26l3 1c-5 10-8 18-10 27z"/>';
+  P.tend = TEND;
+  P.tendon = TEND + '<ellipse class="dk" cx="38.5" cy="15" rx="3.2" ry="5" transform="rotate(25 38.5 15)" opacity=".8"/>';
+  P.gaine = TEND + '<path class="ln" d="M28 24c3-7 6-13 10-20M37 26c2-7 5-14 9-20" stroke-dasharray="2 2"/>';
+  P.enthese = TEND + '<circle class="dot" cx="32" cy="30" r="3.4"/>';
   Object.entries({ fos: "os", fart: "art", fsys: "metab", fped: "enfant" }).forEach(([k, v]) => { P[k] = P[v]; });
   const svg = (name, size = 48) => `<svg class="px" viewBox="0 0 48 48" width="${size}" height="${size}" aria-hidden="true">${P[name] || P.os}</svg>`;
   return { svg, has: n => n in P };

@@ -181,11 +181,80 @@
   qClear.onclick = () => { qInput.value = ""; qClear.hidden = true; location.hash = "#/"; route(); };
 
   // ------------------------------------------------------------ vues
+  // ------------------------------------------------------------ orientation décisionnelle (accueil)
+  // chaque étape = un critère ; chaque réponse = une gamme (ou une région = union de gammes).
+  // Le diagnostic restant = intersection des diagnostics des réponses choisies ; une réponse
+  // n'est proposée que si elle laisse au moins un diagnostic.
+  const W = {
+    os: { label: "Os", px: "os", gid: "os", steps: [
+      { t: "Nombre de lésions", o: [["u", "Lésion unique", []], ["s052", "Ostéolyses plurifocales"], ["s095", "Condensation diffuse ou multifocale"],
+        ["s053", "Stries intracorticales"], ["s139", "Atteinte osseuse + tissus mous"]] },
+      { t: "Localisation", o: [["s301", "Épiphysaire"], ["s302", "Métaphysaire"], ["s303", "Diaphysaire"], ["s311", "Surface de l'os"],
+        ["s018", "Corticale"], ["vertebre", "Vertèbre", ["s141", "s145", "s036", "s041", "s034", "s038"]],
+        ["sacrum", "Sacrum", ["s146", "s178"]], ["crane", "Crâne", ["s305", "s309"]], ["s039", "Côte"], ["s142", "Doigts"]] },
+      { t: "Aspect vertébral", if: "vertebre", o: [["s141", "Ostéolyse vertébrale unique"], ["s036", "Vertèbre ivoire"], ["s145", "Vertèbre évidée (« mini-brain »)"],
+        ["s041", "Forme anormale (H, rostre, plana)"], ["s034", "Franchit le disque"], ["s038", "Pseudo-spondylodiscite"]] },
+      { t: "Sacrum", if: "sacrum", o: [["s146", "Ostéolyse sacrée"], ["s178", "Masse pré-sacrée"]] },
+      { t: "Contours (Lodwick)", o: [["s012", "IA1 — liseré net"], ["s013", "IA2 — condensation dégressive"], ["s014", "IB — sans sclérose"],
+        ["s015", "IC, II, III — mal limitée, mitée, perméative"]] },
+      { t: "Aspect & contenu", o: [["s138", "Soufflante (coque)"], ["s144", "« In and out »"], ["s032", "Réaction inflammatoire"],
+        ["s030", "Niveaux liquide-liquide"], ["s028", "Trabéculations"], ["s101", "Séquestre"], ["s010", "Sinueuse"]] },
+      { t: "Périoste", o: [["s020", "Unilamellaire continue"], ["s022", "Plurilamellaire ou spiculée"], ["s021", "Compacte"],
+        ["s024", "Encoches endostées ± hyperostose"], ["s023", "Appositions diffuses"]] },
+    ] },
+    tm: { label: "Parties molles", px: "tm", gid: "tm", steps: [
+      { t: "Nombre de lésions", o: [["u", "Masse unique", []], ["s174", "Masses multiples"]] },
+      { t: "Siège", o: [["s151", "Superficielle (sous-cutanée)"], ["s155", "Musculaire"], ["s153", "Juxta-articulaire ou tendineuse"],
+        ["s157", "Nerf, pédicule vasculo-nerveux"], ["s175", "Paravertébrale"], ["s178", "Pré-sacrée"]] },
+      { t: "Signal IRM", o: [["s310", "Hypersignal T1"], ["s167", "Hypersignal T2 liquidien ou myxoïde"], ["s168", "Hyposignal T1 et T2"],
+        ["s158", "Triple signal T2"], ["s164", "Structure stratifiée"]] },
+      { t: "Contenu", o: [["s049", "Calcifications"], ["s162", "Hypervasculaire (flow voids)"], ["s171", "Hémorragique"], ["s170", "« Fascial tail sign »"]] },
+    ] },
+  };
+  const optIds = o => o[2] || [o[0]];
+  const entsOf = ids => new Set(ids.flatMap(id => (G[id] ? G[id].ents : [])));
+  const inter = (a, b) => new Set([...a].filter(x => b.has(x)));
+  function wizard(dom, picks) {
+    const w = W[dom]; if (!w) return home();
+    let pool = entsOf(w.steps.flatMap(st => st.o.flatMap(optIds)));
+    const chosen = []; // [étape, réponse]
+    const steps = w.steps.filter(st => !st.if || picks.includes(st.if));
+    let i = 0;
+    for (; i < steps.length && i < picks.length; i++) {
+      const o = steps[i].o.find(x => x[0] === picks[i]);
+      if (o && optIds(o).length) pool = inter(pool, entsOf(optIds(o)));
+      chosen.push([steps[i], o]);
+    }
+    const base = `#/o/${dom}`;
+    let h = `<div class="wz-head" style="${cvar(w.gid)}">${PX.svg(w.px, 40)}<div><b>${esc(w.label)}</b><span>${pool.size} diagnostic${pool.size > 1 ? "s" : ""} possible${pool.size > 1 ? "s" : ""}</span></div><a class="wz-reset" href="#/">Recommencer</a></div>`;
+    if (chosen.length) h += `<ol class="wz-path">${chosen.map(([st, o], k) => `<li><a href="${base}/${picks.slice(0, k).join("/")}"><span>${esc(st.t)}</span><b>${o ? esc(o[1]) : "—"}</b></a></li>`).join("")}</ol>`;
+    // prochaine étape utile : on saute celles dont aucune réponse ne réduit la liste
+    let next = null;
+    for (let k = i; k < steps.length && pool.size > 1; k++) {
+      const opts = steps[k].o.map(o => [o, optIds(o).length ? inter(pool, entsOf(optIds(o))).size : pool.size]).filter(([, n]) => n > 0);
+      if (opts.some(([o, n]) => optIds(o).length && n < pool.size)) { next = [k, opts]; break; }
+    }
+    if (next) {
+      const [k, opts] = next;
+      const hrefK = key => `${base}/${[...picks.slice(0, i), ...Array(k - i).fill("_"), key].join("/")}`;
+      h += `<h2 class="hh2">${esc(steps[k].t)}</h2><div class="wz-opts">${opts.map(([o, n]) => {
+        const g = o[2] ? null : G[o[0]];
+        return `<a class="wz-opt" href="${hrefK(o[0])}"><span>${esc(o[1])}${g && g.aggr ? ` <span class="aggr">agressif</span>` : ""}</span>${optIds(o).length ? `<span class="n">${n}</span>` : ""}</a>`;
+      }).join("")}<a class="wz-opt skip" href="${hrefK("_")}"><span>Je ne sais pas / passer</span></a></div>`;
+    }
+    const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
+    if (!next || pool.size <= 30) h += `<h2 class="hh2">Diagnostics possibles</h2><div class="chips">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${esc(e.label)}</a>`).join("")}</div>`;
+    const gs = chosen.filter(([, o]) => o && optIds(o).length).flatMap(([, o]) => optIds(o)).filter(id => G[id]);
+    if (gs.length) h += `<h2 class="hh2">Gammes correspondantes</h2><div class="list">${[...new Set(gs)].map(id => rowGamme(G[id], { noSnip: true, mixed: true })).join("")}</div>`;
+    view.innerHTML = h;
+  }
+
   function home() {
     let h = "";
     const rec = recents.filter(id => G[id]).slice(0, 3);
     if (rec.length) h += `<div class="chips recent">${rec.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
-    h += `<div class="grid big">${MAIN.map(gr => `<a class="card grp" href="#/c/${gr.id}" style="${cvar(gr.id)}">${PX.svg(gr.id, 64)}<b>${esc(gr.label)}</b></a>`).join("")}</div>`;
+    h += `<h2 class="hh2">Orienter une lésion</h2><div class="grid big">${Object.entries(W).map(([k, w]) => `<a class="card grp wz" href="#/o/${k}" style="${cvar(w.gid)}">${PX.svg(w.px, 64)}<b>${esc(w.label)}</b></a>`).join("")}</div>`;
+    h += `<h2 class="hh2">Toutes les gammes</h2><div class="list">${MAIN.map(gr => `<a class="row" href="#/c/${gr.id}" style="${cvar(gr.id)}">${px(gr.id, gr.id, 32)}<b>${esc(gr.label)}</b></a>`).join("")}</div>`;
     h += `<p class="foot">Dr Grégoire Attané</p>`;
     view.innerHTML = h;
   }
@@ -275,6 +344,7 @@
       if (gs.length) lines.push(`<li><span class="dk-k">${esc(sb.kw || sb.label)}</span> : ${gs.map(g => `<a class="kw${g.aggr ? " ag" : ""}" href="#/g/${g.id}?q=${q}">${esc(g.kw)}</a>`).join(", ")}</li>`);
     }));
     view.innerHTML = `<h1>${esc(e.label)}</h1>
+      ${e.resume ? `<p class="resume">${esc(e.resume)}<span class="src">${esc(e.src || "")}</span></p>` : ""}
       ${lines.length ? `<ul class="desc">${lines.join("")}</ul>` : ""}
       ${fiches.length ? `<h2 class="hh2">Fiche</h2><div class="list">${fiches.map(g => rowGamme(g, { noSnip: true, mixed: true })).join("")}</div>` : ""}`;
   }
@@ -372,6 +442,7 @@
       case "c": if (parts[2] === "demarche" || parts[2] === "unique") { location.replace("#/c/os"); break; } setTab(parts[1] === "ref" ? "ref" : "home"); parts[2] ? subView(parts[1], parts[2]) : groupView(parts[1]); break;
       case "cat": location.replace("#/"); break;
       case "g": { const mv = ({ s029: "s301", s042: "s302", s011: "s303", s031: "s304", s161: "s304", ...(D.moved || {}) })[parts[1]]; if (mv) { location.replace("#/g/" + mv); break; } setTab(""); gammeView(parts[1], q); break; }
+      case "o": setTab("home"); wizard(parts[1], parts.slice(2)); break;
       case "d": setTab("diagnostics"); entityView(parts[1]); break;
       case "diagnostics": setTab("diagnostics"); diagnostics(); break;
       case "demarche": location.replace("#/diagnostics"); break;

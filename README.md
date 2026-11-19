@@ -35,3 +35,10 @@ les schémas SVG dans `scripts/make_schemas.py`. Après modification, incrément
 `sw.js` et le `?v=` des ressources dans `index.html`.
 
 > Outil d'aide à la mémorisation — ne remplace pas le raisonnement clinico-radiologique.
+
+
+## Nouveautés (v34)
+- Accueil décisionnel « Orienter une lésion » (Os / Parties molles) : choix successifs (nombre, localisation, contours, contenu, périoste — ou siège, signal, contenu) qui réduisent la liste des diagnostics ; seules les réponses qui laissent au moins un diagnostic sont proposées.
+- Catégorie « Tendons & enthèses » (Cotten) : tendinopathie non mécanique et rupture, calcification tendineuse, ténosynovite, enthésopathies.
+- Gamme « Lésions inflammatoires » rétablie (Aspect & contenu).
+- Résumé Cotten sur chacune des 81 pages diagnostics (`data/source/cotten_entites.json`).

@@ -21,8 +21,8 @@ GROUPS = [
     ("os", "Lésion osseuse", [
         ("multi", "Lésions multiples", [52, 95, 37, 53, 139]),
         ("siege", "Localisation", [301, 302, 303, 311, 18, 92]),
-        ("lodwick", "Contours (Lodwick)", [12, 13, 32, 14, 15, 16, 17]),
-        ("contenu", "Aspect & contenu", [138, 304, 144, 28, 30, 101, 10]),
+        ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
+        ("contenu", "Aspect & contenu", [138, 304, 144, 32, 28, 30, 101, 10]),
         ("perioste", "Périoste", [20, 22, 21, 134, 24, 98, 23, 25]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
@@ -48,6 +48,11 @@ GROUPS = [
         ("synoviale", "Synoviale & hémarthrose", [90, 74]),
         ("oan", "Arthropathie neurogène", [50, 51]),
     ]),
+    ("tend", "Tendons & enthèses", [
+        ("tendon", "Tendon", [312, 313]),
+        ("gaine", "Gaine (ténosynovite)", [314]),
+        ("enthese", "Enthèse", [315]),
+    ]),
     ("ped", "Enfant & croissance", [
         ("enfant", "Enfant", [45, 46, 100]),
         ("croissance", "Croissance & morphologie", [107, 109, 110, 120]),
@@ -68,7 +73,7 @@ MERGES = [
     (23, "Appositions périostées diffuses ou plurifocales", [(23, None), (25, "Chez l'enfant")]),
     (39, "Lésion costale", [(39, None), (40, "-")]),
     (18, "Lésion corticale", [(18, None), (92, "-")]),
-    (13, "Lodwick IA2 — condensation périphérique dégressive", [(13, None), (32, "-")]),
+    (13, "Lodwick IA2 — condensation périphérique dégressive", [(13, None)]),
     (15, "Lodwick IC, II, III — ostéolyse mal limitée, mitée ou perméative", [(15, None), (16, "-"), (17, "-")]),
     (138, "Lésion soufflante (coque périostée)", [(138, None), (304, "-")]),
     (21, "Réaction périostée compacte (endoste normal)", [(21, None), (134, "-")]),
@@ -95,7 +100,7 @@ SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick",
           "perioste": "Périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
           "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "tmmulti": "Tissus mous", "tmsiege": "Siège (tissus mous)",
           "paravert": "Paravertébral", "signal": "Signal IRM", "calcif": "Calcifications", "vaisseaux": "Vaisseaux", "sang": "Sang", "nerf": "Tissus mous", "inflam": "Articulation",
-          "synoviale": "Synoviale", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
+          "synoviale": "Synoviale", "tendon": "Tendon", "gaine": "Gaine", "enthese": "Enthèse", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
 KW = {39: "côte", 164: "structure stratifiée", 23: "appositions périostées diffuses", 18: "lésion corticale", 21: "réaction périostée compacte", 24: "encoches endostées", 138: "soufflante", 41: "forme anormale", 178: "masse pré-sacrée", 305: "selon les bords", 309: "selon le contenu", 142: "lacune", 151: "superficielle", 153: "juxta-articulaire ou tendineuse", 155: "musculaire", 175: "paravertébrale", 167: "hypersignal T2", 49: "calcifiée", 162: "hypervasculaire", 171: "hémorragique", 157: "nerf", 50: "OAN", 15: "IC, II, III", 36: "vertèbre ivoire", 136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       52: "ostéolyses plurifocales", 95: "condensation diffuse ou multifocale", 37: "condensations axiales multiples",
       23: "appositions périostées diffuses", 139: "atteinte os + tissus mous", 97: "condensation constitutionnelle",
@@ -103,6 +108,7 @@ KW = {39: "côte", 164: "structure stratifiée", 23: "appositions périostées d
       12: "IA1", 13: "IA2", 14: "IB", 15: "IC", 16: "II", 17: "III",
       301: "épiphysaire", 302: "métaphysaire", 303: "diaphysaire",
       304: "expansive / anévrysmale", 144: "« in and out »", 28: "trabéculations", 30: "niveaux liquide-liquide",
+      312: "tendinopathie non mécanique", 313: "calcification tendineuse", 314: "ténosynovite", 315: "enthésopathie",
       101: "séquestre", 32: "inflammatoire", 10: "sinueuse",
       20: "périostose unilamellaire", 21: "périostose compacte", 22: "périostose plurilamellaire ou spiculée",
       24: "hyperostose + encoches endostées", 134: "hyperostose, endoste normal", 138: "coque périostée",
@@ -457,14 +463,14 @@ ENT = [
     ("ewing", "Sarcome d'Ewing", r"ewing"),
     ("lymphome", "Lymphome / Hodgkin", r"(lymphome|hodgkin|parker)"),
     ("myelome", "Myélome / plasmocytome", r"(myelome|plasmocytome|poems)"),
-    ("meta", "Métastases", r"metasta"),
+    ("meta", "Métastases", r"metasta(?!tique \()"),
     ("osteosarcome", "Ostéosarcome", r"(osteosarc|sarcome osteogene)"),
     ("chondrosarcome", "Chondrosarcome", r"(chondrosarcome|tumeur cartilagineuse atypique)"),
     ("chordome", "Chordome", r"chordome"),
     ("angiosarcome", "Angiosarcome", r"angiosarcome"),
     ("hemangiome", "Hémangiome / angiome", r"(hemangiome(?! epith)|\bangiome|hemangiomatose|lac veineux)"),
     ("hee", "Hémangioendothéliome épithélioïde", r"hemangioendotheliome"),
-    ("infection", "Ostéomyélite / ostéite infectieuse", r"(osteomyelite|osteite infectieuse|osteite corticale|osteite\b(?! aseptique| fibreuse)|abces de brodie|brodie|spondylite infectieuse|spondylodiscite|germes? banals?)"),
+    ("infection", "Ostéomyélite / ostéite infectieuse", r"(osteomyelite|osteite infectieuse|osteite corticale|osteite\b(?! aseptique| fibreuse)|abces de brodie|brodie|spondylite infectieuse|spondylodiscite|germes? banals?|infection a pyogenes)"),
     ("tb", "Tuberculose", r"(tubercul|spina vento)"),
     ("hydatide", "Kyste hydatique / hydatidose", r"(hydatique|hydatidose)"),
     ("sapho", "SAPHO / OCMR / ostéite aseptique", r"(sapho|ocmr|ocrm|osteite aseptique)"),
@@ -500,7 +506,7 @@ ENT = [
     ("leucemie", "Leucémie", r"leucemi"),
     ("neuroblastome", "Neuroblastome", r"neuroblastome"),
     ("osteopetrose", "Ostéopétrose / pycnodysostose", r"(osteopetrose|pycnodysostose)"),
-    ("fluorose", "Fluorose", r"fluor"),
+    ("fluorose", "Fluorose", r"fluor(?!oquinolone)"),
     ("osteomalacie", "Ostéomalacie / rachitisme", r"(osteomalacie|rachitisme|looser)"),
     ("odr", "Ostéodystrophie rénale / IRC", r"(osteodystrophie renale|insuffisance renale|hemodialys)"),
     ("myelofibrose", "Myélofibrose", r"myelofibrose"),
@@ -656,6 +662,11 @@ RAW.append(_syn(304, "Lésions expansives / d'aspect « anévrysmal »", [
     "# Tumeurs primitives", "Kyste anévrysmal", "Tumeur à cellules géantes", "Hémangiome-lymphangiome", "Ostéoblastome",
     "Chondroblastome", "Chondrosarcome", "Ostéosarcome télangiectasique", "Sarcome d'Ewing (extrémités principalement)",
     "Angiosarcome"]))
+TITLES[312] = ("Tendon épaissi, nodulaire ou rompu sans traumatisme", "Tendinopathie non mécanique")
+TITLES[313] = ("Calcification tendineuse", None)
+TITLES[314] = ("Ténosynovite", "Épanchement, épaississement synovial de la gaine")
+TITLES[315] = ("Enthèse : œdème, érosion ou ossification", None)
+TITLES[32] = ("Lésions inflammatoires", "Œdème périlésionnel marqué en IRM, réaction périostée")
 TITLES[304] = ("Lésions expansives / d'aspect « anévrysmal »", "Soufflantes, ± cloisonnées")
 # diapos réécrites (texte anglais collé / structure cassée dans le PPT)
 OVERRIDE = {
@@ -765,6 +776,37 @@ OVERRIDE = {
         "Infections parasitaires (cysticercose, loase, dracunculose…)", "Autres infections (lèpre, tuberculose, coccidioïdomycose…)",
         "Divers (athérosclérose, maladie de Weber-Christian…)",
         "## Idiopathique", "Calcinose tumorale idiopathique (Teutschlaender)"]),
+    312: _syn(312, "x", ["# Mécanique (le plus fréquent)", "Tendinopathie dégénérative, nodulaire",
+        "Attrition sur un relief osseux (tête ulnaire, scaphoïde horizontalisé, lunatum en DISI)",
+        "# Inflammatoire", "Polyarthrite rhumatoïde (rupture du long fléchisseur du pouce, des extenseurs)", "Spondyloarthrite",
+        "# Dépôts", "Xanthome (hyperlipidémie de type II ou III ; bilatéral et symétrique)", "Tophus goutteux",
+        "Cristaux de pyrophosphate de calcium (CPP)", "Amylose à β2-microglobuline (hémodialyse ; fléchisseurs, canal carpien)",
+        "# Métabolique", "Hyperparathyroïdie (tendons patellaire, quadricipital, tricipital)",
+        "Insuffisance rénale chronique, hémodialyse", "Diabète",
+        "# Médicamenteuse", "Fluoroquinolones", "Corticoïdes, hypercorticisme", "Statines"]),
+    313: _syn(313, "x", ["# Microcristalline", "Tendinopathie calcifiante (apatite)", "Chondrocalcinose (CPP)", "Goutte",
+        "# Métastatique (trouble phosphocalcique)", "Insuffisance rénale chronique, hyperparathyroïdie",
+        "# Dystrophique", "Connectivites (sclérodermie, dermatomyosite, lupus)", "Séquelle de traumatisme ou de rupture"]),
+    314: _syn(314, "x", ["# Mécanique", "Ténosynovite sténosante (De Quervain, doigt à ressaut)", "Surmenage microtraumatique",
+        "# Inflammatoire", "Polyarthrite rhumatoïde (de loin la plus fréquente)", "Rhumatisme psoriasique, spondyloarthrite",
+        "Lupus, sclérodermie, Gougerot-Sjögren", "Sarcoïdose (parfois révélatrice)",
+        "# Microcristalline", "Goutte (parfois révélatrice)", "Dépôts d'apatite",
+        "# Infectieuse", "Infection à pyogènes (plaie, morsure)", "Tuberculose, mycobactéries atypiques (Mycobacterium marinum)",
+        "# Dépôts et proliférations", "Amylose (hémodialyse)", "Tumeur à cellules géantes ténosynoviale",
+        "Chondromatose ténosynoviale"]),
+    315: _syn(315, "x", ["# Enthésite inflammatoire (œdème, érosions, rehaussement)",
+        "Spondyloarthrite : spondylarthrite ankylosante, rhumatisme psoriasique, MICI, arthrite réactionnelle",
+        "SAPHO",
+        "# Enthésopathie mécanique ou dégénérative", "Microtraumatique (talalgie, sport)", "Dégénérative du sujet âgé",
+        "# Résorption osseuse de l'enthèse", "Hyperparathyroïdie",
+        "# Ossifiante ou hyperostosante",
+        "Hyperostose squelettique idiopathique diffuse (DISH)", "Fluorose", "Rétinoïdes, hypervitaminose A",
+        "Hypophosphatémie liée à l'X", "Ostéo-arthropathie hypertrophiante"]),
+    32: _syn(32, "Lésion avec réaction inflammatoire périlésionnelle (œdème)", ["# Pseudotumeurs", "Ostéite infectieuse",
+        "Histiocytose langerhansienne (granulome éosinophile)",
+        "# Tumeurs bénignes", "Ostéome ostéoïde, ostéoblastome", "Chondroblastome", "Kyste anévrysmal (au début)",
+        "Tumeur à cellules géantes (±)",
+        "# Tumeurs malignes", "Sarcome d'Ewing", "Lymphome", "Chordome", "Ostéosarcome", "Métastase"]),
     13: _syn(13, "x", ["# Pseudotumeurs", "Ostéite infectieuse (abcès de Brodie)", "Ostéite aseptique (SAPHO, spondylarthrites)",
         "Histiocytose langerhansienne, Rosai-Dorfman",
         "# Métastases et hémopathies", "Métastase condensante", "Lymphome, Hodgkin",
@@ -829,7 +871,7 @@ OVERRIDE = {
         "# Tumeurs primitives", "Chondrosarcome", "Enchondrome", "Chondroblastome", "Kyste anévrysmal", "Ostéoblastome",
         "Tumeur à cellules géantes"]),
 }
-RAW = [OVERRIDE.get(x["n"], x) for x in RAW]
+RAW = [OVERRIDE.get(x["n"], x) for x in RAW] + [OVERRIDE[k] for k in (312, 313, 314, 315)]
 # voûte crânienne : diapos 173 + 35 séparées par caractéristique, sans doublon
 RAW += [
     _syn(305, "Lacune à limites nettes scléreuses", ["Dysplasie fibreuse", "Kyste épidermoïde", "Méningocèle",
@@ -1112,6 +1154,8 @@ for g in gammes:
                 keep_items.append(it)
             b["items"] = keep_items
     g["blocks"] = [b for b in g["blocks"] if b["type"] != "list" or b["items"]]
+_ep = ROOT / "data/source/cotten_entites.json"
+ENT_RES = json.loads(_ep.read_text()) if _ep.exists() else {}
 RESUMES = json.loads((ROOT / "data/source/cotten_resumes.json").read_text())
 _by = {g["slide"]: g for g in gammes}
 MOVED.update({"s173": "s305", "s035": "s307", "s165": "s310", "s166": "s310", "s126": "s310", "s147": "s311", "s148": "s311", "s149": "s311", "s026": "s311"})
@@ -1134,6 +1178,9 @@ for name, parts in FICHE_NAMES:
               q=norm(name) + " " + " ".join(qs))
 for e in entities:
     e["gammes"] = list(dict.fromkeys(MOVED.get(x, x) for x in e["gammes"]))
+    _r = ENT_RES.get(e["id"])
+    if _r:
+        e["resume"], e["src"] = _r["resume"], _r["source"]
 KEPT = {g["slide"] for g in gammes}
 
 data = {
