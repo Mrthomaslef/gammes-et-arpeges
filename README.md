@@ -16,7 +16,7 @@ ostéo-articulaire, viscérale et vasculaire (Pr Bousson).
   classifications (OMS, Lodwick, Magerl…), anatomie et repères. Chaque fiche apparaît aussi en tête de la page du diagnostic.
 - **Recherche** instantanée insensible aux accents, avec surlignage des lignes correspondantes.
 - **Diagnostics** : 81 diagnostics indexés → toutes les gammes où chacun apparaît, + **croiseur de gammes**
-  (ex. *lacunes épiphysaires* ∩ *niveaux liquide-liquide* → TCG, chondroblastome…).
+  (ex. *épiphysaire* ∩ *niveaux liquide-liquide* → TCG, chondroblastome…).
 - **Révision** : flashcards (onglet masqué pour le moment, code conservé).
 - Favoris, récents, thème clair/sombre, pull-to-refresh, images des diapos zoomables.
 

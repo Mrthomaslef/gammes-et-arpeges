@@ -20,7 +20,7 @@ GROUPS = [
     ("os", "Lésion osseuse", [
         ("demarche", "Démarche", [2, 136, 137, 143]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
-        ("siege", "Siège dans l'os", [42, 133, 29, 11]),
+        ("siege", "Siège dans l'os", [301, 302, 303]),
         ("contenu", "Aspect & contenu", [31, 144, 28, 30, 161, 101, 32, 10]),
         ("perioste", "Corticale & périoste", [20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
@@ -57,7 +57,7 @@ GROUPS = [
         ("fart", "Fiches articulaires", [61, 62, 63, 121, 66, 68, 72, 73, 88, 75, 67]),
         ("fsys", "Fiches maladies générales", [59, 83, 78, 80, 86, 77, 79, 103, 104, 106, 85]),
         ("fped", "Fiches enfant", [70, 99, 117]),
-        ("classifs", "Classifications", [7, 8, 9, 135, 64, 172, 114, 118, 124, 131]),
+        ("classifs", "Classifications & tableaux", [133, 7, 8, 9, 135, 64, 172, 114, 118, 124, 131]),
         ("anat", "Anatomie & repères", [113, 115, 116, 119, 69]),
     ]),
 ]
@@ -496,7 +496,7 @@ SCHEMAS = {
 }
 NO_SLIDE_TEXT = {135}
 # vignettes de schéma périosté (panneaux de periostees.svg)
-PERIO_THUMB = {20: "perio-4.svg", 21: "perio-2.svg", 22: "perio-5.svg", 24: "perio-3.svg", 134: "perio-2.svg", 138: "perio-7.svg",
+PERIO_THUMB = {301: "siege-epi.svg", 302: "siege-meta.svg", 303: "siege-dia.svg", 20: "perio-4.svg", 21: "perio-2.svg", 22: "perio-5.svg", 24: "perio-3.svg", 134: "perio-2.svg", 138: "perio-7.svg",
                13: "lodwick-ia2.svg"}
 # vignettes recadrées sur la lésion (Lodwick) ; pas de vignette pour les algorithmes (texte illisible en miniature)
 THUMB = {n: f"assets/slides/s{n:03d}_t.webp" for n in (12, 14, 15, 16, 17)}
@@ -512,6 +512,36 @@ def slide_title(s):
         if b["k"] == "text" and b["items"]:
             return clean(b["items"][0][2])
     return f"Diapo {s['n']}"
+
+# ---------------------------------------------------------------- gammes de siège (fusion sans doublon des diapos 42, 29, 133, 11)
+def _syn(n, title, rows):
+    items = []
+    for r in rows:
+        if r.startswith("# "):
+            items.append([0, 1, r[2:] + " :"])
+        else:
+            items.append([1, 0, r])
+    return {"n": n, "blocks": [{"k": "title", "items": [[0, 1, title]]}, {"k": "text", "items": items}]}
+RAW += [
+    _syn(301, "Épiphysaire", ["# Tumeurs", "Chondroblastome", "Tumeur à cellules géantes (épiphysométaphysaire)",
+        "Chondrosarcome à cellules claires", "Ostéome ostéoïde", "Enchondrome", "Myélome/plasmocytome", "Lymphome",
+        "Métastase épiphysaire (rare)",
+        "# Pseudotumeurs", "Géode d'arthropathie (arthrose, chondrocalcinose, PR, psoriasis, tuberculose)", "Tophus goutteux",
+        "Lésion synoviale (synovite villo-nodulaire, chondromatose synoviale)", "Kyste mucoïde intra-osseux",
+        "Géode sous une fissure ou une fracture ostéochondrale", "Ostéochondrite disséquante", "Ostéonécrose pseudo-géodique",
+        "Abcès de Brodie / ostéite infectieuse", "Granulome à éosinophile", "Amylose"]),
+    _syn(302, "Métaphysaire", ["# Lésions centrées", "Kyste essentiel", "Enchondrome", "Infarctus osseux", "Ostéomyélite",
+        "Métastase", "Myélome", "Ostéosarcome", "Chondrosarcome",
+        "# Lésions excentrées", "Défect cortical", "Fibrome non ossifiant", "Desmoïde périosté", "Kyste osseux anévrysmal",
+        "Chondrome périosté", "Fibrome chondromyxoïde", "Tumeur à cellules géantes", "Ostéoblastome", "Ostéochondrome"]),
+    _syn(303, "Diaphysaire", ["# Tumeurs", "Sarcome d'Ewing", "Lymphome (dont lymphome de Parker)", "Myélome",
+        "Adamantinome (tibia)", "Ostéome ostéoïde", "Ostéosarcome (25 %, dont télangiectasique)", "Enchondrome", "Chondrosarcome",
+        "Angiome", "Angiosarcome", "Métastase (dont pseudo-sarcomateuse du cancer de la prostate)",
+        "# Pseudotumeurs", "Dysplasie fibreuse des os", "Dysplasie ostéofibreuse (tibia)", "Histiocytose langerhansienne",
+        "Ostéomyélite", "Ostéite aseptique (SAPHO)", "Infarctus osseux"]),
+]
+for _n in (42, 29, 11):
+    SKIP.add(_n)
 
 gammes = []
 for s in RAW:

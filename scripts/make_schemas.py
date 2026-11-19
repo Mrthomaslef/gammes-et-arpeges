@@ -337,6 +337,17 @@ FILES["lodwick-ia2.svg"] = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 
 # vignettes : un panneau de la classification périostée par gamme
 for n in (2, 3, 4, 5, 6, 7):
     FILES[f"perio-{n}.svg"] = svg(150, 190, f"<g transform='translate(0,-25)'>{PERIO_PANEL(n)}</g>")
+# siège dans un os long : épiphyse / métaphyse / diaphyse (zone colorée)
+def long_bone(zone):
+    hi = {"epi": "M48 14 Q75 0 102 14 Q112 28 104 40 L46 40 Q38 28 48 14Z",
+          "meta": "M46 44 L104 44 Q98 62 90 76 L60 76 Q52 62 46 44Z",
+          "dia": "M60 80 L90 80 L90 176 L60 176Z"}[zone]
+    bone = ("<path d='M48 14 Q75 0 102 14 Q112 28 104 40 Q98 62 90 76 L90 190 L60 190 L60 76 Q52 62 46 40 Q38 28 48 14Z' "
+            f"fill='{BONE}' stroke='{CORT}' stroke-width='3'/>")
+    return svg(150, 190, bone + f"<path d='{hi}' fill='{ACC}' opacity='.75'/>"
+               f"<path d='M44 42 L106 42' stroke='{INK}' stroke-width='2' stroke-dasharray='5 4'/>")
+for z in ("epi", "meta", "dia"):
+    FILES[f"siege-{z}.svg"] = long_bone(z)
 for name, content in FILES.items():
     (OUT / name).write_text(content)
 print("schémas :", ", ".join(FILES))
