@@ -208,6 +208,7 @@
     const short = SHORT[sid];
     view.innerHTML = `<h1 class="hh">${px(sid, gid, 40)}${esc(one ? gr.label : sb.label)}</h1>
       <div class="list">${list.map(g => rowGamme(g, { short })).join("")}</div>`;
+    if (list.length === 1) view.querySelector("details.acc")?.setAttribute("open", ""); // une seule gamme : déjà ouverte
   }
 
   function renderTable(rows, links) {
