@@ -196,7 +196,7 @@
     os: { label: "Os", px: "os", gid: "os", steps: [
       { t: "Densité", o: [["lyt", "Lytique (ostéolyse)", LYT], ["cond", "Condensante (ostéocondensation)", ["s316", "s095", "s036"]]] },
       { t: "Nombre de lésions", o: [["u", "Lésion unique", []], ["s052", "Ostéolyses plurifocales", null, "!cond"],
-        ["s095", "Condensation diffuse ou multifocale", null, "!lyt"], ["s053", "Stries intracorticales"], ["s139", "Atteinte osseuse + tissus mous"]] },
+        ["s095", "Condensation diffuse ou multifocale", null, "!lyt"], ["s053", "Stries intracorticales"]] },
       { t: "Localisation", o: [["s301", "Épiphysaire"], ["s302", "Métaphysaire"], ["s303", "Diaphysaire"], ["s311", "Surface de l'os"],
         ["s018", "Corticale"], ["vertebre", "Vertèbre", ["s141", "s145", "s036", "s041", "s034", "s038"]],
         ["sacrum", "Sacrum", ["s146", "s178"]], ["crane", "Crâne", ["s305", "s309"]], ["s039", "Côte"], ["s142", "Doigts"]] },
@@ -210,12 +210,6 @@
       { t: "Périoste", o: [["s020", "Unilamellaire continue"], ["s022", "Plurilamellaire ou spiculée"], ["s021", "Compacte"],
         ["s024", "Encoches endostées ± hyperostose"], ["s023", "Appositions diffuses"]] },
     ] },
-    art: { label: "Articulation & tendons", px: "art", gid: "art", steps: [
-      { t: "Atteinte articulaire", o: [["s159", "Érosions marginales (synovite)"], ["s055", "Dactylite"], ["s090", "Synoviale hypointense en T2"],
-        ["s074", "Hémarthrose"], ["s050", "Arthropathie destructrice (neurogène)"]] },
-      { t: "Tendon, gaine, enthèse", o: [["s312", "Tendon épaissi ou rompu sans traumatisme"], ["s313", "Calcification tendineuse"],
-        ["s314", "Ténosynovite"], ["s315", "Enthèse : œdème, érosion, ossification"]] },
-    ] },
     tm: { label: "Parties molles", px: "tm", gid: "tm", steps: [
       { t: "Nombre de lésions", o: [["u", "Masse unique", []], ["s174", "Masses multiples"]] },
       { t: "Siège", o: [["s151", "Superficielle (sous-cutanée)"], ["s155", "Musculaire"], ["s153", "Juxta-articulaire ou tendineuse"],
@@ -223,6 +217,15 @@
       { t: "Signal IRM", o: [["s310", "Hypersignal T1"], ["s167", "Hypersignal T2 liquidien ou myxoïde"], ["s168", "Hyposignal T1 et T2"],
         ["s158", "Triple signal T2"], ["s164", "Structure stratifiée"]] },
       { t: "Contenu", o: [["s049", "Calcifications"], ["s162", "Hypervasculaire (flow voids)"], ["s171", "Hémorragique"], ["s170", "« Fascial tail sign »"]] },
+    ] },
+    osm: { label: "Os + parties molles", px: "osmou", gid: "tm", steps: [
+      { t: "Atteinte associée", o: [["s139", "Une même maladie touche l'os et les tissus mous"]] },
+    ] },
+    art: { label: "Articulation & tendons", px: "art", gid: "art", steps: [
+      { t: "Atteinte articulaire", o: [["s159", "Érosions marginales (synovite)"], ["s055", "Dactylite"], ["s090", "Synoviale hypointense en T2"],
+        ["s074", "Hémarthrose"], ["s050", "Arthropathie destructrice (neurogène)"]] },
+      { t: "Tendon, gaine, enthèse", o: [["s312", "Tendon épaissi ou rompu sans traumatisme"], ["s313", "Calcification tendineuse"],
+        ["s314", "Ténosynovite"], ["s315", "Enthèse : œdème, érosion, ossification"]] },
     ] },
   };
   const optIds = o => o[2] || [o[0]];
@@ -261,7 +264,7 @@
         return `<a class="wz-opt" href="${hrefK(o[0])}"><span>${esc(o[1])}${g && g.aggr ? ` <span class="aggr">agressif</span>` : ""}</span>${optIds(o).length ? `<span class="n">${n}</span>` : ""}</a>`;
       }).join("")}<a class="wz-opt skip" href="${hrefK("_")}"><span>Je ne sais pas / passer</span></a></div>`;
     }
-    h += res + q; // propositions diagnostiques d'abord, affinage en dessous
+    h += q + res; // affinage d'abord, réponses possibles en dessous
     view.innerHTML = h;
   }
 
@@ -269,7 +272,7 @@
     let h = "";
     const rec = recents.filter(id => G[id]).slice(0, 3);
     if (rec.length) h += `<div class="chips recent">${rec.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
-    h += `<h2 class="hh2">Orienter une lésion</h2><div class="grid big wz3">${Object.entries(W).map(([k, w]) => `<a class="card grp wz" href="#/o/${k}" style="${cvar(w.gid)}">${PX.svg(w.px, 64)}<b>${esc(w.label)}</b></a>`).join("")}</div>`;
+    h += `<h2 class="hh2">Orienter une lésion</h2><div class="grid big">${Object.entries(W).map(([k, w]) => `<a class="card grp wz" href="#/o/${k}" style="${cvar(w.gid)}">${PX.svg(w.px, 64)}<b>${esc(w.label)}</b></a>`).join("")}</div>`;
     h += `<h2 class="hh2">Toutes les gammes</h2><div class="list">${MAIN.map(gr => `<a class="row" href="#/c/${gr.id}" style="${cvar(gr.id)}">${px(gr.id, gr.id, 32)}<b>${esc(gr.label)}</b></a>`).join("")}</div>`;
     h += `<p class="foot">Dr Grégoire Attané</p>`;
     view.innerHTML = h;

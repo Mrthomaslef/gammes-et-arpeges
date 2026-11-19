@@ -19,7 +19,7 @@ IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json
 GROUPS = [
     # ordre Laredo : nombre → siège → limites → contenu → périoste
     ("os", "Lésion osseuse", [
-        ("multi", "Lésions multiples", [52, 95, 37, 53, 139]),
+        ("multi", "Lésions multiples", [52, 95, 37, 53]),
         ("siege", "Localisation", [301, 302, 303, 311, 18, 92]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
         ("contenu", "Aspect & contenu", [316, 138, 304, 144, 32, 28, 30, 101, 10]),
@@ -34,6 +34,7 @@ GROUPS = [
         ("doigts", "Doigts", [142, 91]),
     ]),
     ("tm", "Tissus mous", [
+        ("osmou", "Os + tissus mous", [139]),
         ("tmmulti", "Multiples", [174]),
         ("tmsiege", "Siège", [151, 152, 177, 153, 156, 155, 154, 170]),
         ("paravert", "Paravertébral", [175, 176, 105]),
@@ -100,10 +101,10 @@ SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick",
           "perioste": "Périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
           "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "tmmulti": "Tissus mous", "tmsiege": "Siège (tissus mous)",
           "paravert": "Paravertébral", "signal": "Signal IRM", "calcif": "Calcifications", "vaisseaux": "Vaisseaux", "sang": "Sang", "nerf": "Tissus mous", "inflam": "Articulation",
-          "synoviale": "Synoviale", "tendon": "Tendon", "gaine": "Gaine", "enthese": "Enthèse", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
+          "osmou": "Os + tissus mous", "synoviale": "Synoviale", "tendon": "Tendon", "gaine": "Gaine", "enthese": "Enthèse", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
 KW = {39: "côte", 164: "structure stratifiée", 23: "appositions périostées diffuses", 18: "lésion corticale", 21: "réaction périostée compacte", 24: "encoches endostées", 138: "soufflante", 41: "forme anormale", 178: "masse pré-sacrée", 305: "selon les bords", 309: "selon le contenu", 142: "lacune", 151: "superficielle", 153: "juxta-articulaire ou tendineuse", 155: "musculaire", 175: "paravertébrale", 167: "hypersignal T2", 49: "calcifiée", 162: "hypervasculaire", 171: "hémorragique", 157: "nerf", 50: "OAN", 15: "IC, II, III", 36: "vertèbre ivoire", 136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       52: "ostéolyses plurifocales", 95: "condensation diffuse ou multifocale", 37: "condensations axiales multiples",
-      23: "appositions périostées diffuses", 139: "atteinte os + tissus mous", 97: "condensation constitutionnelle",
+      23: "appositions périostées diffuses", 139: "atteinte associée", 97: "condensation constitutionnelle",
       93: "superscan", 94: "super BMU", 84: "PAL élevées",
       12: "IA1", 13: "IA2", 14: "IB", 15: "IC", 16: "II", 17: "III",
       301: "épiphysaire", 302: "métaphysaire", 303: "diaphysaire",
@@ -261,7 +262,9 @@ def clean(t: str) -> str:
         t = t.replace(a, b)
     t = re.sub(r"\s+", " ", t).strip()
     t = t.replace("'' ", "« ").replace("‘’", " »").replace("''", "« ")
-    return t
+    return EXACT.get(t, t)
+# lignes entières à préciser pour qu'elles renvoient au bon diagnostic
+EXACT = {"Microcristalline": "Microcristalline (goutte)", "Infection": "Infection (ostéomyélite, arthrite septique)"}
 
 HEADER_WORDS = {
     "sans rapport avec une structure anatomique precise", "tumeurs intermediaires",
@@ -456,7 +459,10 @@ ENT = [
     ("oo", "Ostéome ostéoïde", r"(osteome osteoide|\boo\b)"),
     ("ob", "Ostéoblastome", r"(osteoblastome|\bob\b)"),
     ("fno", "Fibrome non ossifiant / cortical defect", r"(fibromes? non ossifiants?|cortical defect|defect cortical|jaffe)"),
-    ("df", "Dysplasie fibreuse", r"(dysplasie fibreuse|\bdfo\b|mazabraud)"),
+    ("df", "Dysplasie fibreuse", r"(dysplasie fibreuse|\bdfo\b)"),
+    ("mazabraud", "Syndrome de Mazabraud", r"mazabraud"),
+    ("maffucci", "Syndrome de Maffucci", r"maffucci"),
+    ("melorheostose", "Mélorhéostose", r"melorheostose"),
     ("dof", "Dysplasie ostéofibreuse", r"dysplasie osteo-?fibreuse"),
     ("adamantinome", "Adamantinome", r"adamantinome"),
     ("hl", "Histiocytose langerhansienne / granulome éosinophile", r"(histiocytose|granulome (a )?eosinophile)"),
@@ -470,14 +476,14 @@ ENT = [
     ("angiosarcome", "Angiosarcome", r"angiosarcome"),
     ("hemangiome", "Hémangiome / angiome", r"(hemangiome(?! epith)|\bangiome|hemangiomatose|lac veineux)"),
     ("hee", "Hémangioendothéliome épithélioïde", r"hemangioendotheliome"),
-    ("infection", "Ostéomyélite / ostéite infectieuse", r"(osteomyelite|osteite infectieuse|osteite corticale|osteite\b(?! aseptique| fibreuse)|abces de brodie|brodie|spondylite infectieuse|spondylodiscite|germes? banals?|infection a pyogenes)"),
-    ("tb", "Tuberculose", r"(tubercul|spina vento)"),
+    ("infection", "Infection ostéo-articulaire (ostéomyélite, arthrite septique)", r"(^abces$|arthrites? septiques?|^infections?\b(?! parasit| congenit)|infection sous-perio|germes anaerobies|pyogen|osteomyelite|osteite infectieuse|osteite corticale|osteite\b(?! aseptique| fibreuse)|abces de brodie|brodie|spondylite infectieuse|spondylodiscite|germes? banals?|infection a pyogenes)"),
+    ("tb", "Tuberculose", r"(tuberculo|tuberculeu|spina vento)"),
     ("hydatide", "Kyste hydatique / hydatidose", r"(hydatique|hydatidose)"),
     ("sapho", "SAPHO / OCMR / ostéite aseptique", r"(sapho|ocmr|ocrm|osteite aseptique)"),
     ("infarctus", "Infarctus osseux", r"infarctus"),
     ("paget", "Maladie de Paget", r"paget"),
     ("hpt", "Hyperparathyroïdie / tumeur brune", r"(tumeurs? brunes?|hyperparathyro)"),
-    ("sarcoidose", "Sarcoïdose", r"sarco[iï]d(ose|es)"),
+    ("sarcoidose", "Sarcoïdose", r"sarco[iï]d(ose|es?)\b"),
     ("mastocytose", "Mastocytose", r"mastocytose"),
     ("stb", "Sclérose tubéreuse de Bourneville", r"(bourneville|\bstb\b)"),
     ("nf", "Neurofibromatose / phacomatoses", r"(neurofibromatose|\bnf1\b|\bnf2\b|phacomatose)"),
@@ -487,7 +493,7 @@ ENT = [
     ("sip", "Sarcome indifférencié pléomorphe (ex-HFM)", r"(pleomorphe|histiocytome fibreux malin|\bhfm\b|\bmfh\b)"),
     ("myxofibrosarcome", "Myxofibrosarcome", r"myxofibrosarcome"),
     ("fasciite", "Fasciite nodulaire / proliférative", r"fasciite"),
-    ("desmoide", "Tumeur desmoïde / fibromatose", r"(tumeurs? desmoides?|fibromatose)"),
+    ("desmoide", "Tumeur desmoïde / fibromatose", r"(tumeurs? desmoides?|(?<!neuro)fibromatose)"),
     ("tbgp", "Schwannome / neurofibrome (TBGNP)", r"(schwannome|neurofibrome|\btngp\b|\btbgp\b|tumeurs? (benignes? )?des gaines (des )?nerf)"),
     ("tmgnp", "Tumeur maligne des gaines nerveuses (TMGNP)", r"(tumeurs? malignes? (de la gaine|des gaines)|\btmgn?p\b)"),
     ("myxome", "Myxome", r"myxome"),
@@ -498,8 +504,8 @@ ENT = [
     ("goutte", "Goutte / tophus", r"(goutte|tophus|goutteux)"),
     ("cpp", "Chondrocalcinose / CPP", r"(chondrocalcinose|pyrophosphate|\bcpp\b)"),
     ("apatite", "Dépôts d'apatite / calcinose", r"(apatit|calcinose)"),
-    ("svn", "Synovite villonodulaire / TCG ténosynoviale", r"(villo-?nodulaire|\bsvn\b|tenosynoviale|cellules geantes des gaines)"),
-    ("chondromatose", "Chondromatose synoviale", r"chondromatose"),
+    ("svn", "Synovite villonodulaire / TCG ténosynoviale", r"(villo-?nodulaire|\bsvn\b|(?<!chondromatose )tenosynoviale|cellules geantes des gaines)"),
+    ("chondromatose", "Chondromatose synoviale", r"(?<!en)(?<!spondylo-en)chondromatose(?! multiple)"),
     ("amylose", "Amylose", r"amylo"),
     ("hemophilie", "Hémophilie / hémarthrose", r"(hemophil|hemarthrose)"),
     ("drepano", "Drépanocytose / hémoglobinopathies", r"(drepanocyt|thalassemi|hemoglobinopathie)"),
@@ -521,10 +527,10 @@ ENT = [
     ("rms", "Rhabdomyosarcome", r"rhabdomyosarcome"),
     ("lms", "Léiomyosarcome", r"leiomyosarcome"),
     ("pr", "Polyarthrite rhumatoïde", r"(polyarthrite rhumatoide|\bpr\b|rhumatoide)"),
-    ("spa", "Spondyloarthrite / psoriasis", r"(psoria|spondyl(o-?)?arthrite|\bspa\b)"),
+    ("spa", "Spondyloarthrite / psoriasis", r"(psoria|spondyl(o-?)?arthrite|\bspa\b|arthrite reactionnelle|reiter)"),
     ("diabete", "Diabète", r"diabet"),
     ("acromegalie", "Acromégalie", r"acromegal"),
-    ("oan", "Ostéo-arthropathie neurogène", r"(neuroarthropathie|oste.?o-arthropathie neurogene|\boan\b|charcot)"),
+    ("oan", "Ostéo-arthropathie neurogène", r"(neuroarthropathie|oste.?o-?arthropathie (neurogene|nerveuse)|\boan\b|charcot)"),
     ("rx", "Radiothérapie / radio-induit", r"(radio-?induit|irradi|radiotherap|radionecrose)"),
 ]
 ENT_RE = [(k, lab, re.compile(p)) for k, lab, p in ENT]
@@ -554,6 +560,8 @@ def ent_spans(text: str):
             while b < len(text) and text[b].isalpha():
                 b += 1
             cand.append((a, b, k))
+    pos = {c[2]: c[0] for c in cand}
+    cand = [c for c in cand if not _dropped(c[2], pos)]
     cand.sort(key=lambda c: (c[0], -(c[1] - c[0])))
     out, last = [], -1
     for a, b, k in cand:
@@ -561,9 +569,15 @@ def ent_spans(text: str):
             out.append([a, b, k]); last = b
     return out
 
+# un syndrome cité nommément ne renvoie pas vers ses composants (Maffucci ≠ enchondrome isolé)
+SYNDROME_PARTS = {"nf": {"tbgp"}, "maffucci": {"enchondrome", "hemangiome"}, "mazabraud": {"df", "myxome"}}
+def _dropped(k, pos):
+    """composant cité APRÈS le nom du syndrome (« Syndrome de Maffucci : enchondromatose… ») → retiré"""
+    return any(k in parts and sy in pos and pos[sy] < pos[k] for sy, parts in SYNDROME_PARTS.items())
 def entities_of(text: str):
     n = norm(text)
-    return [k for k, _, rx in ENT_RE if rx.search(n)]
+    pos = {k: m.start() for k, _, rx in ENT_RE for m in [rx.search(n)] if m}
+    return [k for k in pos if not _dropped(k, pos)]
 
 # ---------------------------------------------------------------- construction
 SKIP = {1, 3, 4, 5, 6, 19, 27, 33, 43, 60, 65, 71, 76, 181, 47, 102, 96, 112, 111,
@@ -662,6 +676,7 @@ RAW.append(_syn(304, "Lésions expansives / d'aspect « anévrysmal »", [
     "# Tumeurs primitives", "Kyste anévrysmal", "Tumeur à cellules géantes", "Hémangiome-lymphangiome", "Ostéoblastome",
     "Chondroblastome", "Chondrosarcome", "Ostéosarcome télangiectasique", "Sarcome d'Ewing (extrémités principalement)",
     "Angiosarcome"]))
+TITLES[139] = ("Atteinte associée de l'os et des tissus mous", "Une même maladie touche les deux")
 TITLES[316] = ("Lésion condensante localisée", "Ostéocondensation focale (hors rachis : voir Vertèbre ivoire)")
 TITLES[312] = ("Tendon épaissi, nodulaire ou rompu sans traumatisme", "Tendinopathie non mécanique")
 TITLES[313] = ("Calcification tendineuse", None)
@@ -708,7 +723,7 @@ OVERRIDE = {
         "## Idiopathiques", "Calcinose tumorale idiopathique"]),
     174: _syn(174, "Tumeurs des tissus mous multiples", [
         "# Pseudotumeurs", "Sarcoïdes musculaires (sarcoïdose)", "Tophus goutteux (goutte)", "Calcinose tumorale",
-        "Calcifications tendineuses multiples",
+        "Calcifications tendineuses multiples (apatite)",
         "# Métastases", "Métastases (mélanome notamment)",
         "# Tumeurs vasculaires", "Malformations veineuses (Klippel-Trenaunay, Maffucci)",
         "Malformations artério-veineuses (mutation RASA1)", "Fistules artério-veineuses (Parkes-Weber)",
@@ -777,6 +792,12 @@ OVERRIDE = {
         "Infections parasitaires (cysticercose, loase, dracunculose…)", "Autres infections (lèpre, tuberculose, coccidioïdomycose…)",
         "Divers (athérosclérose, maladie de Weber-Christian…)",
         "## Idiopathique", "Calcinose tumorale idiopathique (Teutschlaender)"]),
+    139: _syn(139, "x", ["# Syndromes", "Syndrome de Maffucci : enchondromatose + lésions vasculaires à flux lent (phlébolithes)",
+        "Syndrome de Mazabraud : dysplasie fibreuse + myxomes intramusculaires",
+        "Neurofibromatose de type 1 : neurofibromes plexiformes", "Mélorhéostose : coulée osseuse + ossifications para-articulaires",
+        "# Infection", "Abcès intramusculaire, myonécrose et ostéomyélite",
+        "# Tumeurs et hémopathies", "Métastases", "Myélome",
+        "# Granulomatose", "Sarcoïdose"]),
     316: _syn(316, "x", ["# Pseudotumeurs", "Îlot condensant bénin (énostose)", "Ostéite chronique",
         "Ostéite aseptique (SAPHO, OCMR)", "Infarctus osseux", "Dysplasie fibreuse", "Maladie de Paget", "Fracture de contrainte",
         "Mastocytose", "Sarcoïdose", "Sclérose tubéreuse de Bourneville",

@@ -322,5 +322,17 @@
  "tmgnp": {
   "resume": "Sarcome de haut grade des gros troncs nerveux (sciatique, plexus), 20-50 ans, NF1 dans 25-70 % des cas (dégénérescence d'un neurofibrome plexiforme) ou radio-induit. Douleur intense et déficit neurologique, croissance rapide. Masse souvent ≥ 5 cm, hétérogène (nécrose, hémorragie), contours flous, œdème des tissus mous adjacents, rehaussement annulaire périphérique ; signe de la cible ou aspect fasciculé rares et focaux. TEP-FDG : SUVmax élevée (seuil proposé 6,1 vs schwannome) ; guide la biopsie.",
   "source": "Cotten — Tumeurs des tissus mous"
+ },
+ "maffucci": {
+  "resume": "Affection rare, non héréditaire, associant une enchondromatose unilatérale ou asymétrique prédominant aux mains à des malformations vasculaires à flux lent, surtout veineuses et sous-cutanées, dont la distribution ne suit pas celle des enchondromes. Radio : enchondromes multiples et phlébolithes des tissus mous, très évocateurs. Diagnostic précoce, parfois dès la naissance (déformations, tuméfactions). Risque de dégénérescence très important : chondrosarcome (15 à 51 % des patients) ou hémangiosarcome (3 à 5 %).",
+  "source": "Cotten — Ostéochondrodysplasies"
+ },
+ "mazabraud": {
+  "resume": "Association d'une dysplasie fibreuse, volontiers polyostotique, à un ou plusieurs myxomes intramusculaires siégeant habituellement dans les muscles adjacents aux lésions osseuses, notamment le quadriceps. IRM : myxome fortement hyperintense en T2, peu rehaussé après gadolinium. Myxomes uniques ou plus souvent multiples, pouvant atteindre une grande taille et récidiver après exérèse.",
+  "source": "Cotten — Ostéochondrodysplasies"
+ },
+ "melorheostose": {
+  "resume": "Dysplasie sporadique du squelette appendiculaire, surtout du membre inférieur, découverte volontiers dans l'enfance ; mono-, polyostotique ou monomélique, exceptionnellement bilatérale. Radio : hyperostose ondulée « en coulée de bougie » le long d'un seul versant de l'os, ± hyperostose endostée. Anomalies des tissus mous en regard (fibrose, masses ou ossifications para-articulaires), précédant souvent l'atteinte osseuse, pouvant aboutir à une ankylose. IRM : coulée en hyposignal sur toutes les séquences.",
+  "source": "Cotten — Ostéochondrodysplasies"
  }
 }

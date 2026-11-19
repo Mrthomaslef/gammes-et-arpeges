@@ -84,6 +84,7 @@ window.GEA_PICTOS = (() => {
   // tendons & enthèses : os + tendon qui s'y insère
   const TEND = '<path class="bo" d="M6 30h24l6 6v8H6z"/><path class="le" d="M30 30c3-8 6-16 12-26l3 1c-5 10-8 18-10 27z"/>';
   P.tend = TEND;
+  P.osmou = P.os + '<ellipse class="le soft" cx="37" cy="31" rx="9" ry="7"/><ellipse class="ln" cx="37" cy="31" rx="9" ry="7"/>';
   P.tendon = TEND + '<ellipse class="dk" cx="38.5" cy="15" rx="3.2" ry="5" transform="rotate(25 38.5 15)" opacity=".8"/>';
   P.gaine = TEND + '<path class="ln" d="M28 24c3-7 6-13 10-20M37 26c2-7 5-14 9-20" stroke-dasharray="2 2"/>';
   P.enthese = TEND + '<circle class="dot" cx="32" cy="30" r="3.4"/>';
