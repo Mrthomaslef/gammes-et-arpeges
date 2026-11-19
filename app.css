@@ -339,3 +339,8 @@ h1 .aggr{font-size:12px;vertical-align:4px}
 .wz-res{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px}
 .wz-dx{padding:10px 14px;border-width:1.5px;border-left-width:4px;box-shadow:none}
 .wz-dx b{font-size:15px}
+.resume .rl{display:block}
+.resume .rl+.rl{margin-top:6px}
+.resume .rl b{font-weight:700}
+details.dacc{margin:4px 0 14px}
+details.dacc .desc{padding:10px 14px 12px 30px;margin:0}

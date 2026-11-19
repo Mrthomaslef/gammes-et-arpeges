@@ -95,7 +95,7 @@
     return out + hl(t.slice(pos));
   }
   function renderBody(g, ts) {
-    let body = g.resume ? `<p class="resume">${esc(g.resume)}<span class="src">${esc(g.src || "")}</span></p>` : "";
+    let body = g.resume ? `<p class="resume">${resumeHtml(g.resume)}<span class="src">${esc(g.src || "")}</span></p>` : "";
     for (const b of g.blocks) {
       if (b.type === "list") body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}${i.a ? " ag" : ""}">${rich(i.t, i.e, ts)}</li>`).join("")}</ul>`;
       else if (b.type === "table") body += renderTable(b.rows, b.links);
@@ -104,6 +104,12 @@
     return body;
   }
   // bouton de gamme qui se déroule : titre + image (schéma de la gamme, sinon picto du sous-choix en liste mixte)
+  // résumé : une phrase par ligne, une ligne par technique d'imagerie (Radio, TDM, IRM…)
+  const IMG = "(?:Radio(?:graphie)?s?|TDM|Scanner|IRM|[ÉE]chographie|[ÉE]cho|Scintigraphie|Scinti|TEP|Biologie|Clinique|Histologie)";
+  function resumeHtml(t) {
+    const parts = String(t || "").split(new RegExp(`(?<=[.!?])\\s+(?=[A-ZÉÈÀÂÎÔÛÇ«])|\\s*;\\s+(?=${IMG}\\b)`));
+    return parts.filter(Boolean).map(x => `<span class="rl">${esc(x).replace(new RegExp(`^(${IMG}[^:]{0,25} :)`), "<b>$1</b>")}</span>`).join("");
+  }
   function rowGamme(g, opts = {}) {
     const ts = opts.ts && opts.ts.length ? opts.ts : null;
     const [gid, sid] = home1(g);
@@ -120,7 +126,7 @@
   }
   view.addEventListener("toggle", e => {
     const d = e.target;
-    if (!d.classList || !d.classList.contains("acc") || !d.open) return;
+    if (!d.classList || !d.classList.contains("acc") || !d.dataset.id || !d.open) return;
     const g = G[d.dataset.id], box = d.querySelector(".acc-b");
     if (!box.dataset.done) {
       const ts = d.dataset.q ? terms(d.dataset.q) : null;
@@ -354,8 +360,8 @@
       if (gs.length) lines.push(`<li><span class="dk-k">${esc(sb.kw || sb.label)}</span> : ${gs.map(g => `<a class="kw${g.aggr ? " ag" : ""}" href="#/g/${g.id}?q=${q}">${esc(g.kw)}</a>`).join(", ")}</li>`);
     }));
     view.innerHTML = `<h1>${esc(e.label)}</h1>
-      ${e.resume ? `<p class="resume">${esc(e.resume)}<span class="src">${esc(e.src || "")}</span></p>` : ""}
-      ${lines.length ? `<ul class="desc">${lines.join("")}</ul>` : ""}
+      ${e.resume ? `<p class="resume">${resumeHtml(e.resume)}<span class="src">${esc(e.src || "")}</span></p>` : ""}
+      ${lines.length ? `<details class="card acc dacc"><summary><span class="t"><b>Dans les gammes</b><span class="snip1">${lines.length} critère${lines.length > 1 ? "s" : ""}</span></span><span class="chev">›</span></summary><ul class="desc">${lines.join("")}</ul></details>` : ""}
       ${fiches.length ? `<h2 class="hh2">Fiche</h2><div class="list">${fiches.map(g => rowGamme(g, { noSnip: true, mixed: true })).join("")}</div>` : ""}`;
   }
 
