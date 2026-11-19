@@ -869,6 +869,7 @@ FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
     ("Leucémie aiguë de l'enfant", [(99, None)]),
     ("Ostéochondroses", [(117, None)]),
 ]
+RESUMES = json.loads((ROOT / "data/source/cotten_resumes.json").read_text())
 _by = {g["slide"]: g for g in gammes}
 MOVED = {"s173": "s305", "s035": "s307", "s165": "s310", "s166": "s310", "s126": "s310"}
 for name, parts in FICHE_NAMES:
@@ -882,6 +883,10 @@ for name, parts in FICHE_NAMES:
         ents |= set(g["ents"]); fiche += [e for e in (g["fiche"] or []) if e not in fiche]; qs.append(g["q"])
         if g is not g0:
             MOVED[g["id"]] = g0["id"]; gammes.remove(g)
+    r = RESUMES.get(name) or {}
+    if r.get("resume"):
+        chaps = re.findall(r"«\s*([^»]+?)\s*»", r["source"])
+        g0["resume"] = r["resume"]; g0["src"] = "Cotten — " + (", ".join(dict.fromkeys(chaps)) if chaps else r["source"])
     g0.update(title=name, sub=None, blocks=blocks, ents=sorted(ents), fiche=fiche or None, thumb=None,
               q=norm(name) + " " + " ".join(qs))
 for e in entities:

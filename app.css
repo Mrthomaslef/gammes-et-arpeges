@@ -306,3 +306,6 @@ body{overscroll-behavior-y:auto}
 .desc li::before{content:"–";position:absolute;left:0;color:var(--muted)}
 .desc .dk-k{color:var(--muted);font-weight:600}
 .desc a.kw{color:var(--acc);font-weight:600;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--acc) 35%,transparent);text-underline-offset:3px}
+/* fiche maladie : résumé Cotten */
+.resume{margin:4px 0 14px;padding:10px 12px;border-left:3px solid var(--acc);background:var(--acc-soft);border-radius:8px;line-height:1.5}
+.resume .src{display:block;margin-top:6px;font-size:12px;color:var(--muted);font-style:italic}

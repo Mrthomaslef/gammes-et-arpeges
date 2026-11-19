@@ -95,7 +95,7 @@
     return out + hl(t.slice(pos));
   }
   function renderBody(g, ts) {
-    let body = "";
+    let body = g.resume ? `<p class="resume">${esc(g.resume)}<span class="src">${esc(g.src || "")}</span></p>` : "";
     for (const b of g.blocks) {
       if (b.type === "list") body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}">${rich(i.t, i.e, ts)}</li>`).join("")}</ul>`;
       else if (b.type === "table") body += renderTable(b.rows, b.links);

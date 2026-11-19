@@ -1,6 +1,6 @@
 // Service worker : cache « réseau d'abord » pour le code, « cache d'abord » pour les images.
-const CACHE = "gea-v23";
-const CORE = ["./", "index.html", "app.css?v=23", "icons.js?v=23", "pictos.js?v=23", "app.js?v=23", "data/embedded_data.js?v=23", "manifest.webmanifest", "assets/logo.svg", "assets/icon-192.png"];
+const CACHE = "gea-v24";
+const CORE = ["./", "index.html", "app.css?v=24", "icons.js?v=24", "pictos.js?v=24", "app.js?v=24", "data/embedded_data.js?v=24", "manifest.webmanifest", "assets/logo.svg", "assets/icon-192.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));

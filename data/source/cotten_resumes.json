@@ -1,0 +1,118 @@
+{
+  "Enchondrome": {
+    "resume": "Tumeur bénigne fréquente faite de lobules de cartilage hyalin, très fréquente aux mains, métaphysaire aux os longs. Ostéolyse lobulée avec calcifications en anneaux, arcs ou pop-corn et érosions endostées focales peu profondes. IRM : lobules hypo T1/hyper T2, rehaussement « en arcs et anneaux ». Inquiéter : douleur, siège axial, scalloping > 2/3, appositions périostées.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Tumeurs osseuses »"
+  },
+  "Ostéosarcome secondaire": {
+    "resume": "OS survenant sur territoire irradié (bassin, épaule ; dans le champ, délai ≥ 3 ans), dysplasie fibreuse, maladie de Paget habituellement polyostotique ou rarement infarctus osseux ; pronostic mauvais. Sur Paget : ostéolyse, destruction corticale, masse des parties molles, fracture pathologique, sans réaction périostée ; IRM : remplacement médullaire en hyposignal T1.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Tumeurs osseuses » (OS secondaires) et « Ostéopathies » (dégénérescence sarcomateuse du Paget)"
+  },
+  "Kyste anévrysmal vs kyste essentiel": {
+    "resume": "Kyste essentiel : enfant 5-15 ans, humérus puis fémur proximal ; lacune métaphysaire centrale, uniloculaire, allongée dans l'axe de l'os, signe du fragment tombé si fracture. KOA : adolescent, ostéolyse excentrée métaphysaire expansive multiloculaire à fine coque périostée, niveaux liquide-liquide ; rechercher une tumeur sous-jacente (KOA secondaire, TCG).",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Tumeurs osseuses »"
+  },
+  "Tassement vertébral ostéoporotique": {
+    "resume": "Fracture vertébrale par fragilité, rare au-dessus de T7, prédominant à la jonction thoracolombaire, souvent multiple. Bénignité : impaction de tout le plateau, recul du coin postérosupérieur, arc postérieur respecté, pas d'ostéolyse, vide intrasomatique. IRM aiguë : œdème en bande sous le plateau fracturé, fente liquidienne, infiltration paravertébrale absente ou discrète.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Ostéopathies »"
+  },
+  "Tumeur des gaines nerveuses périphériques": {
+    "resume": "Masse fusiforme centrée sur un nerf (nerf entrant et sortant), split fat sign, signe de la cible en T2 (centre fibreux, périphérie myxoïde), aspect fasciculé, dénervation musculaire. Schwannome excentré au nerf, neurofibrome centré. TMGNP (souvent NF1) : grande taille, douleur et déficit, contours flous, œdème péritumoral, nécrose, rehaussement annulaire.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Tumeurs des tissus mous »"
+  },
+  "Tumeurs lipomateuses": {
+    "resume": "Lipome : densité et signal identiques à la graisse sous-cutanée, fine capsule, septums fins (< 2 mm) peu rehaussés ; fibres musculaires piégées possibles dans la forme intramusculaire. Tumeur adipeuse atypique (amplification MDM2) : contours nets, forme plurinodulaire, septums épais (> 2 mm) ou nodulaires rehaussés ; contingent non adipeux = dédifférenciation.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Tumeurs des tissus mous »"
+  },
+  "Myosite ossifiante": {
+    "resume": "Masse ossifiée bénigne intramusculaire, adolescent ou adulte jeune, traumatisme dans la moitié des cas. Calcifications périphériques après 2 à 6 semaines puis ossification centripète (phénomène de zone), liseré clair la séparant de l'os. IRM précoce trompeuse : masse mal limitée hyper T2, rehaussement périphérique, œdème important ; contrôle à 3-4 semaines en cas de doute.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Tumeurs des tissus mous »"
+  },
+  "Neurofibromatoses": {
+    "resume": "NF1 (von Recklinghausen, autosomique dominante) : taches café au lait, neurofibromes dont plexiformes pathognomoniques, nodules de Lisch. Os : dysplasie du sphénoïde, scalloping vertébral postérieur et ectasie durale, cyphoscoliose dysplasique courte et angulaire, incurvation et pseudarthrose du tibia. NF2 : schwannomes vestibulaires bilatéraux ; NF3 : schwannomatose.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Autres affections »"
+  },
+  "Goutte": {
+    "resume": "Dépôts d'urate monosodique (hyperuricémie) : accès aigus puis goutte tophacée chronique. Radio tardive : atteinte polyarticulaire asymétrique des membres inférieurs, tophus denses, érosions para-articulaires de grande taille prolongées de spicules (hallebarde), interligne longtemps préservé, sans raréfaction juxta-articulaire. Écho : signe du double contour.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Affections microcristallines »"
+  },
+  "Chondrocalcinose (CPP)": {
+    "resume": "Dépôts de pyrophosphate de calcium : liseré calcique fin parallèle à l'os sous-chondral (cartilage hyalin), calcifications épaisses des fibrocartilages (ménisques, ligament triangulaire, symphyse). Arthropathie atypique : sièges inhabituels (radiocarpienne, MCP, fémoropatellaire isolée), condensation nette, géodes nombreuses, ostéophytes pauvres, évolution destructrice.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Affections microcristallines »"
+  },
+  "Polyarthrite rhumatoïde": {
+    "resume": "Rhumatisme inflammatoire chronique le plus fréquent : synovite bilatérale et symétrique, débutant aux mains, poignets et avant-pieds. Radio : tuméfaction synoviale, raréfaction en bande, érosions marginales sans reconstruction (styloïde ulnaire, bord radial des MCP, bord latéral de la 5e tête métatarsienne), pincement diffus. Écho/IRM : synovites et ténosynovites précoces.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Polyarthrite rhumatoïde »"
+  },
+  "Sacro-iliite vs surcharge mécanique": {
+    "resume": "Sacro-iliite : atteinte bilatérale symétrique, tout l'interligne (pied et versant postérieur), berges floues érodées avec pseudo-élargissement, condensation étendue et floue, ankylose possible. Surcharge mécanique : tiers moyen, partie antérieure de l'interligne, condensation compacte peu étendue, petites érosions antérieures bien limitées, pas d'ankylose.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Spondyloarthrites »"
+  },
+  "Lupus érythémateux systémique": {
+    "resume": "Maladie inflammatoire avec autoanticorps (anti-ADN natif). Polyarthrite symétrique non érosive ; arthropathie de Jaccoud déformante non érosive, initialement réductible (coup de vent ulnaire, col-de-cygne) ; « rhupus » si érosions. Ostéonécroses multifocales (corticoïdes, antiphospholipides), arthrites septiques, calcifications des tissus mous, fractures.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Maladies systémiques et vascularites »"
+  },
+  "Arthropathie hémophilique": {
+    "resume": "Hémarthroses répétées (déficit FVIII ou FIX, garçon) sur articulations cibles : chevilles, genoux, coudes. Radio : hypertrophie épiphysaire contrastant avec diaphyses grêles, élargissement de la fosse intercondylaire, patella carrée, géodes, pincement diffus. IRM : hypertrophie synoviale et dépôts d'hémosidérine en hyposignal T1/T2, majorés en écho de gradient.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Hémophilie »"
+  },
+  "Amylose": {
+    "resume": "Amylose à β2-microglobuline de l'hémodialysé chronique : syndrome du canal carpien bilatéral, épaississements tendineux et capsulosynoviaux (épaule, poignet), lacunes sous-chondrales bien limitées multiples et bilatérales, spondylarthropathie destructrice cervicale. IRM : dépôts en hypo/iso T1 et typiquement hyposignal T2, sans infiltration des tissus mous périvertébraux.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Troubles minéraux et osseux associés à la maladie rénale chronique »"
+  },
+  "OAN diabétique vs ostéite": {
+    "resume": "OAN : surtout médiopied (Chopart, Lisfranc), sans ulcération en regard, atteinte sous-chondrale et polyarticulaire d'emblée, hyposignal T1 modéré moins étendu que l'œdème. Ostéite : avant-pied et talon, au contact d'une ulcération, extension par contiguïté, franc hyposignal T1 (séquence la plus spécifique). Surinfection d'OAN : ulcère, ghost sign.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Diabète et ostéoarthropathies nerveuses »"
+  },
+  "Déformations des doigts": {
+    "resume": "PR évoluée : boutonnière (flexion IPP, hyperextension IPD) plus fréquente que col-de-cygne (hyperextension IPP, flexion IPD) et maillet (flexion IPD) ; coup de vent ulnaire des MCP avec subluxation palmaire ; pouce en Z. Dans le lupus (Jaccoud), déformations comparables mais non érosives et initialement réductibles.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Polyarthrite rhumatoïde » et « Maladies systémiques et vascularites »"
+  },
+  "Maladie de Paget": {
+    "resume": "Remodelage osseux anormal et excessif d'un ou plusieurs os, sujet de plus de 45 ans. Signes cardinaux : front de résorption en « V » (os longs), épaississement cortical, travées épaissies et désorganisées, élargissement de l'os ; vertèbre en cadre ou ivoire. IRM : moelle de signal graisseux le plus souvent ; tout remplacement médullaire ou masse fait craindre un sarcome.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Ostéopathies »"
+  },
+  "Hyperparathyroïdie primitive": {
+    "resume": "Hypersécrétion autonome de PTH (adénome le plus souvent), hypercalcémie. Résorption sous-périostée du bord radial des phalanges intermédiaires (index, majeur) et des houppes, intracorticale (aspect feuilleté), sous-chondrale (acromioclaviculaire, sacro-iliaques pouvant mimer une sacro-iliite) ; tumeurs brunes ; ostéosclérose possible.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Endocrinopathies »"
+  },
+  "Ostéomalacie": {
+    "resume": "Défaut de minéralisation avec accumulation de tissu ostéoïde, surtout carentiel (vitamine D) ou par malabsorption. Raréfaction osseuse aux travées floues « délavées », pseudo-fractures de Looser-Milkman (bandes claires perpendiculaires à l'os, bilatérales et symétriques, sans cal, ex. branches pubiennes), vertèbres biconcaves harmonieuses, fractures d'âges différents.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Ostéopathies »"
+  },
+  "Ostéodystrophie rénale (TMO-MRC)": {
+    "resume": "TMO de l'insuffisance rénale chronique : ostéite fibreuse (HPT secondaire), ostéomalacie, ostéopathie adynamique ou mixte. Résorption osseuse sous-périostée, intracorticale, sous-chondrale ; ostéosclérose plus fréquente que dans l'HPT primitive (vertèbres en « maillot de rugby ») ; tumeurs brunes plus rares ; calcifications vasculaires et des tissus mous.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Troubles minéraux et osseux associés à la maladie rénale chronique »"
+  },
+  "Acromégalie": {
+    "resume": "Hypersécrétion de GH (adénome hypophysaire), diagnostic vers 40-45 ans. Hypertrophie des tissus mous (coussinet plantaire), houppes en « ancre de marine », épiphyses au carré, élargissement des interlignes (2e MCP) et des disques par hypertrophie cartilagineuse, enthésophytes exubérants, scalloping vertébral postérieur ; arthropathie dégénérative tardive, canal carpien.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Endocrinopathies »"
+  },
+  "Syndrome de Cushing": {
+    "resume": "Hypercortisolisme chronique endogène ou cortisonique. Ostéoporose avec fractures vertébrales fréquentes et paucisymptomatiques ; cals osseux exubérants évocateurs (bande dense épaisse sous les plateaux fracturés, cals costaux épais) ; ostéonécroses multifocales (têtes fémorales, humérus), myopathie proximale, lipomatose épidurale, ruptures tendineuses.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Endocrinopathies »"
+  },
+  "Drépanocytose": {
+    "resume": "Hémoglobinopathie HbS (syndrome drépanocytaire majeur) avec occlusions microvasculaires et hyperplasie médullaire (hyposignal T1 diffus). Siège des infarctus selon l'âge : syndrome main-pied (6 mois-2 ans), infarctus métaphysodiaphysaires du grand enfant (bien plus fréquents que l'ostéomyélite), ostéonécroses épiphysaires ; vertèbres en « H » évocatrices.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Hémoglobinopathies et autres anémies »"
+  },
+  "Achondroplasie": {
+    "resume": "Ostéochondrodysplasie non létale la plus fréquente (mutation FGFR3, autosomique dominante) : nanisme rhizomélique. Grosse voûte et petite base du crâne (foramen magnum étroit), canal rachidien étroit (distance interpédiculaire non croissante de L1 à L5, pédicules courts), ailes iliaques petites et trapues, acétabulum en trident, métaphyses en « cornet à glace », fibula longue.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Ostéochondrodysplasies »"
+  },
+  "Radiothérapie": {
+    "resume": "Moelle irradiée : phase œdémato-hémorragique (1re-2e semaines) puis transformation graisseuse (hypersignal T1). Complications : troubles de croissance chez l'enfant, ostéoradionécrose après 1 à 3 ans (ostéopénie et plages de sclérose), fractures par insuffisance dans le champ (souvent 3 à 12 mois, sacrum), tumeurs radio-induites (bénignes vers 5 ans, malignes 11-14 ans).",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Ostéopathies » (lésions osseuses radio-induites)"
+  },
+  "OCRM": {
+    "resume": "Ostéomyélite chronique récurrente multifocale de l'enfant, évoluant par poussées et rémissions. Atteinte surtout des os longs des membres inférieurs (métaphyses jouxtant la physe, souvent symétrique) et du tiers médial de la clavicule : ostéolyse puis ostéocondensation et hyperostose. IRM : œdème médullaire métaphysaire, sans abcès ni séquestre ; IRM corps entier utile.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Syndrome SAPHO et ostéomyélite chronique récurrente multifocale »"
+  },
+  "Leucémie aiguë de l'enfant": {
+    "resume": "Atteinte osseuse fréquente, pouvant révéler la maladie (2-5 ans). Bandes claires métaphysaires bilatérales et symétriques aux zones de croissance rapide (signe le plus précoce), ostéopénie diffuse, lésions ostéolytiques (corticale médiale de l'humérus proximal évocatrice), appositions périostées. IRM : infiltration médullaire diffuse, mieux vue en T2 fat sat.",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies générales — chapitre « Néoplasies lymphoïdes et myéloïdes »"
+  },
+  "Ostéochondroses": {
+    "resume": "Atteintes d'un noyau d'ossification chez l'enfant ou l'adolescent, d'origine microtraumatique/ischémique : Freiberg (tête du 2e métatarsien), Köhler (naviculaire, 4-6 ans), Panner (capitulum, 7-12 ans). Radio : aplatissement, ostéocondensation, fragmentation ; IRM : œdème non spécifique. Penser aux variantes d'ossification ; évolution souvent favorable (Köhler, Panner).",
+    "source": "Cotten, Imagerie musculosquelettique : pathologies loco-régionales — chapitre « Autres pathologies de la cheville et du pied » (Freiberg, Köhler) et « Pathologies du compartiment latéral » du coude (Panner)"
+  }
+}
