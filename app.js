@@ -202,7 +202,7 @@
       { t: "Densité", multi: 1, o: [["lyt", "Lytique (ostéolyse)", LYT], ["cond", "Condensante (ostéocondensation)", ["s316", "s095", "s036"]]] },
       { t: "Nombre de lésions", multi: 1, o: [["u", "Lésion unique", "UNI", null, 0, "os"], ["s052", "Lésions multiples : ostéolyses plurifocales", null, "!cond"],
         ["s095", "Lésions multiples : condensation diffuse ou multifocale", null, "!lyt"], ["s023", "Appositions périostées sur plusieurs os"]] },
-      { t: "Âge (orientation)", soft: 1, o: [["s322#0", "Avant 20 ans"], ["s322#1", "20 à 40 ans"], ["s322#2", "Après 40 ans"]] },
+      { t: "Âge", soft: 1, o: [["s322#0", "Avant 40 ans"], ["s322#1", "Après 40 ans"]] },
       { t: "Os atteint", if: "!s095", o: [["oslong", "Os long", OSLONG], ["vertebre", "Vertèbre", VERT], ["sacrum", "Sacrum", ["s146"]],
         ["crane", "Crâne", ["s305", "s309"]], ["s039", "Côte"], ["s142", "Doigts"]] },
       { t: "Hauteur sur l'os long", if: "oslong", o: [["s301", "Épiphysaire"], ["s302", "Métaphysaire"], ["s303", "Diaphysaire"]] },
