@@ -463,6 +463,9 @@ ENT = [
     ("mazabraud", "Syndrome de Mazabraud", r"mazabraud"),
     ("maffucci", "Syndrome de Maffucci", r"maffucci"),
     ("melorheostose", "Mélorhéostose", r"melorheostose"),
+    ("osteopoecilie", "Ostéopœcilie", r"(osteopo(e|oe)cilie|osteopoikilose)"),
+    ("gaucher", "Maladie de Gaucher", r"maladie de gaucher"),
+    ("oah", "Ostéoarthropathie hypertrophiante (Pierre Marie, pachydermopériostose)", r"(osteo-?arthropathie hypertrophiante|pierre marie|pachydermoperiostose)"),
     ("dof", "Dysplasie ostéofibreuse", r"dysplasie osteo-?fibreuse"),
     ("adamantinome", "Adamantinome", r"adamantinome"),
     ("hl", "Histiocytose langerhansienne / granulome éosinophile", r"(\bhistiocytose|granulome (a )?eosinophile)"),
@@ -1286,11 +1289,15 @@ REPL = {
     ("s022", "Sarcomes osseux"): ["Ostéosarcome (spicules en feu d'herbe, triangle de Codman)", "Sarcome d'Ewing (bulbe d'oignon, spicules)",
                                   "Métastase de neuroblastome, leucémie (enfant)"],
     ("s175", "Hématopoïèse extra-médullaire"): ["Hématopoïèse extramédullaire (myélofibrose, thalassémie, drépanocytose)"],
+    ("s157", "Lipofibrome (nerfs médian et ulnaire)"): ["Lipomatose des nerfs : lipome hétérotopique, hamartome fibrolipomateux (nerf médian surtout)"],
 }
 # diagnostics cités entre parenthèses comme cause d'autre chose : pas de lien
 NOTAG = {"Métastase « anévrysmale »": {"lms"}, "Destructions osseuses marquées (métastases, myélome, leucémie)": {"myelome", "leucemie", "meta"},
          "Malformations artérioveineuses, pathologies postradiques": {"mv", "rx"},
-         "Destruction des précurseurs": {"lymphome", "leucemie"}}
+         "Destruction des précurseurs": {"lymphome", "leucemie"},
+         # lésions multiples : c'est la maladie générale qui est proposée, pas la lésion élémentaire
+         "Neurofibromes, plexiformes notamment (NF1)": {"tbgp"}, "Schwannomes (NF2, schwannomatose)": {"tbgp"},
+         "Tumeur maligne des gaines nerveuses (NF1)": {"tmgnp"}, "Myxomes (Mazabraud, Carney)": {"myxome"}}
 _G = {g["id"]: g for g in gammes}
 def _mk(t, l):
     it = {"l": l, "t": t, "k": "li", "b": 0}

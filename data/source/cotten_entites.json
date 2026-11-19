@@ -334,5 +334,17 @@
  "melorheostose": {
   "resume": "Dysplasie sporadique du squelette appendiculaire, surtout du membre inférieur, découverte volontiers dans l'enfance ; mono-, polyostotique ou monomélique, exceptionnellement bilatérale. Radio : hyperostose ondulée « en coulée de bougie » le long d'un seul versant de l'os, ± hyperostose endostée. Anomalies des tissus mous en regard (fibrose, masses ou ossifications para-articulaires), précédant souvent l'atteinte osseuse, pouvant aboutir à une ankylose. IRM : coulée en hyposignal sur toutes les séquences.",
   "source": "Cotten — Ostéochondrodysplasies"
+ },
+ "osteopoecilie": {
+  "resume": "Dysplasie autosomique dominante (mutation LEMD3), de découverte radiographique fortuite ; associée dans un quart des cas à une dermatofibrose lenticulaire disséminée (syndrome de Buschke-Ollendorf). Radio : multiples énostoses (îlots condensants) de distribution symétrique, prédominant aux épiphyses et métaphyses des os longs, au carpe, au tarse, à la scapula et au bassin. Pas d'hyperfixation scintigraphique habituelle. Peut s'associer à l'ostéopathie striée et à la mélorhéostose.",
+  "source": "Cotten — Ostéochondrodysplasies"
+ },
+ "gaucher": {
+  "resume": "Maladie de surcharge génétique (déficit en glucocérébrosidase), fréquente chez les juifs ashkénazes ; splénomégalie quasi constante, hépatomégalie. IRM (examen de choix) : infiltration médullaire en hyposignal T1, homogène, hétérogène ou « poivre et sel », débutant au squelette axial puis appendiculaire, métaphysaire puis diaphysaire. Complications : crises osseuses (œdème), ostéonécroses et infarctus, fractures, infections. Radio : déformation en « flacon d'Erlenmeyer » de l'extrémité inférieure du fémur, ostéopénie, ostéolyses.",
+  "source": "Cotten — Histiocytoses"
+ },
+ "oah": {
+  "resume": "Ostéoarthropathie hypertrophiante : primitive (pachydermopériostose, 3 à 5 %, homme, hippocratisme et pachydermie) ou secondaire, surtout pulmonaire (90 %, syndrome de Pierre Marie, adénocarcinome bronchique en tête). Radio : appositions périostées bilatérales et symétriques des os longs, diaphysaires puis métaphysodiaphysaires, linéaires uni- ou plurilamellaires dans la forme secondaire ; épaisses, irrégulières, épiphysométaphysodiaphysaires avec enthésopathies ossifiantes dans la forme primitive. Hippocratisme digital, parfois acro-ostéolyse. La forme secondaire régresse après traitement de la cause.",
+  "source": "Cotten — Ostéoarthropathie hypertrophiante"
  }
 }

@@ -344,3 +344,6 @@ h1 .aggr{font-size:12px;vertical-align:4px}
 .resume .rl b{font-weight:700}
 details.dacc{margin:4px 0 14px}
 details.dacc .desc{padding:10px 14px 12px 30px;margin:0}
+
+.wz-sec{font-size:.8rem;font-weight:600;color:var(--muted);margin:14px 2px 6px;text-transform:none}
+.wz-sec:first-of-type{margin-top:4px}

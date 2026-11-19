@@ -199,9 +199,9 @@
   const VERT = ["s141", "s329", "s145", "s036", "s041", "s034", "s038"];
   const W = {
     os: { label: "Os", px: "os", gid: "os", steps: [
-      { t: "Densité", o: [["lyt", "Lytique (ostéolyse)", LYT], ["cond", "Condensante (ostéocondensation)", ["s316", "s095", "s036"]]] },
-      { t: "Nombre de lésions", o: [["u", "Lésion unique", "UNI"], ["s052", "Ostéolyses plurifocales", null, "!cond"],
-        ["s095", "Condensation diffuse ou multifocale", null, "!lyt"]] },
+      { t: "Densité", multi: 1, o: [["lyt", "Lytique (ostéolyse)", LYT], ["cond", "Condensante (ostéocondensation)", ["s316", "s095", "s036"]]] },
+      { t: "Nombre de lésions", multi: 1, o: [["u", "Lésion unique", "UNI", null, 0, "os"], ["s052", "Lésions multiples : ostéolyses plurifocales", null, "!cond"],
+        ["s095", "Lésions multiples : condensation diffuse ou multifocale", null, "!lyt"], ["s023", "Appositions périostées sur plusieurs os"]] },
       { t: "Âge (orientation)", soft: 1, o: [["s322#0", "Avant 20 ans"], ["s322#1", "20 à 40 ans"], ["s322#2", "Après 40 ans"]] },
       { t: "Os atteint", if: "!s095", o: [["oslong", "Os long", OSLONG], ["vertebre", "Vertèbre", VERT], ["sacrum", "Sacrum", ["s146"]],
         ["crane", "Crâne", ["s305", "s309"]], ["s039", "Côte"], ["s142", "Doigts"]] },
@@ -209,21 +209,21 @@
       { t: "Position dans l'os", if: ["oslong", "!s301"], soft: 1, o: [["s320#0", "Centrée (médullaire)"], ["s320#1", "Excentrée"],
         ["s018", "Corticale"], ["s311", "Surface de l'os"]] },
       { t: "Aspect vertébral", if: "vertebre", o: [["s329", "Arc postérieur"], ["s145", "Vertèbre évidée (« mini-brain »)", null, "!cond"],
-        ["s028", "Travées verticales (vertèbre striée)"], ["s036", "Vertèbre ivoire, condensation localisée", null, "!lyt"], ["s041", "Forme anormale (H, rostre, plana)"], ["s034", "Franchit le disque"],
+        ["s028", "Trabéculations (travées épaisses)"], ["s036", "Vertèbre ivoire, condensation localisée", null, "!lyt"], ["s041", "Forme anormale (H, rostre, plana)"], ["s034", "Franchit le disque"],
         ["s038", "Atteinte disco-vertébrale (pseudo-spondylodiscite)"]] },
       { t: "Bords (crâne)", if: ["crane", "!cond"], o: [["s305#0", "Limites nettes scléreuses"], ["s305#1", "Sclérose dégressive"],
         ["s305#2", "À l'emporte-pièce (sans sclérose)"], ["s305#3", "Limites floues, mitées ou perméatives", null, null, 1]] },
       { t: "Contours (Lodwick)", if: ["!cond", "!crane"], o: [["s012", "IA1 — liseré net"], ["s013", "IA2 — condensation dégressive"], ["s014", "IB — sans sclérose"],
         ["s015", "IC, II, III — mal limitée, mitée, perméative"]] },
-      { t: "Matrice", o: [["s325#0", "Chondroïde (arcs et anneaux)"], ["s325#1", "Ostéoïde (nuageuse)"], ["s325#2", "Verre dépoli"],
+      { t: "Matrice", if: "!s095", o: [["s325#0", "Chondroïde (arcs et anneaux)"], ["s325#1", "Ostéoïde (nuageuse)"], ["s325#2", "Verre dépoli"],
         ["s325#3", "Graisseuse"]] },
       { t: "Aspect & contenu", o: [["s138", "Soufflante (coque)", null, "!cond"], ["s144", "« In and out »"], ["s032", "Œdème péri-lésionnel marqué (IRM)"],
         ["s030", "Niveaux liquide-liquide", null, "!cond"], ["s028", "Trabéculations", null, "!vertebre"], ["s101", "Séquestre"], ["s010", "Contours serpigineux"]] },
       { t: "Corticale & périoste", o: [["s053", "Stries intracorticales"], ["s020", "Périoste unilamellaire continu"], ["s022", "Périoste plurilamellaire ou spiculé"],
-        ["s021", "Périoste compact (endoste normal)"], ["s024", "Encoches endostées ± hyperostose"], ["s023", "Appositions périostées sur plusieurs os", null, "!u"]] },
+        ["s021", "Périoste compact (endoste normal)"], ["s024", "Encoches endostées ± hyperostose"]] },
     ] },
     tm: { label: "Parties molles", px: "tm", gid: "tm", steps: [
-      { t: "Nombre de lésions", o: [["s174", "Masses multiples"]] },
+      { t: "Nombre de lésions", multi: 1, o: [["u", "Masse unique", "UNI", null, 0, "tm"], ["s174", "Masses multiples (maladie générale)"]] },
       { t: "Siège", o: [["s151", "Superficielle (sous-cutanée)"], ["s155", "Musculaire"], ["s153", "Juxta-articulaire ou tendineuse"],
         ["s157", "Nerf, pédicule vasculo-nerveux"], ["s175", "Paravertébrale"], ["s178", "Pré-sacrée"]] },
       { t: "Signal T1", o: [["s310#0", "Hypersignal T1 graisseux (s'efface en saturation de graisse)"], ["s310#1", "Hypersignal T1 non graisseux (sang, protéines, mélanine)"]] },
@@ -241,8 +241,12 @@
       { t: "Atteinte articulaire", if: "artic", o: [["s159", "Érosions marginales (synovite)"], ["s333", "Érosions à l'emporte-pièce (bords nets)"],
         ["s332", "Calcifications articulaires"], ["s055", "Dactylite"], ["s090", "Synoviale hypointense en T2"], ["s074", "Hémarthrose"],
         ["s050", "Arthropathie destructrice (neurogène)"]] },
+      { t: "Autre signe associé", if: "artic", o: [["s159", "Érosions marginales (synovite)", null, "!s159"], ["s333", "Érosions à l'emporte-pièce (bords nets)", null, "!s333"],
+        ["s332", "Calcifications articulaires", null, "!s332"], ["s055", "Dactylite", null, "!s055"], ["s090", "Synoviale hypointense en T2", null, "!s090"],
+        ["s074", "Hémarthrose", null, "!s074"], ["s050", "Arthropathie destructrice (neurogène)", null, "!s050"]] },
       { t: "Tendon, gaine, enthèse", if: "tend", o: [["s312", "Tendon épaissi ou rompu sans traumatisme"], ["s313", "Calcification tendineuse"],
         ["s314", "Ténosynovite"], ["s315", "Enthèse : œdème, érosion, ossification"]] },
+      { t: "Signe associé", if: "tend", o: [["s313", "Calcifications"], ["s090", "Hyposignal T2 (dépôts, hémosidérine)"], ["s159", "Érosions osseuses adjacentes"]] },
     ] },
   };
   // diagnostics d'une rubrique de gamme (n-ième intertitre de 1er niveau)
@@ -254,10 +258,16 @@
     }));
     return out;
   }
-  const UNI = () => [...new Set(W.os.steps.flatMap(st => st.o.flatMap(o => Array.isArray(o[2]) ? o[2] : o[2] ? [] : [o[0]])))]
-    .filter(id => !["s052", "s095", "s023", "s053"].includes(id) && !id.includes("#"));
-  const optIds = o => o[2] === "UNI" ? UNI() : (o[2] || [o[0]]);
+  // « lésion unique » : toutes les gammes du domaine sauf celles des atteintes multiples/diffuses
+  const MULTI = ["s052", "s095", "s023", "s053", "s174"];
+  const UNI = dom => [...new Set(W[dom].steps.flatMap(st => st.o.flatMap(o => Array.isArray(o[2]) ? o[2] : o[2] ? [] : [o[0]])))]
+    .filter(id => !MULTI.includes(id) && !id.includes("#"));
+  const UNIC = {};
+  const optIds = o => o[2] === "UNI" ? (UNIC[o[5]] ||= UNI(o[5])) : (o[2] || [o[0]]);
+  const MULTIK = ["s052", "s095", "s023", "s174"];
   const okIf = (c, picks) => !c || [].concat(c).every(x => x[0] === "!" ? !picks.includes(x.slice(1)) : picks.includes(x));
+  // lésions multiples = maladie générale : on ne décrit plus la lésion (seules les étapes « multi » restent)
+  const okStep = (st, picks) => okIf(st.if, picks) && (st.multi || !picks.some(p => MULTIK.includes(p)));
   const entsOf = ids => new Set(ids.flatMap(id => {
     const [gid, k] = id.split("#"); const g = G[gid]; if (!g) return [];
     return k === undefined ? g.ents : secEnts(g, +k);
@@ -277,7 +287,7 @@
     const w = W[dom]; if (!w) return home();
     let pool = entsOf(w.steps.flatMap(st => st.o.flatMap(optIds)));
     const chosen = []; // [étape, réponse]
-    const steps = w.steps.filter(st => okIf(st.if, picks));
+    const steps = w.steps.filter(st => okStep(st, picks));
     let i = 0;
     for (; i < steps.length && i < picks.length; i++) {
       const o = steps[i].o.find(x => x[0] === picks[i]);
@@ -291,11 +301,25 @@
     let next = null;
     for (let k = i; k < steps.length && pool.size > 1; k++) {
       const opts = steps[k].o.filter(o => okIf(o[3], picks)).map(o => [o, keep(steps[k], o, pool).size]).filter(([, n]) => n > 0);
-      if (opts.some(([o, n]) => optIds(o).length && n < pool.size)) { next = [k, opts]; break; }
+      const useful = opts.filter(([o, n]) => optIds(o).length && n < pool.size);
+      if (useful.length >= 2 || (useful.length === 1 && opts.length >= 2)) { next = [k, opts]; break; }
     }
     const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
-    const res = ents.length && (picks.length || ents.length <= 20) ? `<h2 class="hh2">${ents.length > 1 ? `${ents.length} diagnostics à évoquer` : "Diagnostic à évoquer"}</h2><div class="wz-res">${ents.map(e =>
-      `<a class="wz-dx" href="#/d/${e.id}"><b>${esc(e.label)}</b></a>`).join("")}</div>` : "";
+    const dx = e => `<a class="wz-dx" href="#/d/${e.id}"><b>${esc(e.label)}</b></a>`;
+    const mg = picks.find(p => MULTIK.includes(p)) && G[picks.find(p => MULTIK.includes(p))];
+    let body = `<div class="wz-res">${ents.map(dx).join("")}</div>`;
+    if (mg && !next) { // maladies générales rangées par rubrique de la gamme
+      const seen = new Set(); let cur = null; const parts = [];
+      mg.blocks.forEach(b => (b.items || []).forEach(it => {
+        if (it.k === "h" && it.l === 0) { cur = { t: it.t, l: [] }; parts.push(cur); return; }
+        if (!cur) { cur = { t: "", l: [] }; parts.push(cur); }
+        (it.e || []).forEach(x => { if (pool.has(x[2]) && !seen.has(x[2]) && E[x[2]]) { seen.add(x[2]); cur.l.push(E[x[2]]); } });
+      }));
+      const rest = ents.filter(e => !seen.has(e.id));
+      if (rest.length) parts.push({ t: "Autres", l: rest });
+      body = parts.filter(p => p.l.length).map(p => `${p.t ? `<h3 class="wz-sec">${esc(p.t)}</h3>` : ""}<div class="wz-res">${p.l.map(dx).join("")}</div>`).join("");
+    }
+    const res = ents.length && (picks.length || ents.length <= 20) ? `<h2 class="hh2">${mg && !next ? "Maladies générales à évoquer" : ents.length > 1 ? `${ents.length} diagnostics à évoquer` : "Diagnostic à évoquer"}</h2>${body}` : "";
     let q = "";
     if (next) {
       const [k, opts] = next;
