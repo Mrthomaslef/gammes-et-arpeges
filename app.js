@@ -97,7 +97,7 @@
   function renderBody(g, ts) {
     let body = g.resume ? `<p class="resume">${esc(g.resume)}<span class="src">${esc(g.src || "")}</span></p>` : "";
     for (const b of g.blocks) {
-      if (b.type === "list") body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}">${rich(i.t, i.e, ts)}</li>`).join("")}</ul>`;
+      if (b.type === "list") body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}${i.a ? " ag" : ""}">${rich(i.t, i.e, ts)}</li>`).join("")}</ul>`;
       else if (b.type === "table") body += renderTable(b.rows, b.links);
       else if (b.type === "images") body += `<div class="imgs${b.schema ? " schema" : ""}${b.small ? " small" : ""}">${b.src.map(s => `<img src="${s}" loading="lazy" alt="" data-zoom>`).join("")}</div>`;
     }
@@ -115,7 +115,7 @@
     }
     const vis = g.thumb ? `<img class="thumb" src="${g.thumb}" alt="" loading="lazy">` : opts.mixed ? px(sid, gid, 34) : "";
     return `<details class="card acc" data-id="${g.id}" data-q="${esc(opts.q || "")}" style="${cvar(gid)}">
-      <summary>${vis}<span class="t"><b>${ts && !opts.noSnip ? highlight(g.title, ts) : esc(opts.short ? g.title.replace(...opts.short) : g.title)}</b>${snip}</span><span class="chev">›</span></summary>
+      <summary>${vis}<span class="t"><b>${ts && !opts.noSnip ? highlight(g.title, ts) : esc(opts.short ? g.title.replace(...opts.short) : g.title)}</b>${g.aggr ? `<span class="aggr" title="Signe d'agressivité">agressif</span>` : ""}${snip}</span><span class="chev">›</span></summary>
       <div class="acc-b"></div></details>`;
   }
   view.addEventListener("toggle", e => {
@@ -234,7 +234,7 @@
     const prev = sib[k - 1], next = sib[k + 1];
     view.innerHTML = `
       ${crumb(gid, sid)}
-      <div class="g-head"><div class="t"><h1>${esc(g.title)}</h1>${g.sub ? `<p class="sub">${esc(g.sub)}</p>` : ""}</div>
+      <div class="g-head"><div class="t"><h1>${esc(g.title)}${g.aggr ? `<span class="aggr" title="Signe d'agressivité">agressif</span>` : ""}</h1>${g.sub ? `<p class="sub">${esc(g.sub)}</p>` : ""}</div>
         <button class="star${favs.has(id) ? " on" : ""}" id="favBtn" aria-label="Favori">${favs.has(id) ? "★" : "☆"}</button></div>
       <section class="card pad gcard" style="${cvar(gid)}">${body}</section>
       <div class="pn">${prev ? `<a class="card prev" href="#/g/${prev.id}"><small>‹ Précédente</small><span>${esc(prev.title)}</span></a>` : "<span style='flex:1'></span>"}
@@ -272,7 +272,7 @@
     const lines = [];
     MAIN.forEach(gr => gr.subs.forEach(sb => {
       const gs = sb.ids.map(x => G[x]).filter(g => g.ents.includes(id) && home1(g)[1] === sb.id && g.kw);
-      if (gs.length) lines.push(`<li><span class="dk-k">${esc(sb.kw || sb.label)}</span> : ${gs.map(g => `<a class="kw" href="#/g/${g.id}?q=${q}">${esc(g.kw)}</a>`).join(", ")}</li>`);
+      if (gs.length) lines.push(`<li><span class="dk-k">${esc(sb.kw || sb.label)}</span> : ${gs.map(g => `<a class="kw${g.aggr ? " ag" : ""}" href="#/g/${g.id}?q=${q}">${esc(g.kw)}</a>`).join(", ")}</li>`);
     }));
     view.innerHTML = `<h1>${esc(e.label)}</h1>
       ${lines.length ? `<ul class="desc">${lines.join("")}</ul>` : ""}

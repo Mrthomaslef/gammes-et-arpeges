@@ -128,6 +128,9 @@ KW = {39: "côte", 164: "structure stratifiée", 23: "appositions périostées d
       107: "Madelung", 109: "ectasie durale", 110: "gigantisme focal", 120: "longueur des membres",
       45: "pseudo-ostéomyélite", 46: "pseudo-arthrite de hanche", 100: "bandes claires métaphysaires", 25: "appositions périostées"}
 
+# signes d'agressivité (indice rouge) : gammes entières et intertitres
+AGGR = {15, 22, 144}
+AGGR_H = {"limites floues, mitees ou permeatives"}
 # fiche maladie → entité(s) décrite(s) (affichée en tête de la page diagnostic)
 FICHE_ENT = {54: ["enchondrome"], 143: ["osteosarcome"], 172: ["mo"], 81: ["fracture"], 82: ["fracture"], 89: ["tmgnp"], 125: ["lipome", "liposarcome"],
              57: ["nf"], 58: ["nf"], 61: ["goutte"], 62: ["cpp"], 63: ["cpp"], 121: ["cpp"], 66: ["pr"], 73: ["hemophilie"],
@@ -986,6 +989,7 @@ for s in RAW:
         "path": PATHS[n],
         "fiche": FICHE_ENT.get(n),
         "kw": KW.get(n),
+        "aggr": n in AGGR,
         "thumb": None if n in NO_THUMB else THUMB.get(n) or next((b["src"][0] for b in blocks if b["type"] == "images"), None),
         "q": norm(" ".join([title, sub or ""] + flat)),
     })
@@ -1086,6 +1090,11 @@ for g in gammes:
         for it in b.get("items", []):
             if it["t"].replace("\u00a0", " ") == "Hématopoïèse extra-médullaire angiomyolipome":
                 it["t"] = "Hématopoïèse extramédullaire, angiomyolipome"; it.pop("e", None)
+for g in gammes:
+    for b in g["blocks"]:
+        for it in b.get("items", []):
+            if it["k"] == "h" and norm(it["t"]).rstrip(" :") in AGGR_H:
+                it["a"] = 1
 # doublons à l'intérieur d'une même gamme (même libellé) → retirés
 for g in gammes:
     seen = set()
