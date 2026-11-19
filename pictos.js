@@ -73,6 +73,9 @@ window.GEA_PICTOS = (() => {
   // fiches maladies (Référentiel) : même dessin que le domaine
   P.sys = P.croissance;
   P.unique = P.os;
+  P.sacrum = '<path class="bo" d="M8 6h32l-4 16-6 14-4 8h-4l-4-8-6-14z"/><path class="sk th" d="M14 10h20M16 18h16M19 26h10"/>' +
+    '<circle class="sk" cx="16" cy="14" r="1.6"/><circle class="sk" cx="32" cy="14" r="1.6"/><circle class="sk" cx="18" cy="22" r="1.5"/><circle class="sk" cx="30" cy="22" r="1.5"/>' +
+    '<ellipse class="le" cx="27" cy="29" rx="5" ry="4"/>';
   Object.entries({ fos: "os", fart: "art", fsys: "metab", fped: "enfant" }).forEach(([k, v]) => { P[k] = P[v]; });
   const svg = (name, size = 48) => `<svg class="px" viewBox="0 0 48 48" width="${size}" height="${size}" aria-hidden="true">${P[name] || P.os}</svg>`;
   return { svg, has: n => n in P };

@@ -27,7 +27,9 @@ GROUPS = [
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
-        ("vertebre", "Vertèbre, disque & sacrum", [141, 36, 145, 34, 41, 108, 140, 146, 38, 44]),
+        ("vertebre", "Vertèbre", [141, 36, 145, 41, 108, 140, 44]),
+        ("disque", "Disque", [38, 34]),
+        ("sacrum", "Sacrum & pré-sacré", [146, 178, 179]),
         ("crane", "Crâne", [35, 173]),
         ("cotes", "Côtes", [39, 40]),
         ("doigts", "Doigts", [142, 91]),
@@ -35,7 +37,7 @@ GROUPS = [
     ("tm", "Tissus mous", [
         ("frequentes", "Les plus fréquentes", [150, 174]),
         ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 177]),
-        ("paravert", "Paravertébral & pré-sacré", [175, 176, 105, 178, 179]),
+        ("paravert", "Paravertébral", [175, 176, 105]),
         ("signal", "Signal IRM & graisse", [165, 166, 126, 167, 48, 168, 158]),
         ("tmcontenu", "Calcifications, vaisseaux, sang", [49, 87, 162, 169, 163, 164, 170, 171]),
         ("nerf", "Nerfs", [157, 56]),
