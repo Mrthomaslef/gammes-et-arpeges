@@ -73,6 +73,7 @@ window.GEA_PICTOS = (() => {
   // fiches maladies (Référentiel) : même dessin que le domaine
   P.sys = P.croissance;
   P.unique = P.os;
+  P.tmmulti = LIMB + '<ellipse class="le" cx="33" cy="12" rx="4.5" ry="3.4"/><ellipse class="le" cx="14" cy="24" rx="4.5" ry="3.4"/><ellipse class="le" cx="32" cy="36" rx="4.5" ry="3.4"/>';
   const MASS = '<ellipse class="le soft" cx="24" cy="24" rx="19" ry="15"/><ellipse class="ln" cx="24" cy="24" rx="19" ry="15"/>';
   P.calcif = MASS + [[16, 20], [23, 15], [30, 19], [20, 28], [28, 29], [34, 25]].map(([x, y]) => `<circle class="dot" cx="${x}" cy="${y}" r="2.2"/>`).join("");
   P.vaisseaux = MASS + '<path class="sk" style="stroke-width:2.4" d="M2 26c6-8 9 6 15-1s8 6 14-1 7 4 15-2"/>';

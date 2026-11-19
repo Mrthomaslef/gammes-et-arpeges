@@ -34,7 +34,7 @@ GROUPS = [
         ("doigts", "Doigts", [142, 91]),
     ]),
     ("tm", "Tissus mous", [
-        ("frequentes", "Les plus fréquentes", [150, 174]),
+        ("tmmulti", "Multiples", [174]),
         ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 170, 177]),
         ("paravert", "Paravertébral", [175, 176, 105]),
         ("signal", "Signal IRM", [310, 167, 48, 168, 158]),
@@ -66,7 +66,7 @@ GROUPS = [
 # mots-clés courts : description d'une maladie = ses caractéristiques (chaque mot-clé → la gamme)
 SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick", "siege": "Siège", "contenu": "Aspect",
           "perioste": "Corticale / périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
-          "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "frequentes": "Tissus mous", "tmsiege": "Siège (tissus mous)",
+          "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "tmmulti": "Tissus mous", "tmsiege": "Siège (tissus mous)",
           "paravert": "Paravertébral", "signal": "Signal IRM", "calcif": "Calcifications", "vaisseaux": "Vaisseaux", "sang": "Sang", "nerf": "Nerf", "inflam": "Articulation",
           "synoviale": "Synoviale", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
 KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
@@ -87,7 +87,7 @@ KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       146: "ostéolyse sacrée", 178: "masse pré-sacrée (adulte)", 179: "masse pré-sacrée (enfant)",
       305: "limites nettes scléreuses", 306: "sclérose dégressive", 307: "emporte-pièce", 308: "limites floues", 309: "contenu", 39: "côte", 40: "côte soufflante",
       142: "lacune des doigts", 91: "acrométastase",
-      150: "fréquente", 174: "multiple / syndromique",
+      174: "masses multiples",
       151: "superficielle", 152: "aponévrose superficielle", 153: "juxta-articulaire", 154: "intermusculaire",
       155: "intramusculaire", 156: "tendon / gaine", 177: "sarcome hypodermique",
       175: "paravertébrale thoracique", 176: "paravertébrale lombaire", 105: "hématopoïèse extramédullaire",
@@ -721,7 +721,7 @@ RAW.append(_syn(310, "Masse en hypersignal T1", [
     "## Vaisseaux à flux lent", "Malformations veineuses", "Hémangiome", "Sarcome alvéolaire",
     "## Matériel riche en protéines", "Kystes mucoïdes", "Kyste épidermoïde", "Abcès",
     "## Mélanine", "Mélanome et métastases de mélanome", "Sarcome à cellules claires"]))
-for _n in (35, 173, 2, 136, 137, 165, 166, 126):  # 2, 136, 137 : catégorie « Lésion unique » retirée
+for _n in (35, 173, 2, 136, 137, 165, 166, 126, 150):  # 150 : « les plus fréquentes » retirée  # 2, 136, 137 : catégorie « Lésion unique » retirée
     SKIP.add(_n)
 for _n in (42, 29, 11, 31, 161, 113, 115, 116, 119, 69):  # 113… : anatomie & repères retirés
     SKIP.add(_n)
