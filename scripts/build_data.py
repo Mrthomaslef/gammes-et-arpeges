@@ -131,6 +131,10 @@ TITLES = {
 
 # ---------------------------------------------------------------- nettoyage
 FIX = [
+    ("Hémopathie Myélome", "Myélome"), ("Tumeurs Intermédiaire", "Tumeurs intermédiaires"), ("Granulome Eosinophile", "Granulome éosinophile"),
+    ("Varices (canal tarsien par exemple) Sans rapport avec une structure anatomique précise", "Varices (canal tarsien par exemple)"),
+    ("Syndrome Hyperparathyroïdie", "Hyperparathyroïdie"), ("Intox Fluor (Fluoroses, fréon, voriconazole..)", "Intoxication au fluor (fluorose, fréon, voriconazole)"),
+    ("Intoxication par la Vitamine A et Rétinoïdes", "Intoxication par la vitamine A et les rétinoïdes"),
     ("Chondrosarsome", "Chondrosarcome"), ("Ostéosarcme", "Ostéosarcome"), ("Ostéosarocme", "Ostéosarcome"),
     ("Darrier", "Darier"), ("Dvsplasie", "Dysplasie"), ("Histiocyofìbrome", "Histiocytofibrome"),
     ("Hvpercholestérolémie", "Hypercholestérolémie"), ("Kvste", "Kyste"), ("Pager", "Paget"),
@@ -179,6 +183,7 @@ def clean(t: str) -> str:
     return t
 
 HEADER_WORDS = {
+    "sans rapport avec une structure anatomique precise", "tumeurs intermediaires",
     "pseudotumeurs", "pseudo-tumeurs", "pseudo tumeurs", "tumeurs primitives", "tumeurs benignes", "tumeurs malignes",
     "tumeurs malignes primitives", "frequentes", "rares", "causes classiques", "causes rares", "metastases osseuses",
     "hemopathies", "le plus souvent", "plus rarement", "metastases et hemopathies",
@@ -536,12 +541,14 @@ def slide_title(s):
 
 # ---------------------------------------------------------------- gammes de siège (fusion sans doublon des diapos 42, 29, 133, 11)
 def _syn(n, title, rows):
-    items = []
+    items, d = [], 1
     for r in rows:
-        if r.startswith("# "):
-            items.append([0, 1, r[2:] + " :"])
+        if r.startswith("## "):
+            items.append([1, 1, r[3:] + " :"]); d = 2
+        elif r.startswith("# "):
+            items.append([0, 1, r[2:] + " :"]); d = 1
         else:
-            items.append([1, 0, r])
+            items.append([d, 0, r])
     return {"n": n, "blocks": [{"k": "title", "items": [[0, 1, title]]}, {"k": "text", "items": items}]}
 RAW += [
     _syn(301, "Épiphysaire", ["# Tumeurs", "Chondroblastome", "Tumeur à cellules géantes (épiphysométaphysaire)",
@@ -571,6 +578,51 @@ RAW.append(_syn(304, "Lésions expansives / d'aspect « anévrysmal »", [
     "Chondroblastome", "Chondrosarcome", "Ostéosarcome télangiectasique", "Sarcome d'Ewing (extrémités principalement)",
     "Angiosarcome"]))
 TITLES[304] = ("Lésions expansives / d'aspect « anévrysmal »", "Soufflantes, ± cloisonnées")
+# diapos réécrites (texte anglais collé / structure cassée dans le PPT)
+OVERRIDE = {
+    93: _syn(93, "Superscan", [
+        "# Causes malignes (métastases diffuses)", "Cancer de la prostate", "Cancer du sein", "Cancer du poumon",
+        "Carcinome urothélial", "Cancer du côlon", "Myélome multiple (discuté)", "Lymphome",
+        "* Fixation hétérogène : regarder le crâne et les côtes ; squelette distal relativement épargné",
+        "# Causes métaboliques", "Ostéodystrophie rénale", "Hyperparathyroïdie (souvent secondaire)", "Ostéomalacie",
+        "Hyperthyroïdie", "Acromégalie", "Hypervitaminose D",
+        "* Atteinte du squelette distal, fixation plus homogène",
+        "# Autres", "Myélofibrose / myélosclérose", "Mastocytose", "Maladie de Paget étendue"]),
+    94: _syn(94, "Super BMU", [
+        "# Causes thérapeutiques", "Facteur de croissance granulocytaire (G-CSF)", "Post-chimiothérapie", "Érythropoïétine",
+        "# Causes pathologiques", "Syndromes myélodysplasiques", "Bêta-thalassémie", "Leucémie myéloïde chronique",
+        "Interleukines (états fébriles)", "Cytokines d'origine tumorale", "Métastases médullaires diffuses (moins probable)",
+        "Anémie sévère (moelle hyperplasique)"]),
+    49: _syn(49, "Masses calcifiées des tissus mous", [
+        "# Principales causes", "Musculaire (myosite, hématome, abcès)", "Avulsion osseuse ancienne",
+        "Graisse (cytostéatonécrose, lipome)", "Vasculaire (malformation)", "Calcinose (dépôts microcristallins)",
+        "Tumorale (synovialosarcome)", "Séquelle d'injection",
+        "# Ossifications des tissus mous",
+        "Tumeurs malignes primitives (synovialosarcome, ostéosarcome, chondrosarcome, liposarcome, sarcome épithélioïde…)",
+        "Tumeurs bénignes (chondrome, lipome, ostéome, tumeur fibreuse calcifiante, tumeur fibromyxoïde ossifiante)",
+        "Schwannome, myxome intramusculaire (rares)",
+        "Métastases (adénocarcinomes mucineux digestifs, mammaires, bronchiques ou vésicaux)",
+        "Myosite ossifiante (et panniculite ossifiante)", "Ostéome post-traumatique, postopératoire ou après brûlure",
+        "Para-ostéo-arthropathie neurogène, ossifications périprothétiques", "Ostéochondromatose synoviale, bursopathies",
+        "Fibrodysplasie ossifiante progressive", "Mélorhéostose", "Insuffisance ou malformation veineuse", "Syndrome de loge",
+        "Origine toxique (fluorose, hypervitaminose A, rétinoïdes)", "Hyperostose squelettique idiopathique diffuse (DISH)",
+        "# Calcifications des tissus mous",
+        "## Métastatiques", "Hyperparathyroïdie, hypoparathyroïdie, pseudo-hypoparathyroïdie",
+        "Troubles minéraux et osseux de la maladie rénale chronique", "Hypervitaminose D", "Syndrome du lait et des alcalins",
+        "Sarcoïdose", "Destructions osseuses marquées (métastases, myélome, leucémie)",
+        "## Dystrophiques", "Connectivites (sclérodermie, dermatomyosite, lupus, Ehlers-Danlos)",
+        "Microcristaux (apatite, chondrocalcinose, hémochromatose, ochronose, goutte)",
+        "Infections parasitaires (cysticercose, loase, dracunculose…)", "Autres infections (lèpre, tuberculose, coccidioïdomycose…)",
+        "Divers (athérosclérose, ostéochondromatose synoviale, maladie de Weber-Christian…)",
+        "## Idiopathiques", "Calcinose tumorale idiopathique"]),
+    40: _syn(40, "Lésions costales soufflantes", [
+        "# Pseudotumeurs", "Dysplasie fibreuse des os", "Tumeur brune", "Kyste hydatique",
+        "# Métastases", "Cancer du rein et de la thyroïde", "Cancer du sein et du poumon", "Autres cancers",
+        "# Hémopathies", "Myélome", "Plasmocytome",
+        "# Tumeurs primitives", "Chondrosarcome", "Enchondrome", "Chondroblastome", "Kyste anévrysmal", "Ostéoblastome",
+        "Tumeur à cellules géantes"]),
+}
+RAW = [OVERRIDE.get(x["n"], x) for x in RAW]
 for _n in (42, 29, 11, 31, 161):
     SKIP.add(_n)
 
