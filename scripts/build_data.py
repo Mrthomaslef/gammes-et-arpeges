@@ -502,6 +502,25 @@ PERIO_THUMB = {301: "siege-epi.svg", 302: "siege-meta.svg", 303: "siege-dia.svg"
 THUMB = {n: f"assets/slides/s{n:03d}_t.webp" for n in (12, 14, 15, 16, 17)}
 NO_THUMB = {165, 167, 178, 179}
 # faux intertitres (en-têtes sans sous-éléments)
+TREE_TABLES = {148: 0, 149: 0, 166: 1, 168: 1}   # n → nb de lignes d'en-tête à sauter
+COL_TABLES = {95: 1, 171: 0}                      # n → ligne des en-têtes de colonnes
+
+
+def cell_items(cell, lvl):
+    out = []
+    for x in cell.split("\n"):
+        x = clean(x)
+        if x.startswith("Lésion Lipome"):
+            x = x[len("Lésion "):]
+        if not x:
+            continue
+        if x.startswith("- "):
+            out.append({"l": lvl + 1, "t": x[2:], "k": "li", "b": False})
+        elif x.endswith(":"):
+            out.append({"l": lvl, "t": x.rstrip(" :"), "k": "h", "b": False})
+        else:
+            out.append({"l": lvl, "t": x, "k": "li", "b": False})
+    return out
 DEMOTE = {84: {"Métastases osseuses"}, 70: {"Absence d'ankylose"}}
 
 def slide_title(s):
@@ -561,10 +580,29 @@ for s in RAW:
     for b in s["blocks"]:
         if b["k"] == "text":
             items += build_items(b["items"], raw_title)
+        elif b["k"] == "table" and n in TREE_TABLES:
+            # tableau hiérarchique (catégorie / sous-catégorie / liste) → liste lisible sur mobile
+            for r in b["rows"][TREE_TABLES[n]:]:
+                r = list(r) + ["", "", ""]
+                if clean(r[0]):
+                    items.append({"l": 0, "t": clean(r[0]), "k": "h", "b": True})
+                if clean(r[1]):
+                    items.append({"l": 1, "t": clean(r[1]), "k": "h", "b": False})
+                items += cell_items(r[2], 2 if clean(r[1]) else 1)
+        elif b["k"] == "table" and n in COL_TABLES:
+            # tableau à double entrée → une rubrique par colonne
+            hr = COL_TABLES[n]; rows = b["rows"]
+            for j in range(1, len(rows[hr])):
+                items.append({"l": 0, "t": clean(rows[hr][j]), "k": "h", "b": True})
+                for r in rows[hr + 1:]:
+                    if j < len(r) and clean(r[j]):
+                        if clean(r[0]):
+                            items.append({"l": 1, "t": clean(r[0]), "k": "h", "b": False})
+                        items += cell_items(r[j], 2 if clean(r[0]) else 1)
         elif b["k"] == "table":
             if items:
                 blocks.append({"type": "list", "items": items}); items = []
-            rows = [[clean(c) for c in r] for r in b["rows"]]
+            rows = [["\n".join(x for x in (clean(l) for l in c.split("\n")) if x) for c in r] for r in b["rows"]]
             rows = [r for r in rows if any(r)]
             blocks.append({"type": "table", "rows": rows})
     if items:

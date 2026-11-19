@@ -297,3 +297,4 @@ body{overscroll-behavior-y:auto}
 .imgs.small{grid-template-columns:minmax(0,110px)}
 .px .mg{fill:#5d5a70}
 .px .mb{fill:#cfcbe0}
+.tbl-wrap td,.stack .v{white-space:pre-line}
