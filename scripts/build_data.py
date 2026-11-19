@@ -19,10 +19,10 @@ IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json
 GROUPS = [
     ("os", "Lésion osseuse", [
         ("demarche", "Démarche", [2, 136, 137]),
-        ("lodwick", "Contours (Lodwick)", [9, 12, 13, 14, 15, 16, 17]),
+        ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
         ("siege", "Siège dans l'os", [42, 133, 29, 11]),
         ("contenu", "Aspect & contenu", [31, 144, 28, 30, 160, 161, 101, 54, 32, 10]),
-        ("perioste", "Corticale & périoste", [135, 20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
+        ("perioste", "Corticale & périoste", [20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
         ("multi", "Multifocal & diffus", [52, 139, 95, 97, 37, 23, 93, 94]),
     ]),
@@ -43,7 +43,7 @@ GROUPS = [
     ]),
     ("art", "Articulations", [
         ("cristaux", "Microcristaux", [61, 62, 63, 64, 121]),
-        ("inflam", "Inflammatoire & érosions", [66, 159, 68, 55, 67]),
+        ("inflam", "Inflammatoire & érosions", [66, 159, 68, 55, 67, 72]),
         ("synoviale", "Synoviale & hémarthrose", [90, 73, 74, 88]),
         ("oan", "Arthropathie neurogène", [50, 51, 75]),
     ]),
@@ -51,7 +51,7 @@ GROUPS = [
         ("metab", "Endocrino, métabolique & Paget", [59, 83, 78, 80, 86, 77, 79, 84]),
         ("hemato", "Hémato & drépanocytose", [103, 104, 105]),
         ("croissance", "Croissance & constitutionnel", [106, 107, 109, 110, 120]),
-        ("autres", "Radiothérapie, lupus, ostéosarcome IIaire", [85, 143, 72]),
+        ("autres", "Radiothérapie & sarcome secondaire", [85, 143]),
     ]),
     ("ped", "Enfant", [
         ("enfant", "Enfant", [45, 46, 70, 99, 100, 25, 44, 117, 103, 179]),

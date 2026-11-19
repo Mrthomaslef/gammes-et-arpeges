@@ -199,7 +199,7 @@
   }
 
   // titres raccourcis quand le sous-choix porte déjà l'information
-  const SHORT = { lodwick: [/^Lodwick (?=I)/, ""], enfant: [/ (chez l'enfant|de l'enfant)/i, ""] };
+  const SHORT = { lodwick: [/^Lodwick (?=I)/, ""], enfant: [/ (chez|de) l['’]enfant/i, ""] };
   // niveau 3 : les gammes d'un sous-choix
   function subView(gid, sid) {
     const gr = GRP[gid], sb = SUB[sid]; if (!gr || !sb || sb.gid !== gid) return notFound();
