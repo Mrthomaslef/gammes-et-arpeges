@@ -404,13 +404,17 @@
         ["gw", "Paroi abdominale, cicatrice", A("desmoide")]] },
     ],
   };
+  // réponses proposées : seulement celles qui éliminent au moins un diagnostic (sauf « lésion unique ») ;
+  // une question n'est posée que s'il en reste au moins deux
+  const useful = (st, os, pool) => os.map(o => [o, keep(st, o, pool).size])
+    .filter(([o, n]) => n > 0 && (n < pool.size || o[2] === "UNI"));
   // prochaine question de la banque : la première (dans l'ordre) qui partage encore les diagnostics restants
   function nextBank(dom, pool, asked, picks) {
     let best = null;
     for (const q of BANK[dom] || []) {
       if (asked.has(q) || !okIf(q.if, picks)) continue;
-      const opts = q.o.map(o => [o, keep(q, o, pool).size]).filter(([, n]) => n > 0);
-      if (opts.length < 2 || !opts.some(([, n]) => n < pool.size)) continue;
+      const opts = useful(q, q.o, pool);
+      if (opts.length < 2) continue;
       return [q, opts]; // questions larges d'abord (ordre de la banque), signes précis ensuite
     }
     return best;
@@ -430,9 +434,8 @@
     }
     let next = null;
     for (let k = i; k < steps.length && pool.size > 1; k++) {
-      const opts = steps[k].o.filter(o => okIf(o[3], picks)).map(o => [o, keep(steps[k], o, pool).size]).filter(([, n]) => n > 0);
-      const useful = opts.filter(([o, n]) => optIds(o).length && n < pool.size);
-      if (useful.length >= 2 || (useful.length === 1 && opts.length >= 2)) { next = [k, steps[k], opts]; break; }
+      const opts = useful(steps[k], steps[k].o.filter(o => okIf(o[3], picks)), pool);
+      if (opts.length >= 2) { next = [k, steps[k], opts]; break; }
     }
     if (!next && pool.size > 1) { const b = nextBank(dom, pool, asked, picks); if (b) next = [Math.max(i, steps.length), b[0], b[1]]; }
     return { pool, chosen, i, next };
