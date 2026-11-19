@@ -266,9 +266,11 @@
     const e = E[id]; if (!e) return notFound();
     const ts = terms(e.label.split(/[\/(]/)[0]).filter(t => t.length > 3).slice(0, 3);
     const gs = e.gammes.map(x => G[x]);
+    const fiches = D.gammes.filter(g => (g.fiche || []).includes(id));
     const byCat = {};
-    gs.forEach(g => (byCat[g.cats[0]] ||= []).push(g));
+    gs.filter(g => !fiches.includes(g) && g.cats[0] !== "ref").forEach(g => (byCat[g.cats[0]] ||= []).push(g));
     view.innerHTML = `<h1>${esc(e.label)}</h1>
+      ${fiches.length ? `<h2 class="hh2">Fiche</h2><div class="list">${fiches.map(g => rowGamme(g, { noSnip: true, mixed: true })).join("")}</div>` : ""}
       ${D.groups.filter(c => byCat[c.id]).map(c => `<h2 class="hh2">${esc(c.label)}</h2><div class="list">${byCat[c.id].map(g => rowGamme(g, { ts, q: ts.join(" "), noSnip: true, mixed: true })).join("")}</div>`).join("")}`;
   }
 

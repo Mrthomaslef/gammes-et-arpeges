@@ -18,17 +18,16 @@ IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json
 # groupe (accueil) → sous-choix (picto) → gammes (n° de diapo). Le 1er emplacement d'une gamme est son emplacement principal.
 GROUPS = [
     ("os", "Lésion osseuse", [
-        ("demarche", "Démarche", [2, 136, 137]),
+        ("demarche", "Démarche", [2, 136, 137, 143]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 14, 15, 16, 17]),
         ("siege", "Siège dans l'os", [42, 133, 29, 11]),
-        ("contenu", "Aspect & contenu", [31, 144, 28, 30, 160, 161, 101, 54, 32, 10]),
+        ("contenu", "Aspect & contenu", [31, 144, 28, 30, 161, 101, 32, 10]),
         ("perioste", "Corticale & périoste", [20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
         ("surface", "Surface de l'os", [147, 148, 149, 26]),
-        ("multi", "Multifocal & diffus", [52, 139, 95, 97, 37, 23, 93, 94]),
+        ("multi", "Multifocal & diffus", [52, 139, 95, 97, 37, 23, 93, 94, 84]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
-        ("vertebre", "Vertèbre & sacrum", [141, 36, 145, 34, 41, 108, 140, 146, 44]),
-        ("disque", "Disque & tassement", [38, 81, 82]),
+        ("vertebre", "Vertèbre, disque & sacrum", [141, 36, 145, 34, 41, 108, 140, 146, 38, 44]),
         ("crane", "Crâne", [35, 173]),
         ("cotes", "Côtes", [39, 40]),
         ("doigts", "Doigts", [142, 91]),
@@ -36,32 +35,37 @@ GROUPS = [
     ("tm", "Tissus mous", [
         ("frequentes", "Les plus fréquentes", [150, 174]),
         ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 177]),
-        ("paravert", "Paravertébral & pré-sacré", [175, 176, 178, 179]),
-        ("signal", "Signal IRM & graisse", [165, 166, 126, 125, 167, 48, 168, 158]),
+        ("paravert", "Paravertébral & pré-sacré", [175, 176, 105, 178, 179]),
+        ("signal", "Signal IRM & graisse", [165, 166, 126, 167, 48, 168, 158]),
         ("tmcontenu", "Calcifications, vaisseaux, sang", [49, 87, 162, 169, 163, 164, 170, 171]),
-        ("nerf", "Nerfs", [89, 157, 56]),
+        ("nerf", "Nerfs", [157, 56]),
     ]),
     ("art", "Articulations", [
-        ("cristaux", "Microcristaux", [61, 62, 63, 64, 121]),
-        ("inflam", "Inflammatoire & érosions", [66, 159, 68, 55, 67, 72]),
-        ("synoviale", "Synoviale & hémarthrose", [90, 73, 74, 88]),
-        ("oan", "Arthropathie neurogène", [50, 51, 75]),
+        ("inflam", "Érosions & dactylite", [159, 55]),
+        ("synoviale", "Synoviale & hémarthrose", [90, 74]),
+        ("oan", "Arthropathie neurogène", [50, 51]),
     ]),
-    ("sys", "Maladies générales", [
-        ("metab", "Endocrino, métabolique & Paget", [59, 83, 78, 80, 86, 77, 79, 84]),
-        ("hemato", "Hémato & drépanocytose", [103, 104, 105]),
-        ("croissance", "Croissance & constitutionnel", [106, 107, 109, 110, 120]),
-        ("autres", "Radiothérapie & sarcome secondaire", [85, 143]),
+    ("sys", "Croissance & morphologie", [
+        ("croissance", "Croissance & morphologie", [107, 109, 110, 120]),
     ]),
     ("ped", "Enfant", [
-        ("enfant", "Enfant", [45, 46, 70, 99, 100, 25, 44, 117, 103, 179]),
+        ("enfant", "Enfant", [45, 46, 100, 25, 44, 179]),
     ]),
+    # Référentiel : tout ce qui décrit UNE entité (fiches maladies), classifications, anatomie
     ("ref", "Référentiel", [
+        ("fos", "Fiches os, rachis & tissus mous", [54, 160, 81, 82, 89, 125, 57, 58]),
+        ("fart", "Fiches articulaires", [61, 62, 63, 121, 66, 68, 72, 73, 88, 75, 67]),
+        ("fsys", "Fiches maladies générales", [59, 83, 78, 80, 86, 77, 79, 103, 104, 106, 85]),
+        ("fped", "Fiches enfant", [70, 99, 117]),
         ("classifs", "Classifications", [7, 8, 9, 135, 64, 172, 114, 118, 124, 131]),
-        ("criteres", "Critères", [57, 58]),
         ("anat", "Anatomie & repères", [113, 115, 116, 119, 69]),
     ]),
 ]
+# fiche maladie → entité(s) décrite(s) (affichée en tête de la page diagnostic)
+FICHE_ENT = {54: ["enchondrome"], 81: ["fracture"], 82: ["fracture"], 89: ["tmgnp"], 125: ["lipome", "liposarcome"],
+             57: ["nf"], 58: ["nf"], 61: ["goutte"], 62: ["cpp"], 63: ["cpp"], 121: ["cpp"], 66: ["pr"], 73: ["hemophilie"],
+             88: ["amylose"], 75: ["oan"], 59: ["paget"], 83: ["paget"], 78: ["hpt"], 80: ["osteomalacie"],
+             77: ["acromegalie"], 103: ["drepano"], 104: ["drepano"], 85: ["rx"], 70: ["sapho"], 99: ["leucemie"]}
 C = {}
 PATHS = {}
 for gid, _, subs in GROUPS:
@@ -583,6 +587,7 @@ for s in RAW:
         "id": f"s{n:03d}", "slide": n, "title": title, "sub": sub, "cats": C[n],
         "horsMsk": n in HORS_MSK, "blocks": blocks, "ents": ents,
         "path": PATHS[n],
+        "fiche": FICHE_ENT.get(n),
         "thumb": None if n in NO_THUMB else THUMB.get(n) or next((b["src"][0] for b in blocks if b["type"] == "images"), None),
         "q": norm(" ".join([title, sub or ""] + flat)),
     })

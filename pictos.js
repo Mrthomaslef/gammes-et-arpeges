@@ -70,6 +70,9 @@ window.GEA_PICTOS = (() => {
     criteres: '<rect class="bo" x="8" y="4" width="32" height="40" rx="4"/>' + [14, 24, 34].map(y => `<path class="ln" d="M13 ${y}l3 3 5-6"/><path class="sk" d="M25 ${y + 1}h10"/>`).join(""),
     anat: '<path class="bo" d="M14 4h12v12l-4 2v26h-6V18l-2-2z"/><path class="ln" d="M28 4l8 6M28 22h10M28 40h10" stroke-dasharray="2 2"/><path class="le" d="M16 18h6v6h-6z"/>',
   };
+  // fiches maladies (Référentiel) : même dessin que le domaine
+  P.sys = P.croissance;
+  Object.entries({ fos: "os", fart: "art", fsys: "metab", fped: "enfant" }).forEach(([k, v]) => { P[k] = P[v]; });
   const svg = (name, size = 48) => `<svg class="px" viewBox="0 0 48 48" width="${size}" height="${size}" aria-hidden="true">${P[name] || P.os}</svg>`;
   return { svg, has: n => n in P };
 })();
