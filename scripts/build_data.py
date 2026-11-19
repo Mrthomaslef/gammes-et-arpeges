@@ -19,11 +19,11 @@ IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json
 GROUPS = [
     # ordre Laredo : nombre → siège → limites → contenu → périoste
     ("os", "Lésion osseuse", [
-        ("multi", "Lésions multiples", [52, 95, 37, 53, 23, 25, 139]),
+        ("multi", "Lésions multiples", [52, 95, 37, 53, 139]),
         ("siege", "Localisation", [301, 302, 303, 311, 18, 92]),
         ("lodwick", "Contours (Lodwick)", [12, 13, 32, 14, 15, 16, 17]),
         ("contenu", "Aspect & contenu", [138, 304, 144, 28, 30, 101, 10]),
-        ("perioste", "Périoste", [20, 22, 21, 134, 24, 98]),
+        ("perioste", "Périoste", [20, 22, 21, 134, 24, 98, 23, 25]),
     ]),
     ("axial", "Rachis, crâne, côtes, doigts", [
         ("vertebre", "Vertèbre", [141, 145, 36, 140, 41, 108, 44]),
@@ -35,9 +35,9 @@ GROUPS = [
     ]),
     ("tm", "Tissus mous", [
         ("tmmulti", "Multiples", [174]),
-        ("tmsiege", "Siège", [151, 152, 153, 156, 155, 154, 170]),
-        ("paravert", "Paravertébral", [175, 176]),
-        ("signal", "Signal IRM", [310, 167, 48, 168, 158]),
+        ("tmsiege", "Siège", [151, 152, 177, 153, 156, 155, 154, 170]),
+        ("paravert", "Paravertébral", [175, 176, 105]),
+        ("signal", "Signal IRM", [310, 167, 48, 168, 158, 164]),
         ("calcif", "Calcifications", [49, 87]),
         ("vaisseaux", "Vaisseaux", [162, 169]),
         ("sang", "Sang & hématome", [171, 163, 164]),
@@ -54,9 +54,9 @@ GROUPS = [
     ]),
     # Référentiel : tout ce qui décrit UNE entité (fiches maladies), classifications, médecine nucléaire & biologie
     ("ref", "Référentiel", [
-        ("fos", "Fiches os, rachis & tissus mous", [54, 143, 160, 81, 82, 89, 125, 172, 177, 57, 58]),
+        ("fos", "Fiches os, rachis & tissus mous", [54, 143, 160, 81, 82, 89, 125, 172, 57, 58]),
         ("fart", "Fiches articulaires", [61, 62, 63, 121, 66, 68, 72, 73, 88, 75, 67]),
-        ("fsys", "Fiches maladies générales", [59, 83, 78, 80, 86, 77, 79, 103, 104, 105, 106, 85]),
+        ("fsys", "Fiches maladies générales", [59, 83, 78, 80, 86, 77, 79, 103, 104, 106, 85]),
         ("fped", "Fiches enfant", [70, 99, 117]),
         ("nucbio", "Scintigraphie, TEP & biologie", [93, 94, 84]),
         ("classifs", "Classifications & tableaux", [133, 7, 8, 9, 135, 97, 64, 114, 118, 124, 131]),
@@ -66,6 +66,7 @@ GROUPS = [
 MERGES = [
     (95, "Condensation diffuse ou multifocale", [(95, None), (37, "-")]),
     (23, "Appositions périostées diffuses ou plurifocales", [(23, None), (25, "Chez l'enfant")]),
+    (39, "Lésion costale", [(39, None), (40, "-")]),
     (18, "Lésion corticale", [(18, None), (92, "-")]),
     (13, "Lodwick IA2 — condensation périphérique dégressive", [(13, None), (32, "-")]),
     (15, "Lodwick IC, II, III — ostéolyse mal limitée, mitée ou perméative", [(15, None), (16, "-"), (17, "-")]),
@@ -78,14 +79,14 @@ MERGES = [
     (305, "Voûte du crâne : selon les bords", [(305, "Limites nettes scléreuses"), (306, "Sclérose dégressive"),
                                               (307, "À l'emporte-pièce (sans sclérose)"), (308, "Limites floues, mitées ou perméatives")]),
     (142, "Lacune des doigts", [(142, None), (91, "Acrométastase : primitif")]),
-    (151, "Masse superficielle", [(151, "Hypoderme"), (152, "Centrée sur l'aponévrose superficielle")]),
+    (151, "Masse superficielle", [(151, "Hypoderme"), (152, "Centrée sur l'aponévrose superficielle"), (177, "Sarcome hypodermique : orientation IRM")]),
     (153, "Masse juxta-articulaire ou tendineuse", [(153, "Juxta-articulaire"), (156, "Tendon, gaine, musculo-aponévrotique")]),
     (155, "Masse musculaire", [(155, "Intramusculaire"), (154, "Intermusculaire")]),
-    (175, "Masse paravertébrale", [(175, "Thoracique"), (176, "Lombaire")]),
-    (167, "Masse en hypersignal T2 liquidien ou myxoïde", [(167, None), (48, "Matrice myxoïde")]),
-    (49, "Masse calcifiée des tissus mous", [(49, None), (87, "Calcinose pseudo-tumorale")]),
+    (175, "Masse paravertébrale", [(175, "Thoracique"), (176, "Lombaire"), (105, "Hématopoïèse extramédullaire : causes")]),
+    (167, "Masse en hypersignal T2 liquidien ou myxoïde", [(167, None), (48, "-")]),
+    (49, "Masse calcifiée des tissus mous", [(49, None), (87, "-")]),
     (162, "Masse hypervasculaire (vaisseaux serpigineux, « flow voids »)", [(162, None), (169, "-")]),
-    (171, "Masse hémorragique", [(171, "Aspect d'hématome"), (163, "Niveaux séro-hématiques"), (164, "Structure stratifiée")]),
+    (171, "Masse hémorragique", [(171, "Aspect d'hématome"), (163, "Niveaux séro-hématiques")]),
     (157, "Nerf", [(157, "Masse sur un pédicule vasculo-nerveux"), (56, "Élargissement diffus des nerfs")]),
     (50, "Ostéo-arthropathie neurogène", [(50, "Causes"), (51, "Siège selon l'étiologie")]),
 ]
@@ -95,7 +96,7 @@ SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick",
           "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "tmmulti": "Tissus mous", "tmsiege": "Siège (tissus mous)",
           "paravert": "Paravertébral", "signal": "Signal IRM", "calcif": "Calcifications", "vaisseaux": "Vaisseaux", "sang": "Sang", "nerf": "Tissus mous", "inflam": "Articulation",
           "synoviale": "Synoviale", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
-KW = {18: "lésion corticale", 21: "réaction périostée compacte", 24: "encoches endostées", 138: "soufflante", 41: "forme anormale", 178: "masse pré-sacrée", 305: "selon les bords", 309: "selon le contenu", 142: "lacune", 151: "superficielle", 153: "juxta-articulaire ou tendineuse", 155: "musculaire", 175: "paravertébrale", 167: "hypersignal T2", 49: "calcifiée", 162: "hypervasculaire", 171: "hémorragique", 157: "nerf", 50: "OAN", 15: "IC, II, III", 36: "vertèbre ivoire", 136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
+KW = {39: "côte", 164: "structure stratifiée", 23: "appositions périostées diffuses", 18: "lésion corticale", 21: "réaction périostée compacte", 24: "encoches endostées", 138: "soufflante", 41: "forme anormale", 178: "masse pré-sacrée", 305: "selon les bords", 309: "selon le contenu", 142: "lacune", 151: "superficielle", 153: "juxta-articulaire ou tendineuse", 155: "musculaire", 175: "paravertébrale", 167: "hypersignal T2", 49: "calcifiée", 162: "hypervasculaire", 171: "hémorragique", 157: "nerf", 50: "OAN", 15: "IC, II, III", 36: "vertèbre ivoire", 136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       52: "ostéolyses plurifocales", 95: "condensation diffuse ou multifocale", 37: "condensations axiales multiples",
       23: "appositions périostées diffuses", 139: "atteinte os + tissus mous", 97: "condensation constitutionnelle",
       93: "superscan", 94: "super BMU", 84: "PAL élevées",
@@ -195,6 +196,7 @@ TITLES = {
 
 # ---------------------------------------------------------------- nettoyage
 FIX = [
+    ("Hématopoïèse extra-médullaire angiomyolipome", "Hématopoïèse extra-médullaire, angiomyolipome"),
     ("Hémopathie Myélome", "Myélome"), ("Tumeurs Intermédiaire", "Tumeurs intermédiaires"), ("Granulome Eosinophile", "Granulome éosinophile"),
     ("Varices (canal tarsien par exemple) Sans rapport avec une structure anatomique précise", "Varices (canal tarsien par exemple)"),
     ("Syndrome Hyperparathyroïdie", "Hyperparathyroïdie"), ("Intox Fluor (Fluoroses, fréon, voriconazole..)", "Intoxication au fluor (fluorose, fréon, voriconazole)"),
@@ -286,11 +288,14 @@ def build_items(raw_items, title_text):
             kind = "h"
         out.append({"l": lvl, "t": txt.rstrip(" :") if kind == "h" else txt, "k": kind, "b": bold})
     # doublons dans un même groupe (même en-tête) → supprimés
-    seen, head, dedup = set(), "", []
+    seen, path, dedup = set(), {}, []
     for it in out:
         if it["k"] == "h" or it["l"] == 0 and it["k"] != "li":
-            head = norm(it["t"])
-        key = (head, it["l"], norm(it["t"]))
+            path = {l: t for l, t in path.items() if l < it["l"]}
+            path[it["l"]] = norm(it["t"])
+            dedup.append(it)
+            continue
+        key = (tuple(sorted(path.items())), it["l"], norm(it["t"]))
         if key in seen:
             continue
         seen.add(key); dedup.append(it)
@@ -657,7 +662,7 @@ OVERRIDE = {
         "# Causes pathologiques", "Syndromes myélodysplasiques", "Bêta-thalassémie", "Leucémie myéloïde chronique",
         "Interleukines (états fébriles)", "Cytokines d'origine tumorale", "Métastases médullaires diffuses (moins probable)",
         "Anémie sévère (moelle hyperplasique)"]),
-    49: _syn(49, "Masses calcifiées des tissus mous", [
+    4900: _syn(4900, "Masses calcifiées des tissus mous", [
         "# Principales causes", "Musculaire (myosite, hématome, abcès)", "Avulsion osseuse ancienne",
         "Graisse (cytostéatonécrose, lipome)", "Vasculaire (malformation)", "Calcinose (dépôts microcristallins)",
         "Tumorale (synovialosarcome)", "Séquelle d'injection",
@@ -702,16 +707,59 @@ OVERRIDE = {
         "# Cheville", "Traumatisme médullaire", "Tabès", "Insensibilité congénitale à la douleur", "Amylose",
         "# Arrière-pied", "Lèpre", "Acropathie ulcéromutilante",
         "# Avant-pied", "Syringomyélie", "Insensibilité congénitale à la douleur", "Diabète"]),
-    15: _syn(15, "x", ["# Pseudotumeurs", "Ostéomyélite, abcès de Brodie",
-        "# Métastases et hémopathies", "Métastases", "Lymphome",
+    15: _syn(15, "x", ["# Pseudotumeurs", "Ostéomyélite, abcès de Brodie", "Histiocytose langerhansienne",
+        "# Métastases et hémopathies", "Métastases", "Myélome", "Lymphome", "Leucémie (enfant)",
         "# Tumeurs primitives", "Sarcomes (ostéosarcome, chondrosarcome, fibrosarcome, angiosarcome, liposarcome)",
-        "Sarcome d'Ewing", "Sarcome indifférencié pléomorphe (ex-histiocytome fibreux malin)", "Kyste anévrysmal (IC)"]),
+        "Sarcome d'Ewing", "Sarcome indifférencié pléomorphe (ex-histiocytome fibreux malin)",
+        "Tumeur à cellules géantes (IC)", "Fibrome chondromyxoïde (IC)", "Kyste anévrysmal (IC)"]),
+    14: _syn(14, "x", ["# Pseudotumeurs", "Abcès de Brodie, ostéomyélite", "Granulome éosinophile", "Dysplasie fibreuse",
+        "Kyste osseux essentiel", "Géode, kyste synovial", "Fibrome non ossifiant, défect cortical",
+        "Tumeur brune d'hyperparathyroïdie", "Infarctus osseux",
+        "# Métastases et hémopathies", "Métastases", "Myélome",
+        "# Tumeurs primitives", "Enchondrome", "Lipome intra-osseux", "Tumeur à cellules géantes"]),
+    23: _syn(23, "x", ["# Ostéoarthropathie hypertrophiante", "Secondaire (cancer bronchique : Pierre Marie-Bamberger)",
+        "Primitive (pachydermopériostose)",
+        "# Vasculaire", "Stase veineuse", "Insuffisance vasculaire", "Périartérite noueuse",
+        "# Toxique, iatrogène", "Hypervitaminose A", "Antifongiques (voriconazole)", "Toxiques (nettoyants)",
+        "# Endocrinienne", "Acropathie thyroïdienne", "Acromégalie",
+        "# Autres", "Leucémie", "Infection", "Traumatisme"]),
+    39: _syn(39, "x", ["# Avant 30 ans", "## Pseudotumeurs", "Ostéite infectieuse", "Granulome éosinophile", "Dysplasie fibreuse",
+        "## Métastases et hémopathies", "Neuroblastome", "Lymphome",
+        "## Tumeurs primitives", "Sarcome d'Ewing", "Ostéosarcome", "Kyste anévrysmal", "Enchondrome",
+        "# Après 30 ans", "## Pseudotumeurs", "Ostéite infectieuse (toxicomanie IV)", "Îlot condensant bénin", "Tumeur brune",
+        "Cal de fracture", "Hyperostose costale",
+        "## Métastases et hémopathies", "Métastases (tous les cancers ostéophiles)", "Myélome, plasmocytome",
+        "## Tumeurs primitives", "Chondrosarcome", "Ostéosarcome",
+        "# Lésion soufflante", "Dysplasie fibreuse", "Tumeur brune", "Kyste hydatique", "Métastase (rein, thyroïde, sein, poumon)",
+        "Myélome, plasmocytome", "Chondrosarcome", "Enchondrome", "Chondroblastome", "Kyste anévrysmal", "Ostéoblastome",
+        "Tumeur à cellules géantes"]),
+    34: _syn(34, "x", ["# Les plus fréquentes", "Plasmocytome, myélome", "Chordome", "Tumeur à cellules géantes",
+        "# Autres", "Tuberculose, kyste hydatique", "SAPHO", "Dysplasie fibreuse", "Métastases (rare)", "Ostéoblastome",
+        "Kyste anévrysmal", "Chondrosarcome", "Ostéosarcome télangiectasique"]),
+    49: _syn(49, "x", [
+        "# Ossifications des tissus mous",
+        "Tumeurs malignes primitives (synovialosarcome, ostéosarcome, chondrosarcome, liposarcome, sarcome épithélioïde…)",
+        "Tumeurs bénignes (chondrome, lipome, ostéome, tumeur fibreuse calcifiante, tumeur fibromyxoïde ossifiante)",
+        "Schwannome, myxome intramusculaire (rares)",
+        "Métastases (adénocarcinomes mucineux digestifs, mammaires, bronchiques ou vésicaux)",
+        "Myosite ossifiante (et panniculite ossifiante)", "Ostéome post-traumatique, postopératoire ou après brûlure",
+        "Para-ostéo-arthropathie neurogène, ossifications périprothétiques", "Ostéochondromatose synoviale, bursopathies",
+        "Fibrodysplasie ossifiante progressive", "Mélorhéostose", "Insuffisance ou malformation veineuse", "Syndrome de loge",
+        "Origine toxique (fluorose, hypervitaminose A, rétinoïdes)", "Hyperostose squelettique idiopathique diffuse (DISH)",
+        "# Calcifications des tissus mous",
+        "## Métastatiques", "Hyperparathyroïdie, hypoparathyroïdie, pseudo-hypoparathyroïdie",
+        "Troubles minéraux et osseux de la maladie rénale chronique", "Hypervitaminose D", "Syndrome du lait et des alcalins",
+        "Sarcoïdose", "Destructions osseuses marquées (métastases, myélome, leucémie)",
+        "## Dystrophiques", "Connectivites (sclérodermie, dermatomyosite, lupus, Ehlers-Danlos)",
+        "Microcristaux (apatite, chondrocalcinose, hémochromatose, ochronose, goutte)",
+        "Infections parasitaires (cysticercose, loase, dracunculose…)", "Autres infections (lèpre, tuberculose, coccidioïdomycose…)",
+        "Divers (athérosclérose, maladie de Weber-Christian…)",
+        "## Idiopathique", "Calcinose tumorale idiopathique (Teutschlaender)"]),
     13: _syn(13, "x", ["# Pseudotumeurs", "Ostéite infectieuse (abcès de Brodie)", "Ostéite aseptique (SAPHO, spondylarthrites)",
         "Histiocytose langerhansienne, Rosai-Dorfman",
         "# Métastases et hémopathies", "Métastase condensante", "Lymphome, Hodgkin",
-        "# Tumeurs bénignes inflammatoires", "Ostéome ostéoïde", "Ostéoblastome", "Chondroblastome", "Kyste anévrysmal (au début)",
-        "Tumeur à cellules géantes (±)",
-        "# Tumeurs malignes", "Sarcome d'Ewing", "Chordome", "Ostéosarcome"]),
+        "# Tumeurs bénignes inflammatoires", "Ostéome ostéoïde", "Ostéoblastome", "Chondroblastome",
+        "# Tumeurs malignes", "Sarcome d'Ewing", "Chordome"]),
     138: _syn(138, "x", ["# Pseudotumeurs", "Dysplasie fibreuse", "Kyste essentiel", "Kyste hydatique",
         "Tumeur brune d'hyperparathyroïdie", "Ostéite tuberculeuse (spina ventosa)", "Pseudotumeur hémophilique", "Tophus goutteux",
         "Kyste épidermoïde", "Fibrome non ossifiant",
@@ -737,10 +785,10 @@ OVERRIDE = {
         "Hémangiome intracortical"]),
     24: _syn(24, "x", ["# Pseudotumeurs", "Ostéomyélite chronique", "Dysplasie fibreuse", "Histiocytose langerhansienne",
         "# Hémopathies", "Myélome, plasmocytome",
-        "# Tumeurs primitives", "Enchondrome", "Chondrosarcome", "Ostéosarcome central dédifférencié (rare)"]),
+        "# Tumeurs primitives", "Enchondrome", "Chondrosarcome", "Ostéosarcome central très différencié (rare)"]),
     36: _syn(36, "x", ["# Pseudotumeurs", "Maladie de Paget", "Îlot condensant bénin", "Fracture-tassement",
         "Condensation discogénique (en dôme)", "Spondylite infectieuse (tuberculose)", "SAPHO", "Mastocytose", "Sarcoïdose",
-        "Radionécrose", "Sclérose tubéreuse de Bourneville", "Ostéose iliaque condensante", "Condensation claviculaire interne",
+        "Radionécrose", "Sclérose tubéreuse de Bourneville",
         "Condensation pédiculaire réactionnelle (lyse isthmique, agénésie controlatérale)",
         "# Métastases et hémopathies", "Métastase condensante (prostate)", "Lymphome, Hodgkin", "Myélome, plasmocytome condensant",
         "# Tumeurs primitives", "Ostéoblastome", "Ostéome ostéoïde", "Ostéome", "Hémangiome", "Sarcome d'Ewing", "Chordome",
@@ -945,7 +993,6 @@ FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
     ("Tumeur des gaines nerveuses périphériques", [(89, "Arguments diagnostiques")]),
     ("Tumeurs lipomateuses", [(125, "Prise en charge")]),
     ("Myosite ossifiante", [(172, None)]),
-    ("Sarcomes hypodermiques", [(177, None)]),
     ("Neurofibromatoses", [(57, "NF1"), (58, "NF2 (critères de Manchester)")]),
     ("Goutte", [(61, None)]),
     ("Chondrocalcinose (CPP)", [(62, "Formes"), (63, "Différences avec l'arthrose"), (121, "Arthropathie")]),
@@ -963,7 +1010,6 @@ FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
     ("Acromégalie", [(77, None)]),
     ("Syndrome de Cushing", [(79, None)]),
     ("Drépanocytose", [(103, "Complications"), (104, "Arthropathies")]),
-    ("Hématopoïèse extramédullaire", [(105, "Causes")]),
     ("Achondroplasie", [(106, None)]),
     ("Radiothérapie", [(85, "Complications")]),
     ("OCRM", [(70, None)]),
@@ -983,6 +1029,8 @@ def _merge(keep, title, parts):
                 items = []
                 for it in b["items"]:
                     it = dict(it)
+                    if it["k"] == "h":
+                        seen = set()
                     if sec and sec != "-":
                         it["l"] += 1
                     elif it["k"] == "li":
@@ -993,7 +1041,9 @@ def _merge(keep, title, parts):
                     items.append(it)
                 blocks.append({"type": "list", "items": items})
             elif b["type"] == "images":
-                if not b.get("small") or n == keep:
+                if sec and sec != "-" and not b.get("small"):
+                    blocks.append(b)
+                elif not b.get("small") or n == keep:
                     imgs.append(b)
             else:
                 blocks.append(b)
@@ -1006,6 +1056,17 @@ MOVED = {}
 _by0 = {g["slide"]: g for g in gammes}
 for _k, _t, _p in MERGES:
     _merge(_k, _t, _p)
+# lignes orphelines ou renvois vers des gammes fusionnées
+DROP_PREFIX = {9: ("Gamme des",), 12: ("+/- Tumeurs neurogène",)}
+for g in gammes:
+    for b in g["blocks"]:
+        if b["type"] == "list" and g["slide"] in DROP_PREFIX:
+            b["items"] = [it for it in b["items"] if not it["t"].startswith(DROP_PREFIX[g["slide"]])]
+for g in gammes:
+    for b in g["blocks"]:
+        for it in b.get("items", []):
+            if it["t"].replace("\u00a0", " ") == "Hématopoïèse extra-médullaire angiomyolipome":
+                it["t"] = "Hématopoïèse extramédullaire, angiomyolipome"; it.pop("e", None)
 # doublons à l'intérieur d'une même gamme (même libellé) → retirés
 for g in gammes:
     seen = set()
@@ -1014,6 +1075,8 @@ for g in gammes:
             keep_items = []
             for it in b["items"]:
                 k = norm(it["t"])
+                if it["k"] == "h":
+                    seen = set()  # nouvelle rubrique : les doublons ne sont cherchés qu'à l'intérieur d'une même liste
                 if it["k"] == "li" and k in seen:
                     continue
                 if it["k"] == "li":
