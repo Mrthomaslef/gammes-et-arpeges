@@ -146,14 +146,14 @@ TITLES = {
     162: ("Masses avec vaisseaux serpigineux", "Vaisseaux qui pénètrent/sortent de la lésion"),
     163: ("Masses des tissus mous avec niveaux séro-hématiques", None),
     177: ("Sarcomes hypodermiques : signal & aspect IRM", "Gamme des sarcomes hypodermiques les plus fréquents"),
-    174: ("Tumeurs des tissus mous multiples", "Et syndromes associés"),
-    173: ("Lésions les plus fréquentes de la voûte crânienne", "Tableau sémiologique"),
+    174: ("Tumeurs des tissus mous multiples", None),
+    173: ("Lésions les plus fréquentes de la voûte crânienne", None),
     69: ("Diastasis tibio-fibulaire distal", None),
     93: ("« Superscan » (scintigraphie)", None),
     94: ("« Super BMU » (TEP-FDG)", "Hyperfixation médullaire diffuse"),
     46: ("Arthrite septique de hanche de l'enfant : différentiels", None),
     45: ("Ostéomyélite aiguë de l'enfant : différentiels", None),
-    51: ("Siège des OAN selon l'étiologie", "Ostéo-arthropathies neurogènes"),
+    51: ("Siège des OAN selon l'étiologie", None),
     75: ("OAN diabétique vs ostéite", "Signes différentiels"),
     86: ("Anomalies observées dans les TMO-MRC", "Troubles minéraux et osseux de la maladie rénale chronique"),
     126: ("Masses des tissus mous contenant de la graisse", None),
@@ -652,6 +652,46 @@ OVERRIDE = {
         "Infections parasitaires (cysticercose, loase, dracunculose…)", "Autres infections (lèpre, tuberculose, coccidioïdomycose…)",
         "Divers (athérosclérose, ostéochondromatose synoviale, maladie de Weber-Christian…)",
         "## Idiopathiques", "Calcinose tumorale idiopathique"]),
+    174: _syn(174, "Tumeurs des tissus mous multiples", [
+        "# Pseudotumeurs", "Sarcoïdes musculaires (sarcoïdose)", "Tophus goutteux (goutte)", "Calcinose tumorale",
+        "Calcifications tendineuses multiples",
+        "# Métastases", "Métastases (mélanome notamment)",
+        "# Tumeurs vasculaires", "Malformations veineuses (Klippel-Trenaunay, Maffucci)",
+        "Malformations artério-veineuses (mutation RASA1)", "Fistules artério-veineuses (Parkes-Weber)",
+        "Hémangiomes, épithélioïdes notamment", "Tumeurs glomiques (glomangiomatose)",
+        "# Tumeurs des gaines nerveuses", "Neurofibromes, plexiformes notamment (NF1)", "Schwannomes (NF2, schwannomatose)",
+        "Tumeur maligne des gaines nerveuses (NF1)",
+        "# Tumeurs conjonctives", "Myxomes (Mazabraud, Carney)", "Tumeurs desmoïdes (Gardner)",
+        "# Tumeurs graisseuses", "Lipomes (lipomatose familiale, Gardner, Dercum, Madelung)",
+        "Xanthomes (hypercholestérolémie familiale)",
+        "# Autres", "Léiomyomes (Gardner)"]),
+    173: _syn(173, "Lésions les plus fréquentes de la voûte crânienne", [
+        "# Limites nettes, sclérose nette sur les deux versants", "Dysplasie fibreuse", "Kyste épidermoïde", "Méningocèle",
+        "Empreinte vasculaire", "Granulation de Pacchioni", "Kyste arachnoïdien",
+        "# Limites nettes, sclérose « en beignet »", "Dysplasie fibreuse", "Kyste épidermoïde", "Métastase (rare)",
+        "# Sclérose progressivement dégressive", "Ostéite", "Ostéome ostéoïde", "Méningiome",
+        "# Sans sclérose, liseré clair", "Maladie de Paget",
+        "# Limites floues, mitées ou perméatives", "Métastase", "Ostéite", "Sarcome", "Histiocytose langerhansienne",
+        "Leucémie", "Lymphome",
+        "# Séquestre", "Granulome éosinophile", "Ostéite", "Kyste dermoïde", "Radionécrose", "Métastase", "Lymphome",
+        "Ostéome ostéoïde", "Enchondrome",
+        "# Verre dépoli", "Dysplasie fibreuse",
+        "# Aspect nuageux", "Dysplasie fibreuse", "Ostéosarcome",
+        "# Multikystique", "Dysplasie fibreuse", "Kyste osseux anévrysmal", "Granulome de réparation",
+        "Tumeur à cellules géantes", "Chondroblastome",
+        "# Rayon de miel", "Hémangiome",
+        "# Liquidien", "Kyste épidermoïde", "Hémangiome (lac veineux)",
+        "# Graisseux", "Kyste dermoïde"]),
+    51: _syn(51, "Siège des OAN selon l'étiologie", [
+        "# Épaule, coude", "Syringomyélie", "Traumatisme médullaire cervical",
+        "# Poignet", "Lèpre", "Syringomyélie", "Tabès", "Acropathies ulcéromutilantes",
+        "# Main", "Syringomyélie", "Lèpre", "Acropathies ulcéromutilantes",
+        "# Phalanges distales", "Tabès", "Corticothérapie",
+        "# Hanche (rare)", "Tabès", "Dysautonomie familiale",
+        "# Genou", "Diabète", "Tabès",
+        "# Cheville", "Traumatisme médullaire", "Tabès", "Insensibilité congénitale à la douleur", "Amylose",
+        "# Arrière-pied", "Lèpre", "Acropathie ulcéromutilante",
+        "# Avant-pied", "Syringomyélie", "Insensibilité congénitale à la douleur", "Diabète"]),
     40: _syn(40, "Lésions costales soufflantes", [
         "# Pseudotumeurs", "Dysplasie fibreuse des os", "Tumeur brune", "Kyste hydatique",
         "# Métastases", "Cancer du rein et de la thyroïde", "Cancer du sein et du poumon", "Autres cancers",
@@ -721,7 +761,7 @@ for s in RAW:
         hidden += txt
     if n in PERIO_THUMB:
         blocks.insert(0, {"type": "images", "src": [f"assets/schemas/{PERIO_THUMB[n]}"], "schema": True, "small": True})
-    if n in EXTRA_TABLES:
+    if n in EXTRA_TABLES and n != 178:  # 178 : liste déjà dans « Ostéolyse localisée du sacrum », points clés = description
         blocks.append({"type": "table", "rows": EXTRA_TABLES[n]})
     imgs = [f for f in IMGS.get(n, []) if f in KEEP_IMGS]
     if imgs:

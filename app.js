@@ -218,7 +218,8 @@
     const wide = maxc >= 3;
     let h = `<div class="tbl-wrap${wide ? " wide" : ""}"><table><thead><tr>${head.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${body.map((r, i) => `<tr>${r.map((c, j) => `<td>${cell(c, i + 1, j)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
     if (wide) {
-      h += `<div class="stack">${body.map((r, i) => `<div class="sc">${r.map((c, j) => c ? `${j && head[j] ? `<div class="k">${esc(head[j])}</div>` : ""}<div class="v">${cell(c, i + 1, j)}</div>` : "").join("")}</div>`).join("")}</div>`;
+      // mobile : un intertitre par ligne, puis « – colonne : valeur » (pas de cartes)
+      h += `<div class="stack">${body.map((r, i) => `<div class="sc">${r[0] ? `<div class="sh">${cell(r[0], i + 1, 0)}</div>` : ""}<ul>${r.slice(1).map((c, j) => c ? `<li>${head[j + 1] ? `<span class="k">${esc(head[j + 1])}</span> : ` : ""}<span class="v">${cell(c, i + 1, j + 1)}</span></li>` : "").join("")}</ul></div>`).join("")}</div>`;
     }
     return h;
   }
