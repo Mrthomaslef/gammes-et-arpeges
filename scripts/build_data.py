@@ -197,7 +197,8 @@ TITLES = {
 
 # ---------------------------------------------------------------- nettoyage
 FIX = [
-    ("Liposarcome bien dédifférencié/Lipome atypique", "Liposarcome bien différencié / tumeur lipomateuse atypique"),
+    ("épidermoïque", "épidermoïde"), ("\uf083", ""),
+    ("Liposarcome bien dédifférenclé/Lipome atypique", "Liposarcome bien différencié / tumeur lipomateuse atypique"),
     ("Hématopoïèse extra-médullaire angiomyolipome", "Hématopoïèse extra-médullaire, angiomyolipome"),
     ("Hémopathie Myélome", "Myélome"), ("Tumeurs Intermédiaire", "Tumeurs intermédiaires"), ("Granulome Eosinophile", "Granulome éosinophile"),
     ("Varices (canal tarsien par exemple) Sans rapport avec une structure anatomique précise", "Varices (canal tarsien par exemple)"),
@@ -244,6 +245,9 @@ FIX = [
 ]
 
 def clean(t: str) -> str:
+    t = unicodedata.normalize("NFC", t)
+    t = re.sub(r"[\ue000-\uf8ff\U000f0000-\U0010ffff]", "", t)  # caractères privés (puces Wingdings)
+    t = re.sub(r"[ \t\u00a0]+", " ", t)
     for a, b in FIX:
         t = t.replace(a, b)
     t = re.sub(r"\s+", " ", t).strip()
@@ -1061,7 +1065,8 @@ def _merge(keep, title, parts):
                     imgs.append(b)
             else:
                 blocks.append(b)
-        ents |= set(g["ents"]); qs.append(g["q"])
+        if sec != "-":
+            ents |= set(g["ents"]); qs.append(g["q"])
         if n != keep:
             MOVED[g["id"]] = g0["id"]; gammes.remove(g)
     g0.update(title=title, sub=None, blocks=[b for b in imgs if b.get("small")] + blocks + [b for b in imgs if not b.get("small")],
