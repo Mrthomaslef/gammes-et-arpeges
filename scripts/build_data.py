@@ -30,7 +30,7 @@ GROUPS = [
         ("vertebre", "Vertèbre", [141, 36, 145, 41, 108, 140, 44]),
         ("disque", "Disque", [38, 34]),
         ("sacrum", "Sacrum & pré-sacré", [146, 178, 179]),
-        ("crane", "Crâne", [35, 173]),
+        ("crane", "Crâne", [305, 306, 307, 308, 309]),
         ("cotes", "Côtes", [39, 40]),
         ("doigts", "Doigts", [142, 91]),
     ]),
@@ -84,7 +84,7 @@ KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
       108: "vertèbre en rostre", 140: "condensation axiale localisée", 44: "vertebra plana",
       38: "pseudo-spondylodiscite", 34: "extension transdiscale",
       146: "ostéolyse sacrée", 178: "masse pré-sacrée (adulte)", 179: "masse pré-sacrée (enfant)",
-      35: "lacune à l'emporte-pièce", 173: "voûte crânienne", 39: "côte", 40: "côte soufflante",
+      305: "limites nettes scléreuses", 306: "sclérose dégressive", 307: "emporte-pièce", 308: "limites floues", 309: "contenu", 39: "côte", 40: "côte soufflante",
       142: "lacune des doigts", 91: "acrométastase",
       150: "fréquente", 174: "multiple / syndromique",
       151: "superficielle", 152: "aponévrose superficielle", 153: "juxta-articulaire", 154: "intermusculaire",
@@ -665,23 +665,6 @@ OVERRIDE = {
         "# Tumeurs graisseuses", "Lipomes (lipomatose familiale, Gardner, Dercum, Madelung)",
         "Xanthomes (hypercholestérolémie familiale)",
         "# Autres", "Léiomyomes (Gardner)"]),
-    173: _syn(173, "Lésions les plus fréquentes de la voûte crânienne", [
-        "# Limites nettes, sclérose nette sur les deux versants", "Dysplasie fibreuse", "Kyste épidermoïde", "Méningocèle",
-        "Empreinte vasculaire", "Granulation de Pacchioni", "Kyste arachnoïdien",
-        "# Limites nettes, sclérose « en beignet »", "Dysplasie fibreuse", "Kyste épidermoïde", "Métastase (rare)",
-        "# Sclérose progressivement dégressive", "Ostéite", "Ostéome ostéoïde", "Méningiome",
-        "# Sans sclérose, liseré clair", "Maladie de Paget",
-        "# Limites floues, mitées ou perméatives", "Métastase", "Ostéite", "Sarcome", "Histiocytose langerhansienne",
-        "Leucémie", "Lymphome",
-        "# Séquestre", "Granulome éosinophile", "Ostéite", "Kyste dermoïde", "Radionécrose", "Métastase", "Lymphome",
-        "Ostéome ostéoïde", "Enchondrome",
-        "# Verre dépoli", "Dysplasie fibreuse",
-        "# Aspect nuageux", "Dysplasie fibreuse", "Ostéosarcome",
-        "# Multikystique", "Dysplasie fibreuse", "Kyste osseux anévrysmal", "Granulome de réparation",
-        "Tumeur à cellules géantes", "Chondroblastome",
-        "# Rayon de miel", "Hémangiome",
-        "# Liquidien", "Kyste épidermoïde", "Hémangiome (lac veineux)",
-        "# Graisseux", "Kyste dermoïde"]),
     51: _syn(51, "Siège des OAN selon l'étiologie", [
         "# Épaule, coude", "Syringomyélie", "Traumatisme médullaire cervical",
         "# Poignet", "Lèpre", "Syringomyélie", "Tabès", "Acropathies ulcéromutilantes",
@@ -700,6 +683,30 @@ OVERRIDE = {
         "Tumeur à cellules géantes"]),
 }
 RAW = [OVERRIDE.get(x["n"], x) for x in RAW]
+# voûte crânienne : diapos 173 + 35 séparées par caractéristique, sans doublon
+RAW += [
+    _syn(305, "Lacune à limites nettes scléreuses", ["Dysplasie fibreuse", "Kyste épidermoïde", "Méningocèle",
+        "Empreinte vasculaire", "Granulation de Pacchioni", "Kyste arachnoïdien", "Métastase (rare, sclérose « en beignet »)"]),
+    _syn(306, "Sclérose progressivement dégressive", ["Ostéite", "Ostéome ostéoïde", "Méningiome"]),
+    _syn(307, "Lacune à l'emporte-pièce (sans sclérose)", ["Myélome (adulte)", "Métastase (neuroblastome chez l'enfant)",
+        "Histiocytose langerhansienne", "Ostéomyélite (staphylococcique)", "Hémangiome", "Kyste épidermoïde",
+        "Maladie de Paget (liseré clair)", "Granulation arachnoïdienne, lac veineux",
+        "Variante anatomique (foramen pariétal, veine émissaire)"]),
+    _syn(308, "Limites floues, mitées ou perméatives", ["Métastase", "Ostéite", "Sarcome", "Histiocytose langerhansienne",
+        "Leucémie", "Lymphome"]),
+    _syn(309, "Contenu de la lésion", [
+        "# Séquestre", "Granulome éosinophile", "Ostéite", "Kyste dermoïde", "Radionécrose", "Métastase", "Lymphome",
+        "Ostéome ostéoïde", "Enchondrome",
+        "# Verre dépoli", "Dysplasie fibreuse",
+        "# Nuageux", "Dysplasie fibreuse", "Ostéosarcome",
+        "# Multikystique", "Dysplasie fibreuse", "Kyste osseux anévrysmal", "Granulome de réparation",
+        "Tumeur à cellules géantes", "Chondroblastome",
+        "# Rayon de miel", "Hémangiome",
+        "# Liquidien", "Kyste épidermoïde", "Hémangiome (lac veineux)",
+        "# Graisseux", "Kyste dermoïde"]),
+]
+for _n in (35, 173):
+    SKIP.add(_n)
 for _n in (42, 29, 11, 31, 161, 113, 115, 116, 119, 69):  # 113… : anatomie & repères retirés
     SKIP.add(_n)
 
@@ -846,7 +853,7 @@ FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
     ("Ostéochondroses", [(117, None)]),
 ]
 _by = {g["slide"]: g for g in gammes}
-MOVED = {}
+MOVED = {"s173": "s305", "s035": "s307"}
 for name, parts in FICHE_NAMES:
     g0 = _by[parts[0][0]]
     blocks, ents, fiche, qs = [], set(), [], []
