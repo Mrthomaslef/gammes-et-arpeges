@@ -40,7 +40,7 @@ GROUPS = [
         ("signal", "Signal IRM", [310, 167, 48, 168, 158, 164]),
         ("calcif", "Calcifications", [49, 87]),
         ("vaisseaux", "Vaisseaux", [162, 169]),
-        ("sang", "Sang & hématome", [171, 163, 164]),
+        ("sang", "Sang & hématome", [171, 163]),
         ("nerf", "Nerfs", [157, 56]),
     ]),
     ("art", "Articulations", [
@@ -87,7 +87,7 @@ MERGES = [
     (49, "Masse calcifiée des tissus mous", [(49, None), (87, "-")]),
     (162, "Masse hypervasculaire (vaisseaux serpigineux, « flow voids »)", [(162, None), (169, "-")]),
     (171, "Masse hémorragique", [(171, "Aspect d'hématome"), (163, "Niveaux séro-hématiques")]),
-    (157, "Nerf", [(157, "Masse sur un pédicule vasculo-nerveux"), (56, "Élargissement diffus des nerfs")]),
+    (157, "Nerf ou pédicule vasculo-nerveux", [(157, None), (56, "Élargissement diffus des nerfs")]),
     (50, "Ostéo-arthropathie neurogène", [(50, "Causes"), (51, "Siège selon l'étiologie")]),
 ]
 # mots-clés courts : description d'une maladie = ses caractéristiques (chaque mot-clé → la gamme)
@@ -166,6 +166,7 @@ TITLES = {
     149: ("Érosions à la surface d'un os", "Hors lésions pluri-osseuses, centrales étendues à la surface et érosions articulaires"),
     161: ("Images d'aspect « anévrysmal »", "Images soufflantes paraissant cloisonnées"),
     144: ("Aspect « in and out »", "Envahissement médullaire et des tissus mous de part et d'autre d'une corticale relativement conservée"),
+    34: ("Lésion vertébrale franchissant le disque", None),
     145: ("Vertèbre évidée — aspect en « mini-brain »", "Vertèbre évidée avec seul respect des corticales"),
     165: ("Algorithme devant une masse en hypersignal T1", "Tissus mous — d'après J.-D. Laredo"),
     167: ("Masse en hypersignal T2 liquidien ou pseudoliquidien", "Lésion d'allure kystique en T2 → injecter"),
@@ -196,6 +197,7 @@ TITLES = {
 
 # ---------------------------------------------------------------- nettoyage
 FIX = [
+    ("Liposarcome bien dédifférencié/Lipome atypique", "Liposarcome bien différencié / tumeur lipomateuse atypique"),
     ("Hématopoïèse extra-médullaire angiomyolipome", "Hématopoïèse extra-médullaire, angiomyolipome"),
     ("Hémopathie Myélome", "Myélome"), ("Tumeurs Intermédiaire", "Tumeurs intermédiaires"), ("Granulome Eosinophile", "Granulome éosinophile"),
     ("Varices (canal tarsien par exemple) Sans rapport avec une structure anatomique précise", "Varices (canal tarsien par exemple)"),
@@ -289,8 +291,9 @@ def build_items(raw_items, title_text):
         out.append({"l": lvl, "t": txt.rstrip(" :") if kind == "h" else txt, "k": kind, "b": bold})
     # doublons dans un même groupe (même en-tête) → supprimés
     seen, path, dedup = set(), {}, []
-    for it in out:
-        if it["k"] == "h" or it["l"] == 0 and it["k"] != "li":
+    for i, it in enumerate(out):
+        parent = i + 1 < len(out) and out[i + 1]["l"] > it["l"]  # futur en-tête de groupe
+        if it["k"] == "h" or parent or it["l"] == 0 and it["k"] != "li":
             path = {l: t for l, t in path.items() if l < it["l"]}
             path[it["l"]] = norm(it["t"])
             dedup.append(it)
@@ -801,6 +804,17 @@ OVERRIDE = {
         "Lymphangiome", "Faux anévrysme", "Hémangioendothéliome épithélioïde", "Angiosarcome",
         "# Autres tumeurs", "Hibernome", "Tumeur fibreuse solitaire", "Sarcome alvéolaire", "Synovialosarcome", "Rhabdomyosarcome",
         "Sarcome d'Ewing des tissus mous", "Métastase de cancer du rein"]),
+    157: _syn(157, "x", ["# Aux dépens d'un nerf",
+        "## Tumeurs des gaines nerveuses", "Schwannome", "Neurofibrome", "Tumeur maligne des gaines nerveuses périphériques",
+        "Myxome de la gaine des nerfs (superficiel)",
+        "## Autres tumeurs", "Périneuriome", "Lipofibrome (nerfs médian et ulnaire)", "Tumeur de Triton",
+        "## Occasionnellement sur un nerf", "Hémangiome", "Lymphome (rare)", "Hémangioendothéliome épithélioïde",
+        "## Pseudotumeurs", "Névrome", "Kyste mucoïde (nerf fibulaire)",
+        "# Aux dépens d'une artère", "Faux anévrisme", "Kyste adventiciel (artères radiale et poplitée)",
+        "Hémangioendothéliome épithélioïde (rare)",
+        "# Aux dépens d'une veine", "Varices (canal tarsien)", "Fasciite nodulaire intravasculaire", "Léiomyosarcome",
+        "Hémangioendothéliome épithélioïde",
+        "# Sans rapport avec une structure précise", "Sarcome à cellules claires"]),
     40: _syn(40, "Lésions costales soufflantes", [
         "# Pseudotumeurs", "Dysplasie fibreuse des os", "Tumeur brune", "Kyste hydatique",
         "# Métastases", "Cancer du rein et de la thyroïde", "Cancer du sein et du poumon", "Autres cancers",
