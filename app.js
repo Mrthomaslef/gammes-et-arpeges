@@ -370,7 +370,7 @@
       case "d": setTab("diagnostics"); entityView(parts[1]); break;
       case "diagnostics": setTab("diagnostics"); diagnostics(); break;
       case "demarche": location.replace("#/diagnostics"); break;
-      case "revision": setTab("revision"); revision(); break;
+      case "revision": location.replace("#/"); break; // onglet Révision retiré pour le moment (code conservé)
       case "favoris": setTab("favoris"); favoris(); break;
       default: notFound();
     }

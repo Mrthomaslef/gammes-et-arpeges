@@ -17,7 +17,7 @@ ostéo-articulaire, viscérale et vasculaire (Pr Bousson).
 - **Recherche** instantanée insensible aux accents, avec surlignage des lignes correspondantes.
 - **Diagnostics** : 81 diagnostics indexés → toutes les gammes où chacun apparaît, + **croiseur de gammes**
   (ex. *lacunes épiphysaires* ∩ *niveaux liquide-liquide* → TCG, chondroblastome…).
-- **Révision** : flashcards avec suivi « je savais / à revoir » (stocké localement).
+- **Révision** : flashcards (onglet masqué pour le moment, code conservé).
 - Favoris, récents, thème clair/sombre, pull-to-refresh, images des diapos zoomables.
 
 ## Mise à jour des données
