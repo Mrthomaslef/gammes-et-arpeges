@@ -12,8 +12,8 @@ ostéo-articulaire, viscérale et vasculaire (Pr Bousson).
 
 - **Gammes** : 105 gammes (hypothèses diagnostiques selon un signe uniquement) en 6 groupes illustrés (lésion osseuse,
   rachis & sites, tissus mous, articulations, croissance & morphologie, enfant), chacun avec un 2ᵉ choix en pictogrammes.
-- **Référentiel** (onglet à part) : 33 fiches maladies (description d'une entité : signes, critères, formes),
-  classifications (OMS, Lodwick, Magerl…), anatomie et repères. Chaque fiche apparaît aussi en tête de la page du diagnostic.
+- **Référentiel** (onglet à part) : 34 fiches maladies (description d'une entité : signes, critères, formes),
+  classifications (OMS, Lodwick, Magerl…). Page d'un diagnostic : description courte à tirets dont chaque mot-clé ouvre la gamme correspondante, puis sa fiche.
 - **Recherche** instantanée insensible aux accents, avec surlignage des lignes correspondantes.
 - **Diagnostics** : 81 diagnostics indexés → toutes les gammes où chacun apparaît, + **croiseur de gammes**
   (ex. *épiphysaire* ∩ *niveaux liquide-liquide* → TCG, chondroblastome…).

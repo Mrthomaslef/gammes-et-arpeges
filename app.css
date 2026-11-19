@@ -298,3 +298,9 @@ body{overscroll-behavior-y:auto}
 .px .mg{fill:#5d5a70}
 .px .mb{fill:#cfcbe0}
 .tbl-wrap td,.stack .v{white-space:pre-line}
+/* page maladie : description courte à tirets, mots-clés cliquables */
+.desc{list-style:none;margin:8px 0 18px;padding:0;display:grid;gap:10px}
+.desc li{position:relative;padding-left:18px;line-height:1.5;font-size:1.02rem}
+.desc li::before{content:"–";position:absolute;left:0;color:var(--muted)}
+.desc .dk-k{color:var(--muted);font-weight:600}
+.desc a.kw{color:var(--acc);font-weight:600;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--acc) 35%,transparent);text-underline-offset:3px}

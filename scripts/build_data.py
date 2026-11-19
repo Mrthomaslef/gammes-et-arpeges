@@ -55,16 +55,53 @@ GROUPS = [
     ]),
     # Référentiel : tout ce qui décrit UNE entité (fiches maladies), classifications, anatomie
     ("ref", "Référentiel", [
-        ("fos", "Fiches os, rachis & tissus mous", [54, 160, 81, 82, 89, 125, 57, 58]),
+        ("fos", "Fiches os, rachis & tissus mous", [54, 160, 81, 82, 89, 125, 172, 57, 58]),
         ("fart", "Fiches articulaires", [61, 62, 63, 121, 66, 68, 72, 73, 88, 75, 67]),
         ("fsys", "Fiches maladies générales", [59, 83, 78, 80, 86, 77, 79, 103, 104, 106, 85]),
         ("fped", "Fiches enfant", [70, 99, 117]),
-        ("classifs", "Classifications & tableaux", [133, 7, 8, 9, 135, 64, 172, 114, 118, 124, 131]),
-        ("anat", "Anatomie & repères", [113, 115, 116, 119, 69]),
+        ("classifs", "Classifications & tableaux", [133, 7, 8, 9, 135, 64, 114, 118, 124, 131]),
     ]),
 ]
+# mots-clés courts : description d'une maladie = ses caractéristiques (chaque mot-clé → la gamme)
+SUB_KW = {"unique": "Lésion unique", "multi": "Multiple", "lodwick": "Lodwick", "siege": "Siège", "contenu": "Aspect",
+          "perioste": "Corticale / périoste", "surface": "Surface", "vertebre": "Vertèbre", "disque": "Disque", "sacrum": "Sacrum",
+          "crane": "Crâne", "cotes": "Côtes", "doigts": "Doigts", "frequentes": "Tissus mous", "tmsiege": "Siège (tissus mous)",
+          "paravert": "Paravertébral", "signal": "Signal IRM", "tmcontenu": "Contenu", "nerf": "Nerf", "inflam": "Articulation",
+          "synoviale": "Synoviale", "oan": "OAN", "croissance": "Croissance", "enfant": "Enfant"}
+KW = {136: "ostéolytique", 137: "condensante", 143: "ostéosarcome secondaire",
+      52: "ostéolyses plurifocales", 95: "condensation diffuse ou multifocale", 37: "condensations axiales multiples",
+      23: "appositions périostées diffuses", 139: "atteinte os + tissus mous", 97: "condensation constitutionnelle",
+      93: "superscan", 94: "super BMU", 84: "PAL élevées",
+      12: "IA1", 13: "IA2", 14: "IB", 15: "IC", 16: "II", 17: "III",
+      301: "épiphysaire", 302: "métaphysaire", 303: "diaphysaire",
+      304: "expansive / anévrysmale", 144: "« in and out »", 28: "trabéculations", 30: "niveaux liquide-liquide",
+      101: "séquestre", 32: "inflammatoire", 10: "sinueuse",
+      20: "périostose unilamellaire", 21: "périostose compacte", 22: "périostose plurilamellaire ou spiculée",
+      24: "hyperostose + encoches endostées", 134: "hyperostose, endoste normal", 138: "coque périostée",
+      18: "ostéolyse corticale", 53: "stries intracorticales", 92: "métastase corticale", 98: "scalloping endosté",
+      147: "lésion de surface", 148: "minéralisation de surface", 149: "érosion de surface", 26: "encoche + coque",
+      141: "ostéolyse vertébrale unique", 36: "vertèbre ivoire", 145: "vertèbre évidée", 41: "vertèbre en H",
+      108: "vertèbre en rostre", 140: "condensation axiale localisée", 44: "vertebra plana",
+      38: "pseudo-spondylodiscite", 34: "extension transdiscale",
+      146: "ostéolyse sacrée", 178: "masse pré-sacrée (adulte)", 179: "masse pré-sacrée (enfant)",
+      35: "lacune à l'emporte-pièce", 173: "voûte crânienne", 39: "côte", 40: "côte soufflante",
+      142: "lacune des doigts", 91: "acrométastase",
+      150: "fréquente", 174: "multiple / syndromique",
+      151: "superficielle", 152: "aponévrose superficielle", 153: "juxta-articulaire", 154: "intermusculaire",
+      155: "intramusculaire", 156: "tendon / gaine", 177: "sarcome hypodermique",
+      175: "paravertébrale thoracique", 176: "paravertébrale lombaire", 105: "hématopoïèse extramédullaire",
+      165: "hypersignal T1 (algorithme)", 166: "hypersignal T1", 126: "graisse", 167: "hypersignal T2 liquidien",
+      48: "matrice myxoïde", 168: "hyposignal T1 et T2", 158: "triple signal T2",
+      49: "calcifiée", 87: "calcinose pseudo-tumorale", 162: "vaisseaux serpigineux", 169: "« flow voids »",
+      163: "niveaux séro-hématiques", 164: "structure stratifiée", 170: "« fascial tail »", 171: "aspect d'hématome",
+      157: "pédicule vasculo-nerveux", 56: "nerfs élargis",
+      159: "érosions marginales", 55: "dactylite", 90: "synoviale hypo-T2", 74: "hémarthrose",
+      50: "OAN", 51: "siège des OAN",
+      107: "Madelung", 109: "ectasie durale", 110: "gigantisme focal", 120: "longueur des membres",
+      45: "pseudo-ostéomyélite", 46: "pseudo-arthrite de hanche", 100: "bandes claires métaphysaires", 25: "appositions périostées"}
+
 # fiche maladie → entité(s) décrite(s) (affichée en tête de la page diagnostic)
-FICHE_ENT = {54: ["enchondrome"], 81: ["fracture"], 82: ["fracture"], 89: ["tmgnp"], 125: ["lipome", "liposarcome"],
+FICHE_ENT = {54: ["enchondrome"], 172: ["mo"], 81: ["fracture"], 82: ["fracture"], 89: ["tmgnp"], 125: ["lipome", "liposarcome"],
              57: ["nf"], 58: ["nf"], 61: ["goutte"], 62: ["cpp"], 63: ["cpp"], 121: ["cpp"], 66: ["pr"], 73: ["hemophilie"],
              88: ["amylose"], 75: ["oan"], 59: ["paget"], 83: ["paget"], 78: ["hpt"], 80: ["osteomalacie"],
              77: ["acromegalie"], 103: ["drepano"], 104: ["drepano"], 85: ["rx"], 70: ["sapho"], 99: ["leucemie"]}
@@ -623,7 +660,7 @@ OVERRIDE = {
         "Tumeur à cellules géantes"]),
 }
 RAW = [OVERRIDE.get(x["n"], x) for x in RAW]
-for _n in (42, 29, 11, 31, 161):
+for _n in (42, 29, 11, 31, 161, 113, 115, 116, 119, 69):  # 113… : anatomie & repères retirés
     SKIP.add(_n)
 
 gammes = []
@@ -720,6 +757,7 @@ for s in RAW:
         "horsMsk": n in HORS_MSK, "blocks": blocks, "ents": ents,
         "path": PATHS[n],
         "fiche": FICHE_ENT.get(n),
+        "kw": KW.get(n),
         "thumb": None if n in NO_THUMB else THUMB.get(n) or next((b["src"][0] for b in blocks if b["type"] == "images"), None),
         "q": norm(" ".join([title, sub or ""] + flat)),
     })
@@ -743,7 +781,7 @@ data = {
         "count": len(gammes),
         "version": "2026-11-18",
     },
-    "groups": [{"id": g, "label": l, "subs": [{"id": si, "label": sl, "ids": [f"s{n:03d}" for n in nums if n in BUILT]} for si, sl, nums in subs]} for g, l, subs in GROUPS],
+    "groups": [{"id": g, "label": l, "subs": [{"id": si, "label": sl, "kw": SUB_KW.get(si), "ids": [f"s{n:03d}" for n in nums if n in BUILT]} for si, sl, nums in subs]} for g, l, subs in GROUPS],
     "gammes": gammes,
     "entities": entities,
 }
