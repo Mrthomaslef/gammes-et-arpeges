@@ -336,3 +336,6 @@ h1 .aggr{font-size:12px;vertical-align:4px}
 .wz-dx b{display:block;font-size:17px;font-weight:700;color:var(--acc)}
 .wz-dx small{display:block;margin-top:4px;font-size:13.5px;line-height:1.4;color:var(--muted)}
 .grid.big.wz3{grid-template-columns:repeat(3,1fr);gap:8px}.grid.big.wz3 .card{padding:12px 6px}.grid.big.wz3 .card svg{width:48px;height:48px}.grid.big.wz3 b{font-size:13.5px;line-height:1.25;text-align:center}
+.wz-res{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px}
+.wz-dx{padding:10px 14px;border-width:1.5px;border-left-width:4px;box-shadow:none}
+.wz-dx b{font-size:15px}

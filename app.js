@@ -244,9 +244,8 @@
       if (opts.some(([o, n]) => optIds(o).length && n < pool.size)) { next = [k, opts]; break; }
     }
     const ents = [...pool].map(id => E[id]).filter(Boolean).sort((a, b) => norm(a.label).localeCompare(norm(b.label)));
-    const first = t => { const m = String(t || "").match(/^.{20,}?[.;](\s|$)/); return (m ? m[0] : String(t || "").slice(0, 120)).replace(/[.;]\s*$/, ""); };
-    const res = ents.length <= 30 ? `<h2 class="hh2">${ents.length > 1 ? `${ents.length} réponses possibles` : "Réponse"}</h2><div class="wz-res">${ents.map(e =>
-      `<a class="wz-dx" href="#/d/${e.id}"><b>${esc(e.label)}</b>${e.resume ? `<small>${esc(first(e.resume))}</small>` : ""}</a>`).join("")}</div>` : "";
+    const res = ents.length && (picks.length || ents.length <= 20) ? `<h2 class="hh2">${ents.length > 1 ? `${ents.length} réponses possibles` : "Réponse"}</h2><div class="wz-res">${ents.map(e =>
+      `<a class="wz-dx" href="#/d/${e.id}"><b>${esc(e.label)}</b></a>`).join("")}</div>` : "";
     let q = "";
     if (next) {
       const [k, opts] = next;
@@ -256,8 +255,7 @@
         return `<a class="wz-opt" href="${hrefK(o[0])}"><span>${esc(o[1])}${g && g.aggr ? ` <span class="aggr">agressif</span>` : ""}</span>${optIds(o).length ? `<span class="n">${n}</span>` : ""}</a>`;
       }).join("")}<a class="wz-opt skip" href="${hrefK("_")}"><span>Je ne sais pas / passer</span></a></div>`;
     }
-    // peu de réponses : on les montre d'abord ; sinon la question d'abord
-    h += ents.length <= 8 ? res + q : q + res;
+    h += res + q; // propositions diagnostiques d'abord, affinage en dessous
     view.innerHTML = h;
   }
 
