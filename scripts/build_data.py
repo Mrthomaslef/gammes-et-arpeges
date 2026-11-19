@@ -774,6 +774,56 @@ BUILT = {g["slide"] for g in gammes}
 miss = [n for n in PATHS if n not in BUILT]
 if miss:
     raise SystemExit(f"Diapos rangées mais absentes : {miss}")
+# ---------------------------------------------------------------- fiches : une entrée par maladie (nom seul), sections fusionnées
+FICHE_NAMES = [  # (nom, [(diapo, intitulé de section ou None)])
+    ("Enchondrome", [(54, "Signes atypiques")]),
+    ("Kyste anévrysmal vs kyste essentiel", [(160, None)]),
+    ("Tassement vertébral ostéoporotique", [(81, "Radiographie"), (82, "IRM (tassement récent)")]),
+    ("Tumeur des gaines nerveuses périphériques", [(89, "Arguments diagnostiques")]),
+    ("Tumeurs lipomateuses", [(125, "Prise en charge")]),
+    ("Myosite ossifiante", [(172, None)]),
+    ("Neurofibromatoses", [(57, "NF1"), (58, "NF2 (critères de Manchester)")]),
+    ("Goutte", [(61, None)]),
+    ("Chondrocalcinose (CPP)", [(62, "Formes"), (63, "Différences avec l'arthrose"), (121, "Arthropathie")]),
+    ("Polyarthrite rhumatoïde", [(66, "Présentations initiales")]),
+    ("Sacro-iliite vs surcharge mécanique", [(68, None)]),
+    ("Lupus érythémateux systémique", [(72, None)]),
+    ("Arthropathie hémophilique", [(73, None)]),
+    ("Amylose", [(88, "Échographie")]),
+    ("OAN diabétique vs ostéite", [(75, None)]),
+    ("Déformations des doigts", [(67, None)]),
+    ("Maladie de Paget", [(59, "Signes cardinaux"), (83, "Raréfactions pseudotumorales")]),
+    ("Hyperparathyroïdie primitive", [(78, None)]),
+    ("Ostéomalacie", [(80, None)]),
+    ("Ostéodystrophie rénale (TMO-MRC)", [(86, None)]),
+    ("Acromégalie", [(77, None)]),
+    ("Syndrome de Cushing", [(79, None)]),
+    ("Drépanocytose", [(103, "Complications"), (104, "Arthropathies")]),
+    ("Achondroplasie", [(106, None)]),
+    ("Radiothérapie", [(85, "Complications")]),
+    ("OCRM", [(70, None)]),
+    ("Leucémie aiguë de l'enfant", [(99, None)]),
+    ("Ostéochondroses", [(117, None)]),
+]
+_by = {g["slide"]: g for g in gammes}
+MOVED = {}
+for name, parts in FICHE_NAMES:
+    g0 = _by[parts[0][0]]
+    blocks, ents, fiche, qs = [], set(), [], []
+    for n, sec in parts:
+        g = _by[n]
+        if sec:
+            blocks.append({"type": "list", "items": [{"l": 0, "t": sec, "k": "h", "b": True}]})
+        blocks += g["blocks"]
+        ents |= set(g["ents"]); fiche += [e for e in (g["fiche"] or []) if e not in fiche]; qs.append(g["q"])
+        if g is not g0:
+            MOVED[g["id"]] = g0["id"]; gammes.remove(g)
+    g0.update(title=name, sub=None, blocks=blocks, ents=sorted(ents), fiche=fiche or None, thumb=None,
+              q=norm(name) + " " + " ".join(qs))
+for e in entities:
+    e["gammes"] = list(dict.fromkeys(MOVED.get(x, x) for x in e["gammes"]))
+KEPT = {g["slide"] for g in gammes}
+
 data = {
     "meta": {
         "title": "Gammes & Arpèges",
@@ -781,8 +831,9 @@ data = {
         "count": len(gammes),
         "version": "2026-11-18",
     },
-    "groups": [{"id": g, "label": l, "subs": [{"id": si, "label": sl, "kw": SUB_KW.get(si), "ids": [f"s{n:03d}" for n in nums if n in BUILT]} for si, sl, nums in subs]} for g, l, subs in GROUPS],
+    "groups": [{"id": g, "label": l, "subs": [{"id": si, "label": sl, "kw": SUB_KW.get(si), "ids": [f"s{n:03d}" for n in nums if n in KEPT]} for si, sl, nums in subs]} for g, l, subs in GROUPS],
     "gammes": gammes,
+    "moved": MOVED,
     "entities": entities,
 }
 (ROOT / "data").mkdir(exist_ok=True)
