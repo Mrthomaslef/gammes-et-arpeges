@@ -341,12 +341,13 @@ for n in (2, 3, 4, 5, 6, 7):
 def long_bone(zone):
     hi = {"epi": "M48 14 Q75 0 102 14 Q112 28 104 40 L46 40 Q38 28 48 14Z",
           "meta": "M46 44 L104 44 Q98 62 90 76 L60 76 Q52 62 46 44Z",
-          "dia": "M60 80 L90 80 L90 176 L60 176Z"}[zone]
+          "dia": "M60 80 L90 80 L90 176 L60 176Z",
+          "surf": "M90 96 Q108 104 108 124 Q108 144 90 152Z"}[zone]
     bone = ("<path d='M48 14 Q75 0 102 14 Q112 28 104 40 Q98 62 90 76 L90 190 L60 190 L60 76 Q52 62 46 40 Q38 28 48 14Z' "
             f"fill='{BONE}' stroke='{CORT}' stroke-width='3'/>")
     return svg(150, 190, bone + f"<path d='{hi}' fill='{ACC}' opacity='.75'/>"
                f"<path d='M44 42 L106 42' stroke='{INK}' stroke-width='2' stroke-dasharray='5 4'/>")
-for z in ("epi", "meta", "dia"):
+for z in ("epi", "meta", "dia", "surf"):
     FILES[f"siege-{z}.svg"] = long_bone(z)
 for name, content in FILES.items():
     (OUT / name).write_text(content)
