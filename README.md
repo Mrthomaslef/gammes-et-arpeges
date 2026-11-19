@@ -10,7 +10,7 @@ ostéo-articulaire, viscérale et vasculaire (Pr Bousson).
 
 ## Fonctions
 
-- **Gammes** : 106 gammes (hypothèses diagnostiques selon un signe uniquement) en 6 groupes illustrés (lésion osseuse,
+- **Gammes** : 105 gammes (hypothèses diagnostiques selon un signe uniquement) en 6 groupes illustrés (lésion osseuse,
   rachis & sites, tissus mous, articulations, croissance & morphologie, enfant), chacun avec un 2ᵉ choix en pictogrammes.
 - **Référentiel** (onglet à part) : 33 fiches maladies (description d'une entité : signes, critères, formes),
   classifications (OMS, Lodwick, Magerl…), anatomie et repères. Chaque fiche apparaît aussi en tête de la page du diagnostic.
