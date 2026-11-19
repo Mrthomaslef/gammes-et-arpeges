@@ -1,6 +1,6 @@
 // Service worker : cache « réseau d'abord » pour le code, « cache d'abord » pour les images.
-const CACHE = "gea-v4";
-const CORE = ["./", "index.html", "app.css?v=4", "icons.js?v=4", "app.js?v=4", "data/embedded_data.js?v=4", "manifest.webmanifest", "assets/logo.svg", "assets/icon-192.png"];
+const CACHE = "gea-v5";
+const CORE = ["./", "index.html", "app.css?v=5", "icons.js?v=5", "pictos.js?v=5", "app.js?v=5", "data/embedded_data.js?v=5", "manifest.webmanifest", "assets/logo.svg", "assets/icon-192.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
@@ -11,7 +11,7 @@ self.addEventListener("activate", e => {
 self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
-  const isImg = /\/assets\/slides\//.test(req.url);
+  const isImg = /\/assets\/(slides|schemas)\//.test(req.url);
   if (isImg) {
     e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(res => {
       const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res;

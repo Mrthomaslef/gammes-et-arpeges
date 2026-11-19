@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gammes & Arpèges — MSK</title>
-<meta name="description" content="Les gammes diagnostiques en imagerie ostéo-articulaire, pour les internes : recherche, parcours guidé, diagnostics, révision.">
+<meta name="description" content="Les gammes diagnostiques en imagerie ostéo-articulaire, pour les internes : recherche, diagnostics, révision.">
 <meta name="theme-color" content="#1e1b4b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,10 +12,10 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
-<link rel="stylesheet" href="app.css?v=4">
+<link rel="stylesheet" href="app.css?v=5">
 </head>
 <body>
-<div id="ptr" aria-hidden="true"><span class="ptr-ico">↻</span><span class="ptr-txt">Tirer pour actualiser</span></div>
+<div id="ptr" aria-hidden="true"><svg class="ptr-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></svg></div>
 
 <header class="top">
   <button class="icon-btn" id="backBtn" aria-label="Retour" hidden>‹</button>
@@ -27,7 +27,7 @@
 </header>
 
 <div class="searchbar" id="searchWrap">
-  <input id="q" type="text" placeholder="Gamme ou diagnostic (Ewing, épiphyse, T1…)" autocomplete="off" enterkeyhint="search">
+  <input id="q" type="text" placeholder="Rechercher (Ewing, épiphyse, T1…)" autocomplete="off" enterkeyhint="search">
   <button id="qClear" class="q-clear" aria-label="Effacer" hidden>✕</button>
 </div>
 
@@ -35,7 +35,7 @@
 
 <nav class="tabbar" id="tabbar">
   <a href="#/" data-tab="home"><span>🎼</span>Gammes</a>
-  <a href="#/demarche" data-tab="demarche"><span>🧭</span>Démarche</a>
+  <a href="#/c/ref" data-tab="ref"><span></span>Référentiel</a>
   <a href="#/diagnostics" data-tab="diagnostics"><span>🔎</span>Diagnostics</a>
   <a href="#/revision" data-tab="revision"><span>🧠</span>Révision</a>
   <a href="#/favoris" data-tab="favoris"><span>★</span>Favoris</a>
@@ -43,8 +43,9 @@
 
 <div id="lightbox" hidden><button class="lb-close" aria-label="Fermer">✕</button><img alt=""></div>
 
-<script src="data/embedded_data.js?v=4"></script>
-<script src="icons.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="data/embedded_data.js?v=5"></script>
+<script src="icons.js?v=5"></script>
+<script src="pictos.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

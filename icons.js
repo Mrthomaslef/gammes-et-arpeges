@@ -15,6 +15,7 @@ window.GEA_ICONS = (() => {
     demarche: '<circle cx="12" cy="12" r="9"/><path d="M15.8 8.2 13.6 13.6 8.2 15.8 10.4 10.4Z"/>',
     diagnostics: '<circle cx="10.5" cy="10.5" r="7"/><path d="m15.5 15.5 5.5 5.5M8 10.5h5M10.5 8v5"/>',
     revision: '<rect x="3.5" y="6.5" width="13" height="15" rx="2.2"/><path d="M8 3h10.3a2.2 2.2 0 0 1 2.2 2.2V17"/><path d="m7 14.2 2.2 2.2L13.3 12"/>',
+    ref: '<path d="M5 4.5h10.5a3 3 0 0 1 3 3v12.5H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h10.5M9 8.5h6"/>',
     favoris: '<path d="m12 3 2.8 5.8 6.2.8-4.6 4.3 1.2 6.1L12 17l-5.6 3 1.2-6.1L3 9.6l6.2-.8Z"/>',
   };
   const COLORS = {
@@ -22,6 +23,7 @@ window.GEA_ICONS = (() => {
     axial: ["#0ea5e9", "#0369a1"], diffus: ["#14b8a6", "#0f766e"], tm: ["#ec4899", "#be185d"],
     rhumato: ["#f97316", "#c2410c"], interne: ["#ef4444", "#b91c1c"], pedia: ["#22c55e", "#15803d"],
     classif: ["#64748b", "#334155"],
+    art: ["#f97316", "#c2410c"], sys: ["#ef4444", "#b91c1c"], ped: ["#22c55e", "#15803d"], ref: ["#64748b", "#334155"],
   };
   const svg = (name, size = 24) =>
     `<svg class="ic" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[name] || ""}</svg>`;

@@ -14,49 +14,63 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = json.loads((ROOT / "data/source/slides_raw.json").read_text())
 IMGS = {int(k): v for k, v in json.loads((ROOT / "data/source/slides_images.json").read_text()).items()}
 
-# ---------------------------------------------------------------- catégories
-CATS = [
-    ("os", "Os — lésion focale", "🦴", "Lodwick, contours, topographie, gamme générale"),
-    ("aspect", "Os — aspect & contenu", "🔬", "Trabéculations, niveaux, soufflure, séquestre…"),
-    ("perioste", "Périoste, corticale & surface", "🧱", "Réactions périostées, lésions corticales et de surface"),
-    ("axial", "Rachis, bassin, crâne, côtes, mains", "🧭", "Vertèbres, sacrum, voûte, côtes, doigts"),
-    ("diffus", "Multifocal & diffus", "🌐", "Ostéolyses plurifocales, condensations diffuses, superscan"),
-    ("tm", "Tissus mous", "🧬", "Localisation, signal IRM, structure"),
-    ("rhumato", "Rhumato & articulaire", "🦵", "Microcristaux, PR, sacro-iliaques, OAN…"),
-    ("interne", "Médecine interne, endocrino, hémato", "🩸", "Paget, HPT, ostéomalacie, drépanocytose…"),
-    ("pedia", "Pédiatrie", "🧸", "Gammes de l'enfant"),
-    ("classif", "Classifications & anatomie", "📐", "OMS, zones prothétiques, scores (dont hors MSK)"),
+# ---------------------------------------------------------------- arborescence
+# groupe (accueil) → sous-choix (picto) → gammes (n° de diapo). Le 1er emplacement d'une gamme est son emplacement principal.
+GROUPS = [
+    ("os", "Lésion osseuse", [
+        ("demarche", "Démarche", [2, 136, 137]),
+        ("lodwick", "Contours (Lodwick)", [9, 12, 13, 14, 15, 16, 17]),
+        ("siege", "Siège dans l'os", [42, 133, 29, 11]),
+        ("contenu", "Aspect & contenu", [31, 144, 28, 30, 160, 161, 101, 54, 32, 10]),
+        ("perioste", "Corticale & périoste", [135, 20, 21, 22, 24, 134, 138, 18, 53, 92, 98]),
+        ("surface", "Surface de l'os", [147, 148, 149, 26]),
+        ("multi", "Multifocal & diffus", [52, 139, 95, 97, 37, 23, 93, 94]),
+    ]),
+    ("axial", "Rachis, crâne, côtes, doigts", [
+        ("vertebre", "Vertèbre & sacrum", [141, 36, 145, 34, 41, 108, 140, 146, 44]),
+        ("disque", "Disque & tassement", [38, 81, 82]),
+        ("crane", "Crâne", [35, 173]),
+        ("cotes", "Côtes", [39, 40]),
+        ("doigts", "Doigts", [142, 91]),
+    ]),
+    ("tm", "Tissus mous", [
+        ("frequentes", "Les plus fréquentes", [150, 174]),
+        ("tmsiege", "Siège", [151, 152, 153, 154, 155, 156, 177]),
+        ("paravert", "Paravertébral & pré-sacré", [175, 176, 178, 179]),
+        ("signal", "Signal IRM & graisse", [165, 166, 126, 125, 167, 48, 168, 158]),
+        ("tmcontenu", "Calcifications, vaisseaux, sang", [49, 87, 162, 169, 163, 164, 170, 171]),
+        ("nerf", "Nerfs", [89, 157, 56]),
+    ]),
+    ("art", "Articulations", [
+        ("cristaux", "Microcristaux", [61, 62, 63, 64, 121]),
+        ("inflam", "Inflammatoire & érosions", [66, 159, 68, 55, 67]),
+        ("synoviale", "Synoviale & hémarthrose", [90, 73, 74, 88]),
+        ("oan", "Arthropathie neurogène", [50, 51, 75]),
+    ]),
+    ("sys", "Maladies générales", [
+        ("metab", "Endocrino, métabolique & Paget", [59, 83, 78, 80, 86, 77, 79, 84]),
+        ("hemato", "Hémato & drépanocytose", [103, 104, 105]),
+        ("croissance", "Croissance & constitutionnel", [106, 107, 109, 110, 120]),
+        ("autres", "Radiothérapie, lupus, ostéosarcome IIaire", [85, 143, 72]),
+    ]),
+    ("ped", "Enfant", [
+        ("enfant", "Enfant", [45, 46, 70, 99, 100, 25, 44, 117, 103, 179]),
+    ]),
+    ("ref", "Référentiel", [
+        ("classifs", "Classifications", [7, 8, 9, 135, 64, 172, 114, 118, 124, 131]),
+        ("criteres", "Critères", [57, 58]),
+        ("anat", "Anatomie & repères", [113, 115, 116, 119, 69]),
+    ]),
 ]
-
-# slide -> (catégories, titre court optionnel)
 C = {}
-def put(cats, *slides):
-    for s in slides:
-        C[s] = cats
-
-put(["os"], 2, 9, 10, 11, 12, 13, 14, 15, 16, 17, 42, 133, 136, 137)
-put(["aspect"], 28, 29, 30, 31, 32, 138, 161, 144, 101, 160, 54, 143)
-put(["perioste"], 135, 20, 21, 22, 23, 24, 134, 98, 18, 92, 53, 26, 147, 148, 149)
-put(["axial"], 34, 36, 37, 140, 141, 145, 146, 41, 108, 38, 35, 173, 39, 40, 142, 91, 81, 82)
-put(["diffus"], 52, 95, 97, 93, 94, 139)
-put(["tm"], 150, 151, 152, 153, 154, 155, 156, 157, 48, 126, 125, 165, 166, 167, 168, 158,
-    169, 162, 163, 164, 170, 171, 49, 172, 174, 177, 89, 175, 176, 178, 179, 87)
-put(["rhumato"], 159, 61, 62, 63, 64, 66, 67, 68, 70, 90, 55, 50, 51, 75, 88, 121, 69, 74, 73)
-put(["interne"], 72, 77, 78, 79, 80, 83, 84, 85, 86, 103, 104, 105, 56, 57, 58, 59, 106, 107, 109, 110)
-put(["pedia", "axial"], 44)
-put(["pedia", "perioste"], 25)
-put(["pedia"], 45, 46, 99, 100)
-put(["classif", "os"], 7)
-put(["classif", "tm"], 8)
-put(["classif"], 113, 114, 115, 116, 117, 118, 119, 120, 122, 123, 124, 127, 128, 129, 130, 131, 132, 180)
-# catégories secondaires
-for s in (11, 12, 13, 14, 15, 16, 17):
-    pass
-C[41] = ["axial", "interne"]
-C[103] = ["interne", "pedia"]
-C[52] = ["diffus", "os"]
-C[35] = ["axial"]
-C[173] = ["axial"]
+PATHS = {}
+for gid, _, subs in GROUPS:
+    for sid, _, nums in subs:
+        for n in nums:
+            PATHS.setdefault(n, []).append([gid, sid])
+            C.setdefault(n, [])
+            if gid not in C[n]:
+                C[n].append(gid)
 
 HORS_MSK = set()
 
@@ -128,7 +142,7 @@ FIX = [
     ("siègejuxta", "siège juxta"), ("juxta-dia hysaire", "juxta-diaphysaire"), ("Ostéosarcme", "Ostéosarcome"),
     ("télangiestasique", "télangiectasique"), ("ostéomyéliteaiguë", "ostéomyélite aiguë"), ("Myélome multipleet", "Myélome multiple et"),
     ("Dysplasie osté-ofibreuse", "Dysplasie ostéofibreuse"), ("Hémodialisé", "Hémodialysé"), ("microcristaline", "microcristalline"),
-    ("aîgue", "aiguë"), ("Ostéite tuberculeuse  ", "Ostéite tuberculeuse "), ("Ilot", "Îlot"), ("CTB", "cervico-thoraco-brachiale"),
+    ("aîgue", "aiguë"), ("aigue", "aiguë"), ("Hyperostose localisées", "Hyperostoses localisées"), ("Ostéite tuberculeuse  ", "Ostéite tuberculeuse "), ("Ilot", "Îlot"), ("CTB", "cervico-thoraco-brachiale"),
     ("avant-piednet", "avant-pied et"), ("Fazeka", "Fazekas"), ("Fazekass", "Fazekas"), ("Aux · dépens", "Aux dépens"),
     ("Pseudo- tumeurs", "Pseudo-tumeurs"), ("Hématomes sous- périostés", "Hématomes sous-périostés"),
     ("Prolifération ostéochondromateuse paraostéale bizarre (BPOP,l ésion de Nora)", "Prolifération ostéochondromateuse paraostéale bizarre (BPOP, lésion de Nora)"),
@@ -477,8 +491,14 @@ SCHEMAS = {
     178: ("presacre-adulte.svg", _flat(MS.PRESACRE_ADULTE)), 179: ("presacre-enfant.svg", _flat(MS.PRESACRE_ENFANT)),
 }
 NO_SLIDE_TEXT = {135}
-_spec2 = importlib.util.spec_from_file_location("examples", ROOT / "scripts/examples.py")
-EX = importlib.util.module_from_spec(_spec2); _spec2.loader.exec_module(EX)  # texte de la diapo déjà porté par le schéma
+# vignettes de schéma périosté (panneaux de periostees.svg)
+PERIO_THUMB = {20: "perio-4.svg", 21: "perio-2.svg", 22: "perio-5.svg", 24: "perio-3.svg", 134: "perio-2.svg", 138: "perio-7.svg",
+               13: "lodwick-ia2.svg"}
+# vignettes recadrées sur la lésion (Lodwick) ; pas de vignette pour les algorithmes (texte illisible en miniature)
+THUMB = {n: f"assets/slides/s{n:03d}_t.webp" for n in (12, 14, 15, 16, 17)}
+NO_THUMB = {165, 167, 178, 179}
+# faux intertitres (en-têtes sans sous-éléments)
+DEMOTE = {84: {"Métastases osseuses"}, 70: {"Absence d'ankylose"}}
 
 def slide_title(s):
     for b in s["blocks"]:
@@ -526,11 +546,20 @@ for s in RAW:
         f, txt = SCHEMAS[n]
         blocks.insert(0, {"type": "images", "src": [f"assets/schemas/{f}"], "schema": True})
         hidden += txt
+    if n in PERIO_THUMB:
+        blocks.insert(0, {"type": "images", "src": [f"assets/schemas/{PERIO_THUMB[n]}"], "schema": True, "small": True})
     if n in EXTRA_TABLES:
         blocks.append({"type": "table", "rows": EXTRA_TABLES[n]})
     imgs = [f for f in IMGS.get(n, []) if f in KEEP_IMGS]
     if imgs:
         blocks.append({"type": "images", "src": [f"assets/slides/{f}" for f in imgs]})
+    for b in blocks:
+        if b["type"] == "list":
+            for it in b["items"]:
+                if it["t"] in DEMOTE.get(n, ()):
+                    it["k"] = "li"
+            if sub and b["items"] and norm(b["items"][0]["t"]).rstrip(" .:") == norm(sub).rstrip(" .:"):
+                b["items"] = b["items"][1:]
     blocks = [b for b in blocks if b["type"] != "list" or b["items"]]
     # texte plein pour la recherche + entités
     flat = list(hidden)
@@ -553,7 +582,8 @@ for s in RAW:
     gammes.append({
         "id": f"s{n:03d}", "slide": n, "title": title, "sub": sub, "cats": C[n],
         "horsMsk": n in HORS_MSK, "blocks": blocks, "ents": ents,
-        "ex": EX.EXAMPLES.get(n), "thumb": EX.THUMBS.get(n),
+        "path": PATHS[n],
+        "thumb": None if n in NO_THUMB else THUMB.get(n) or next((b["src"][0] for b in blocks if b["type"] == "images"), None),
         "q": norm(" ".join([title, sub or ""] + flat)),
     })
 
@@ -565,63 +595,10 @@ for g in gammes:
 entities = [{"id": k, "label": lab, "gammes": ent_index[k]} for k, lab, _ in ENT if k in ent_index]
 entities.sort(key=lambda e: norm(e["label"]))
 
-# parcours guidé (« Démarche »)
-GUIDE = [
-    {"t": "Devant une lésion osseuse focale", "i": "🦴", "steps": [
-        ("1. Réflexe", ["s002"]),
-        ("2. Contours (Lodwick)", ["s009", "s012", "s013", "s014", "s015", "s016", "s017", "s010", "s011"]),
-        ("3. Topographie dans l'os", ["s042", "s133"]),
-        ("4. Lyse ou condensation", ["s136", "s137"]),
-        ("5. Contenu / aspect", ["s028", "s030", "s031", "s138", "s161", "s032", "s144", "s101"]),
-        ("6. Épiphyse", ["s029"]),
-        ("7. Cartilage / kystes", ["s054", "s160"]),
-    ]},
-    {"t": "Périoste & corticale", "i": "🧱", "steps": [
-        ("Réactions périostées", ["s135", "s020", "s021", "s022", "s023", "s134", "s024", "s098"]),
-        ("Corticale", ["s018", "s092", "s053"]),
-        ("Surface de l'os", ["s147", "s148", "s149", "s026"]),
-    ]},
-    {"t": "Squelette axial & sites particuliers", "i": "🧭", "steps": [
-        ("Vertèbre", ["s141", "s036", "s145", "s034", "s041", "s108", "s140"]),
-        ("Disque / tassement", ["s038", "s081", "s082"]),
-        ("Sacrum & pré-sacré", ["s146", "s178", "s179"]),
-        ("Crâne", ["s035", "s173"]),
-        ("Côtes", ["s039", "s040"]),
-        ("Mains & doigts", ["s142", "s091", "s055"]),
-    ]},
-    {"t": "Atteinte multiple ou diffuse", "i": "🌐", "steps": [
-        ("Lyse plurifocale", ["s052"]),
-        ("Condensation", ["s095", "s097", "s037"]),
-        ("Médecine nucléaire", ["s093", "s094"]),
-        ("Os + tissus mous", ["s139", "s174"]),
-    ]},
-    {"t": "Masse des tissus mous", "i": "🧬", "steps": [
-        ("Les plus fréquentes", ["s150", "s151"]),
-        ("Par localisation", ["s152", "s153", "s154", "s155", "s156", "s157", "s176", "s175"]),
-        ("Par signal IRM", ["s165", "s166", "s167", "s168", "s048", "s126", "s158"]),
-        ("Par structure / aspect", ["s162", "s169", "s163", "s164", "s170", "s171", "s049", "s089"]),
-        ("Sous-cutané", ["s177"]),
-        ("Prise en charge", ["s125", "s172"]),
-    ]},
-    {"t": "Chez l'enfant", "i": "🧸", "steps": [
-        ("Gammes pédiatriques", ["s044", "s045", "s046", "s025", "s099", "s100"]),
-    ]},
-]
-ids = {g["id"] for g in gammes}
-_seen = set()
-for sec in GUIDE:
-    sec["steps"] = [(lab, [x for x in lst if x in ids and not (x in _seen or _seen.add(x))]) for lab, lst in sec["steps"]]
-    sec["steps"] = [st for st in sec["steps"] if st[1]]
-guide = []
-for sec in GUIDE:
-    st = []
-    for lab, lst in sec["steps"]:
-        bad = [x for x in lst if x not in ids]
-        if bad:
-            raise SystemExit(f"Guide : id inconnu {bad}")
-        st.append({"label": lab, "ids": lst})
-    guide.append({"title": sec["t"], "icon": sec["i"], "steps": st})
-
+BUILT = {g["slide"] for g in gammes}
+miss = [n for n in PATHS if n not in BUILT]
+if miss:
+    raise SystemExit(f"Diapos rangées mais absentes : {miss}")
 data = {
     "meta": {
         "title": "Gammes & Arpèges",
@@ -629,15 +606,16 @@ data = {
         "count": len(gammes),
         "version": "2026-11-18",
     },
-    "cats": [{"id": a, "label": b, "icon": c, "desc": d} for a, b, c, d in CATS],
+    "groups": [{"id": g, "label": l, "subs": [{"id": si, "label": sl, "ids": [f"s{n:03d}" for n in nums if n in BUILT]} for si, sl, nums in subs]} for g, l, subs in GROUPS],
     "gammes": gammes,
     "entities": entities,
-    "guide": guide,
 }
 (ROOT / "data").mkdir(exist_ok=True)
 js = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
 (ROOT / "data/gammes.json").write_text(js)
 (ROOT / "data/embedded_data.js").write_text("window.GAMMES_DATA=" + js + ";\n")
 print(f"{len(gammes)} gammes, {len(entities)} diagnostics indexés")
-for c in CATS:
-    print(f"  {c[2]} {c[1]}: {sum(1 for g in gammes if c[0] in g['cats'])}")
+for g, l, subs in GROUPS:
+    print(f"  {l}: " + ", ".join(f"{sl} {len(nums)}" for _, sl, nums in subs))
+dup = {n: p for n, p in PATHS.items() if len(p) > 1}
+print("  doublons :", {n: [x[1] for x in p] for n, p in dup.items()})

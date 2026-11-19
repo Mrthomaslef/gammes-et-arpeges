@@ -120,6 +120,8 @@ def periostees():
             b += text(PW / 2, bot + 38 + i * 13, ln, 10.5, MUTED)
         return b
 
+    global PERIO_PANEL
+    PERIO_PANEL = panel
     W = PW * 6 + 20
     body = text(W / 2, 20, "Classification des réactions périostées (diaphyse d'un os long)", 15, INK, "middle", "700")
     for i in range(11):
@@ -325,6 +327,16 @@ FILES = {
     "presacre-adulte.svg": flow("Algorithme : masse pré-sacrée de l'adulte", PRESACRE_ADULTE),
     "presacre-enfant.svg": flow("Algorithme : masse pré-sacrée de l'enfant", PRESACRE_ENFANT),
 }
+# Lodwick IA2 (pas de figure dans le diaporama) : même style que les schémas IA1/IB/IC
+FILES["lodwick-ia2.svg"] = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='240' height='240'>"
+    "<defs><radialGradient id='h'><stop offset='.5' stop-color='#7d7d7d'/><stop offset='1' stop-color='#d9d9d9'/></radialGradient></defs>"
+    "<rect width='240' height='240' fill='#fff'/>"
+    "<path d='M85 -2 L70 30 L22 105 L12 175 L30 225 L60 242 L190 242 L215 175 L242 165 L242 -2 Z' fill='#d9d9d9' stroke='#555' stroke-width='2'/>"
+    "<g transform='rotate(28 115 108)'><ellipse cx='115' cy='108' rx='58' ry='76' fill='url(#h)'/>"
+    "<ellipse cx='115' cy='108' rx='30' ry='46' fill='#f4f4f4'/></g></svg>")
+# vignettes : un panneau de la classification périostée par gamme
+for n in (2, 3, 4, 5, 6, 7):
+    FILES[f"perio-{n}.svg"] = svg(150, 190, f"<g transform='translate(0,-25)'>{PERIO_PANEL(n)}</g>")
 for name, content in FILES.items():
     (OUT / name).write_text(content)
 print("schémas :", ", ".join(FILES))

@@ -4,7 +4,10 @@
   const D = window.GAMMES_DATA;
   const G = Object.fromEntries(D.gammes.map(g => [g.id, g]));
   const E = Object.fromEntries(D.entities.map(e => [e.id, e]));
-  const CAT = Object.fromEntries(D.cats.map(c => [c.id, c]));
+  const GRP = Object.fromEntries(D.groups.map(c => [c.id, c]));
+  const SUB = {};
+  D.groups.forEach(gr => gr.subs.forEach(sb => { SUB[sb.id] = { ...sb, gid: gr.id }; }));
+  const MAIN = D.groups.filter(gr => gr.id !== "ref");
   const $ = s => document.querySelector(s);
   const view = $("#view"), qInput = $("#q"), qClear = $("#qClear");
 
@@ -65,15 +68,20 @@
   $("#themeBtn").onclick = () => { const t = root.dataset.theme === "dark" ? "light" : "dark"; applyTheme(t); store.set("theme", t); };
 
   // ------------------------------------------------------------ icônes
-  const IC = window.GEA_ICONS;
+  const IC = window.GEA_ICONS, PX = window.GEA_PICTOS;
   const col = c => (IC.COLORS[c] || IC.COLORS.classif);
+  const px = (name, gid, size = 48) => `<span class="pxw" style="${cvar(gid)}">${PX.svg(name, size)}</span>`;
+  const home1 = g => g.path[0]; // [groupe, sous-choix] principal
   const cvar = c => `--c:${col(c)[0]};--c2:${col(c)[1]}`;
   const tile = (c, size = 22) => `<span class="tile" style="${cvar(c)}">${IC.svg(c, size)}</span>`;
   const hIco = (name, c) => `<span class="h-ico" style="${cvar(c)}">${IC.svg(name, 20)}</span>`;
   document.querySelectorAll(".tabbar a").forEach(a => { a.querySelector("span").innerHTML = IC.svg(a.dataset.tab === "home" ? "gammes" : a.dataset.tab, 22); });
+  const crumb = (gid, sid) => {
+    const gr = GRP[gid], sb = SUB[sid];
+    return `<nav class="crumb" style="${cvar(gid)}"><a href="#/c/${gid}">${esc(gr.label)}</a>${sb && gr.subs.length > 1 ? ` › <a href="#/c/${gid}/${sid}">${esc(sb.label)}</a>` : ""}</nav>`;
+  };
 
   // ------------------------------------------------------------ composants
-  const catChips = g => g.cats.map(c => `<a class="tag ctag" style="${cvar(c)}" href="#/cat/${c}">${IC.svg(c, 14)} ${esc(CAT[c].label)}</a>`).join("");
   // texte avec diagnostics cliquables (+ surlignage éventuel)
   function rich(t, spans, ts) {
     const hl = x => ts ? highlight(x, ts) : esc(x);
@@ -91,21 +99,23 @@
     for (const b of g.blocks) {
       if (b.type === "list") body += `<ul class="tree">${b.items.map(i => `<li class="${i.k} l${Math.min(i.l, 4)}${i.b ? " b" : ""}">${rich(i.t, i.e, ts)}</li>`).join("")}</ul>`;
       else if (b.type === "table") body += renderTable(b.rows, b.links);
-      else if (b.type === "images") body += `<div class="imgs${b.schema ? " schema" : ""}">${b.src.map(s => `<img src="${s}" loading="lazy" alt="" data-zoom>`).join("")}</div>`;
+      else if (b.type === "images") body += `<div class="imgs${b.schema ? " schema" : ""}${b.small ? " small" : ""}">${b.src.map(s => `<img src="${s}" loading="lazy" alt="" data-zoom>`).join("")}</div>`;
     }
     return body;
   }
-  // bouton de gamme qui se déroule : titre + exemple caricatural (+ schéma pour Lodwick)
+  // bouton de gamme qui se déroule : titre + image (schéma de la gamme, sinon picto du sous-choix en liste mixte)
   function rowGamme(g, opts = {}) {
     const ts = opts.ts && opts.ts.length ? opts.ts : null;
+    const [gid, sid] = home1(g);
     let snip = "";
     if (ts && !opts.noSnip) {
       const tl = ts.join("").length;
       const hit = [...new Set(LINES[g.id])].find(l => ts.every(t => norm(l).includes(t)) && norm(l).length - tl > 18);
       if (hit) snip = `<span class="snip1">${highlight(hit, ts)}</span>`;
     }
-    return `<details class="card acc" data-id="${g.id}" data-q="${esc(opts.q || "")}" style="${cvar(g.cats[0])}">
-      <summary>${opts.tile ? tile(g.cats[0], 18) : ""}<span class="t"><b>${ts && !opts.noSnip ? highlight(g.title, ts) : esc(g.title)}</b>${g.ex ? `<span class="ex">${esc(g.ex)}</span>` : ""}${snip}</span>${g.thumb ? `<img class="thumb" src="${g.thumb}" alt="">` : ""}<span class="chev">›</span></summary>
+    const vis = g.thumb ? `<img class="thumb" src="${g.thumb}" alt="" loading="lazy">` : opts.mixed ? px(sid, gid, 34) : "";
+    return `<details class="card acc" data-id="${g.id}" data-q="${esc(opts.q || "")}" style="${cvar(gid)}">
+      <summary>${vis}<span class="t"><b>${ts && !opts.noSnip ? highlight(g.title, ts) : esc(opts.short ? g.title.replace(...opts.short) : g.title)}</b>${snip}</span><span class="chev">›</span></summary>
       <div class="acc-b"></div></details>`;
   }
   view.addEventListener("toggle", e => {
@@ -138,7 +148,7 @@
       ts.forEach(t => { if (tn.includes(t)) score += 10; if (tn.startsWith(t)) score += 5; });
       LINES[g.id].forEach(l => { const ln = norm(l); ts.forEach(t => { if (ln.includes(t)) score += 1; }); });
       if (g.horsMsk) score -= 8;
-      if (g.cats.includes("classif")) score -= 4;
+      if (g.cats[0] === "ref") score -= 4;
       res.push([score, g]);
     }
     res.sort((a, b) => b[0] - a[0]);
@@ -153,7 +163,7 @@
       h += `<div class="chips" style="margin-top:6px">${ents.map(e => `<a class="chip ent" href="#/d/${e.id}">${esc(e.label)} · voir les ${e.gammes.length} gammes ›</a>`).join("")}</div>`;
     }
     h += `<h2>${gammes.length} gamme${gammes.length > 1 ? "s" : ""}</h2>`;
-    h += gammes.length ? `<div class="list">${gammes.slice(0, 80).map(g => rowGamme(g, { ts, q, tile: true })).join("")}</div>`
+    h += gammes.length ? `<div class="list">${gammes.slice(0, 80).map(g => rowGamme(g, { ts, q, mixed: true })).join("")}</div>`
       : `<div class="empty">Aucun résultat pour « ${esc(q)} ».<br>Essayez un terme plus court (ex. « ewing », « epiphys », « T2 »).</div>`;
     view.innerHTML = h;
   }
@@ -172,23 +182,32 @@
 
   // ------------------------------------------------------------ vues
   function home() {
-    let h = `<section class="card hero"><img class="hero-logo" src="assets/logo.svg" alt=""><h1>Des gammes et des arpèges</h1>
-      <p>Les gammes diagnostiques ostéo-articulaires</p></section>`;
-    const rec = recents.filter(id => G[id]).slice(0, 4);
-    if (rec.length) h += `<h2>Récemment</h2><div class="chips">${rec.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
-    h += `<h2>Thèmes</h2><div class="grid">${D.cats.map(c => {
-      const n = D.gammes.filter(g => g.cats.includes(c.id)).length;
-      return `<a class="card cat" href="#/cat/${c.id}" style="${cvar(c.id)}"><span class="cat-top">${tile(c.id, 26)}<span class="n">${n}</span></span><b>${esc(c.label)}</b></a>`;
-    }).join("")}</div>`;
+    let h = "";
+    const rec = recents.filter(id => G[id]).slice(0, 3);
+    if (rec.length) h += `<div class="chips recent">${rec.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div>`;
+    h += `<div class="grid big">${MAIN.map(gr => `<a class="card grp" href="#/c/${gr.id}" style="${cvar(gr.id)}">${PX.svg(gr.id, 64)}<b>${esc(gr.label)}</b></a>`).join("")}</div>`;
     h += `<p class="foot">Dr Grégoire Attané</p>`;
     view.innerHTML = h;
   }
 
-  function catView(id) {
-    const c = CAT[id]; if (!c) return notFound();
-    const list = D.gammes.filter(g => g.cats.includes(id));
-    view.innerHTML = `<h1 class="hh">${hIco(id, id)}${esc(c.label)}</h1><p class="sub">${list.length} gammes</p>
-      <div class="list">${list.map(g => rowGamme(g)).join("")}</div>`;
+  // niveau 2 : les sous-choix d'un groupe (ou directement la liste s'il n'y en a qu'un)
+  function groupView(gid) {
+    const gr = GRP[gid]; if (!gr) return notFound();
+    if (gr.subs.length === 1) return subView(gid, gr.subs[0].id);
+    view.innerHTML = `<h1 class="hh">${px(gid, gid, 40)}${esc(gr.label)}</h1>
+      <div class="grid subs">${gr.subs.map(sb => `<a class="card sub-t" href="#/c/${gid}/${sb.id}" style="${cvar(gid)}">${PX.svg(sb.id, 56)}<b>${esc(sb.label)}</b></a>`).join("")}</div>`;
+  }
+
+  // titres raccourcis quand le sous-choix porte déjà l'information
+  const SHORT = { lodwick: [/^Lodwick (?=I)/, ""], enfant: [/ (chez l'enfant|de l'enfant)/i, ""] };
+  // niveau 3 : les gammes d'un sous-choix
+  function subView(gid, sid) {
+    const gr = GRP[gid], sb = SUB[sid]; if (!gr || !sb || sb.gid !== gid) return notFound();
+    const list = sb.ids.map(id => G[id]).filter(Boolean);
+    const one = gr.subs.length === 1;
+    const short = SHORT[sid];
+    view.innerHTML = `<h1 class="hh">${px(sid, gid, 40)}${esc(one ? gr.label : sb.label)}</h1>
+      <div class="list">${list.map(g => rowGamme(g, { short })).join("")}</div>`;
   }
 
   function renderTable(rows, links) {
@@ -209,13 +228,13 @@
     recents = [id, ...recents.filter(x => x !== id)].slice(0, 12); store.set("recents", recents);
     const ts = q ? terms(q) : null;
     const body = renderBody(g, ts);
-    const cat = g.cats[0], sib = D.gammes.filter(x => x.cats.includes(cat)), k = sib.findIndex(x => x.id === id);
+    const [gid, sid] = home1(g), sib = SUB[sid].ids.map(x => G[x]), k = sib.findIndex(x => x.id === id);
     const prev = sib[k - 1], next = sib[k + 1];
     view.innerHTML = `
-      <div class="g-head"><div class="t"><h1>${esc(g.title)}</h1>${g.sub ? `<p class="sub">${esc(g.sub)}</p>` : ""}${g.ex ? `<p class="ex1">${esc(g.ex)}</p>` : ""}</div>
+      ${crumb(gid, sid)}
+      <div class="g-head"><div class="t"><h1>${esc(g.title)}</h1>${g.sub ? `<p class="sub">${esc(g.sub)}</p>` : ""}</div>
         <button class="star${favs.has(id) ? " on" : ""}" id="favBtn" aria-label="Favori">${favs.has(id) ? "★" : "☆"}</button></div>
-      <div class="meta">${catChips({ cats: [g.cats[0]] })}<span class="dia">diapo ${g.slide}</span></div>
-      <section class="card pad gcard" style="${cvar(g.cats[0])}">${body}</section>
+      <section class="card pad gcard" style="${cvar(gid)}">${body}</section>
       <div class="pn">${prev ? `<a class="card prev" href="#/g/${prev.id}"><small>‹ Précédente</small><span>${esc(prev.title)}</span></a>` : "<span style='flex:1'></span>"}
         ${next ? `<a class="card next" href="#/g/${next.id}"><small>Suivante ›</small><span>${esc(next.title)}</span></a>` : "<span style='flex:1'></span>"}</div>`;
     $("#favBtn").onclick = () => {
@@ -227,13 +246,19 @@
   function diagnostics() {
     const letters = [...new Set(D.entities.map(e => norm(e.label)[0].toUpperCase()))];
     let cur = "";
-    view.innerHTML = `<h1 class="hh">${hIco("diagnostics", "axial")}Diagnostics</h1><p class="sub">Toutes les gammes où apparaît un diagnostic.</p>
+    view.innerHTML = `<h1 class="hh">${hIco("diagnostics", "axial")}Diagnostics</h1>
+      <details class="card gsec" id="cross"${crossSel.length ? " open" : ""} style="${cvar("aspect")}"><summary class="gsec-h">${tile("aspect", 20)}<b>Croiser des gammes</b><span class="chev">›</span></summary><div class="gsec-b">
+      <input id="crossQ" type="search" placeholder="Chercher une gamme à croiser…" class="cq">
+      <div class="chips" id="crossPick" style="margin-top:8px"></div>
+      <div class="chips" id="crossSel" style="margin-top:10px"></div>
+      <div class="cross-res" id="crossRes"></div></div></details>
       <div class="az">${letters.map(l => `<a href="#" data-az="${l}">${l}</a>`).join("")}</div>
       <div class="list">${D.entities.map(e => {
         const L = norm(e.label)[0].toUpperCase(); let anchor = "";
         if (L !== cur) { cur = L; anchor = ` id="az-${L}"`; }
         return `<a class="card row"${anchor} href="#/d/${e.id}"><div class="t"><b>${esc(e.label)}</b></div><span class="cnt">${e.gammes.length}</span><span class="arrow">›</span></a>`;
       }).join("")}</div>`;
+    crossInit();
     view.querySelectorAll("[data-az]").forEach(a => a.onclick = ev => { ev.preventDefault(); const t = document.getElementById("az-" + a.dataset.az); t && window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 120, behavior: "smooth" }); });
   }
 
@@ -243,26 +268,15 @@
     const gs = e.gammes.map(x => G[x]);
     const byCat = {};
     gs.forEach(g => (byCat[g.cats[0]] ||= []).push(g));
-    view.innerHTML = `<h1>${esc(e.label)}</h1><p class="sub">${gs.length} gammes</p>
-      ${D.cats.filter(c => byCat[c.id]).map(c => `<h2 class="hh2">${tile(c.id, 14)} ${esc(c.label)}</h2><div class="list">${byCat[c.id].map(g => rowGamme(g, { ts, q: ts.join(" "), noSnip: true })).join("")}</div>`).join("")}`;
+    view.innerHTML = `<h1>${esc(e.label)}</h1>
+      ${D.groups.filter(c => byCat[c.id]).map(c => `<h2 class="hh2">${esc(c.label)}</h2><div class="list">${byCat[c.id].map(g => rowGamme(g, { ts, q: ts.join(" "), noSnip: true, mixed: true })).join("")}</div>`).join("")}`;
   }
 
-  // ---- démarche + croiseur
+  // ---- croiseur de gammes (dans Diagnostics)
   let crossSel = [];
-  function demarche() {
-    let h = `<h1 class="hh">${hIco("demarche", "diffus")}Démarche</h1><p class="sub">De ce que l'on voit à la bonne gamme.</p>`;
-    const GC = ["os", "perioste", "axial", "diffus", "tm", "pedia"];
-    h += D.guide.map((sec, i) => `<details class="card gsec" style="${cvar(GC[i])}"><summary class="gsec-h">${tile(GC[i], 20)}<b>${esc(sec.title)}</b><span class="chev">›</span></summary><div class="gsec-b">
-      ${sec.steps.map(st => `<div class="step"><div class="lab">${esc(st.label)}</div><div class="chips">${st.ids.map(id => `<a class="chip" href="#/g/${id}">${esc(G[id].title)}</a>`).join("")}</div></div>`).join("")}</div></details>`).join("");
-    h += `<section class="card pad" id="cross" style="margin-top:14px"><div class="gsec-h">${tile("aspect", 20)}<b>Croiser des gammes</b></div>
-      <p class="sub" style="margin-top:4px">2 ou 3 gammes → les diagnostics communs.</p>
-      <input id="crossQ" type="search" placeholder="Ajouter un critère (filtrer les gammes)…" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px">
-      <div class="chips" id="crossPick" style="margin-top:8px"></div>
-      <div class="chips" id="crossSel" style="margin-top:10px"></div>
-      <div class="cross-res" id="crossRes"></div></section>`;
-    view.innerHTML = h;
+  function crossInit() {
     const pick = $("#crossPick"), sel = $("#crossSel"), res = $("#crossRes"), cq = $("#crossQ");
-    const pool = MSK.filter(g => g.ents.length >= 2 && !g.cats.includes("classif"));
+    const pool = MSK.filter(g => g.ents.length >= 2 && g.cats[0] !== "ref");
     function draw() {
       const ts = terms(cq.value);
       const cand = pool.filter(g => !crossSel.includes(g.id) && (!ts.length || ts.every(t => norm(g.title + " " + (g.sub || "")).includes(t)))).slice(0, ts.length ? 12 : 0);
@@ -285,7 +299,7 @@
   function revision() {
     const scores = store.get("scores", {});
     const scope = store.get("revScope", "all");
-    const pool = MSK.filter(g => !g.cats.includes("classif") && g.blocks.some(b => b.type === "list" && b.items.filter(i => i.k === "li").length >= 3))
+    const pool = MSK.filter(g => g.cats[0] !== "ref" && g.blocks.some(b => b.type === "list" && b.items.filter(i => i.k === "li").length >= 3))
       .filter(g => scope === "all" || (scope === "favs" ? favs.has(g.id) : g.cats.includes(scope)));
     const known = pool.filter(g => (scores[g.id] || 0) > 0).length;
     if (!rev || rev.scope !== scope || !pool.find(g => g.id === rev.id)) rev = { scope, id: null, shown: false };
@@ -297,13 +311,13 @@
       rev.id ||= pool[0].id;
     }
     const g = G[rev.id];
-    const opts = [["all", "Tout"], ["favs", "★ Favoris"], ...D.cats.filter(c => c.id !== "classif").map(c => [c.id, c.label])];
+    const opts = [["all", "Tout"], ["favs", "★ Favoris"], ...MAIN.map(c => [c.id, c.label])];
     let h = `<h1 class="hh">${hIco("revision", "tm")}Révision</h1><p class="sub">Retrouvez de mémoire le contenu de la gamme, puis révélez.</p>
       <select id="scopeSel" class="scope">${opts.map(([k, l]) => `<option value="${k}"${k === scope ? " selected" : ""}>${esc(l)}</option>`).join("")}</select>
       <div class="sub" style="font-size:13px">${known}/${pool.length} gammes maîtrisées</div><div class="progress"><i style="width:${pool.length ? (100 * known / pool.length) : 0}%"></i></div>`;
     if (!g) { view.innerHTML = h + `<div class="empty">Aucune gamme dans cette sélection.</div>`; bindScope(); return; }
     const n = g.blocks.filter(b => b.type === "list").reduce((a, b) => a + b.items.filter(i => i.k === "li").length, 0);
-    h += `<section class="card pad flash"><div class="meta" style="margin:0">${catChips(g)}</div>
+    h += `<section class="card pad flash" style="${cvar(home1(g)[0])}"><div class="meta" style="margin:0">${crumb(...home1(g))}</div>
       <div class="q">${esc(g.title)}</div>${g.sub ? `<div class="sub">${esc(g.sub)}</div>` : ""}
       <div class="sub" style="font-size:13px">≈ ${n} éléments</div>
       ${rev.shown ? `<div id="ans"></div>` : ""}
@@ -332,7 +346,7 @@
 
   function favoris() {
     const list = [...favs].map(id => G[id]).filter(Boolean);
-    view.innerHTML = `<h1 class="hh">${hIco("favoris", "perioste")}Favoris</h1>${list.length ? `<div class="list">${list.map(g => rowGamme(g, { tile: true })).join("")}</div>`
+    view.innerHTML = `<h1 class="hh">${hIco("favoris", "perioste")}Favoris</h1>${list.length ? `<div class="list">${list.map(g => rowGamme(g, { mixed: true })).join("")}</div>`
       : `<div class="empty">Aucun favori pour l'instant.<br>Touchez ☆ sur une gamme pour l'épingler ici.</div>`}`;
   }
   function notFound() { view.innerHTML = `<div class="empty">Page introuvable. <a href="#/">Accueil</a></div>`; }
@@ -343,16 +357,17 @@
     const [path, qs] = (location.hash.slice(1) || "/").split("?");
     const parts = path.split("/").filter(Boolean);
     const q = new URLSearchParams(qs || "").get("q");
-    $("#backBtn").hidden = !parts.length;
+    $("#backBtn").hidden = !parts.length || (parts[0] === "c" && parts[1] === "ref" && !parts[2]) || ["diagnostics", "revision", "favoris"].includes(parts[0]);
     if (parts[0] !== "search" && qInput.value) { qInput.value = ""; qClear.hidden = true; }
     switch (parts[0]) {
       case undefined: setTab("home"); home(); break;
       case "search": setTab("home"); qInput.value ? renderSearch(qInput.value) : home(); break;
-      case "cat": setTab("home"); catView(parts[1]); break;
+      case "c": setTab(parts[1] === "ref" ? "ref" : "home"); parts[2] ? subView(parts[1], parts[2]) : groupView(parts[1]); break;
+      case "cat": location.replace("#/"); break;
       case "g": setTab(""); gammeView(parts[1], q); break;
       case "d": setTab("diagnostics"); entityView(parts[1]); break;
       case "diagnostics": setTab("diagnostics"); diagnostics(); break;
-      case "demarche": setTab("demarche"); demarche(); break;
+      case "demarche": location.replace("#/diagnostics"); break;
       case "revision": setTab("revision"); revision(); break;
       case "favoris": setTab("favoris"); favoris(); break;
       default: notFound();
@@ -379,13 +394,14 @@
     if (dy <= 0) { ptr.style.transform = ""; return; }
     const p = Math.min(dy, 120);
     ptr.style.transform = `translate(-50%,${p - 80}px)`;
-    if (p >= 80 && !armed) { armed = true; haptic(10); ptr.querySelector(".ptr-txt").textContent = "Relâcher pour actualiser"; }
-    if (p < 80 && armed) { armed = false; ptr.querySelector(".ptr-txt").textContent = "Tirer pour actualiser"; }
+    if (p >= 80 && !armed) { armed = true; haptic(10); }
+    if (p < 80 && armed) armed = false;
+    ptr.style.opacity = Math.min(1, p / 60); ptr.querySelector(".ptr-ico").style.transform = `rotate(${p * 3}deg)`;
   };
   const end = async () => {
     if (y0 === null) return; y0 = null;
-    if (!armed) { ptr.style.transform = ""; return; }
-    ptr.classList.add("go"); ptr.querySelector(".ptr-txt").textContent = "Actualisation…"; haptic([10, 40, 10]);
+    if (!armed) { ptr.style.transform = ""; ptr.style.opacity = 0; return; }
+    ptr.classList.add("go"); haptic([10, 40, 10]);
     try { const r = await navigator.serviceWorker?.getRegistration(); await r?.update(); } catch {}
     setTimeout(() => location.reload(), 350);
   };
